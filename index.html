@@ -1,35 +1,3423 @@
-<div class="card" id="studentIdentification" style="color:var(--text);margin:18px 0">
-  <h2>👤 Mon profil</h2>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systèmes d’équations interactif – 5e secondaire qualifiant</title>
 
-  <div class="form-row">
-    <label for="studentFirstName">
-      Prénom
-      <input
-        type="text"
-        id="studentFirstName"
-        autocomplete="given-name"
-        placeholder="Ex. Sarah">
-    </label>
+<style>
+:root{
+  --navy:#0b1f3a;
+  --blue:#1677d2;
+  --light:#e8f3ff;
+  --white:#ffffff;
+  --green:#168a55;
+  --orange:#e88216;
+  --red:#c0392b;
+  --text:#182536;
+  --muted:#5c6b7b;
+  --border:#d9e4ef;
+  --shadow:0 8px 30px rgba(10,40,75,.12);
+}
 
-    <label for="studentLastName">
-      Nom
-      <input
-        type="text"
-        id="studentLastName"
-        autocomplete="family-name"
-        placeholder="Ex. Dupont">
-    </label>
-  </div>
+*{box-sizing:border-box}
 
-  <div class="actions">
-    <button class="btn success" id="saveStudentName">
-      Enregistrer mon nom
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:#f4f8fc;
+  line-height:1.5;
+}
+
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus{
+  outline:3px solid #ffbf47;
+  outline-offset:2px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:var(--navy);
+  color:white;
+  box-shadow:0 3px 14px rgba(0,0,0,.2);
+}
+
+.topbar{
+  max-width:1400px;
+  margin:auto;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.brand{
+  font-weight:800;
+  font-size:1.05rem;
+  flex:1;
+  min-width:210px;
+}
+
+.student-chip{
+  padding:7px 12px;
+  background:rgba(255,255,255,.12);
+  border-radius:999px;
+  font-size:.9rem;
+}
+
+.header-btn{
+  border:1px solid rgba(255,255,255,.4);
+  color:white;
+  background:rgba(255,255,255,.1);
+  border-radius:9px;
+  padding:9px 12px;
+  font-weight:700;
+}
+
+.header-btn:hover{
+  background:white;
+  color:var(--navy);
+}
+
+.qr-command{
+  background:#ffbf47;
+  color:#172334;
+  border-color:#ffbf47;
+}
+
+.qr-command:hover{
+  background:#ffd575;
+  color:#172334;
+}
+
+/* NAV */
+
+nav{
+  background:white;
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;
+}
+
+.nav-inner{
+  max-width:1400px;
+  margin:auto;
+  padding:8px 12px;
+  display:flex;
+  gap:7px;
+  min-width:max-content;
+}
+
+.nav-btn{
+  border:0;
+  background:#eef4fa;
+  color:var(--navy);
+  padding:9px 12px;
+  border-radius:8px;
+  font-weight:700;
+}
+
+.nav-btn.active,
+.nav-btn:hover{
+  background:var(--blue);
+  color:white;
+}
+
+/* LAYOUT */
+
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:24px 16px 80px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.hero{
+  background:linear-gradient(135deg,var(--navy),#165fa8);
+  color:white;
+  padding:32px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+
+.hero h1{
+  font-size:clamp(1.9rem,5vw,3rem);
+  margin:.2rem 0 .7rem;
+}
+
+.hero p{
+  font-size:1.08rem;
+  max-width:850px;
+}
+
+.grid{
+  display:grid;
+  gap:18px;
+}
+
+.grid.two{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid.three{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.grid.four{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+@media(max-width:850px){
+  .grid.two,.grid.three,.grid.four{
+    grid-template-columns:1fr;
+  }
+}
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.card h2,
+.card h3{
+  margin-top:0;
+}
+
+.callout{
+  padding:15px;
+  border-radius:12px;
+  background:var(--light);
+  border-left:5px solid var(--blue);
+  margin:15px 0;
+}
+
+.feedback{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:10px;
+  background:#eef4fa;
+}
+
+.feedback.ok{
+  background:#e6f6ee;
+  color:#075c36;
+  border-left:5px solid var(--green);
+}
+
+.feedback.bad{
+  background:#fff0ee;
+  color:#8e241a;
+  border-left:5px solid var(--red);
+}
+
+.feedback.hint{
+  background:#fff5df;
+  color:#78430d;
+  border-left:5px solid var(--orange);
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  font-weight:800;
+}
+
+.btn.primary{
+  background:var(--blue);
+  color:white;
+}
+
+.btn.success{
+  background:var(--green);
+  color:white;
+}
+
+.btn.orange{
+  background:var(--orange);
+  color:white;
+}
+
+.btn.ghost{
+  background:#eaf0f6;
+  color:var(--navy);
+}
+
+.btn.danger{
+  background:var(--red);
+  color:white;
+}
+
+.btn.small{
+  padding:7px 10px;
+  font-size:.9rem;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:11px;
+  border:2px solid #cbd9e6;
+  border-radius:9px;
+  background:white;
+  color:var(--text);
+}
+
+textarea{
+  min-height:100px;
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+@media(max-width:650px){
+  .form-row{
+    grid-template-columns:1fr;
+  }
+}
+
+.progress-wrap{
+  margin:15px 0;
+}
+
+.progress{
+  height:17px;
+  background:#dce7f1;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.progress > div{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  transition:.4s;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#e9f3ff;
+  color:#11548d;
+  font-size:.83rem;
+  font-weight:800;
+}
+
+.badge.orange{
+  background:#fff0db;
+  color:#874d0c;
+}
+
+.badge.green{
+  background:#e3f6ec;
+  color:#08643d;
+}
+
+.math{
+  font-family:"Courier New",monospace;
+  font-weight:700;
+  font-size:1.08em;
+}
+
+.big-math{
+  font-family:"Courier New",monospace;
+  font-size:1.2rem;
+  font-weight:bold;
+  background:#f2f7fb;
+  border-radius:10px;
+  padding:15px;
+  margin:12px 0;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  border-bottom:1px solid var(--border);
+  padding:10px;
+  text-align:left;
+}
+
+th{
+  background:#eef5fb;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+.kpi{
+  text-align:center;
+  background:#f2f7fb;
+  border-radius:12px;
+  padding:15px;
+}
+
+.kpi strong{
+  display:block;
+  font-size:1.8rem;
+  color:var(--blue);
+}
+
+canvas{
+  width:100%;
+  max-width:700px;
+  border:1px solid #bbcbd9;
+  background:white;
+  border-radius:12px;
+}
+
+.separator{
+  border:0;
+  border-top:1px solid var(--border);
+  margin:25px 0;
+}
+
+.step{
+  border-left:4px solid var(--blue);
+  background:#f5f9fd;
+  padding:12px 15px;
+  margin:12px 0;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(0,0,0,.7);
+  display:grid;
+  place-items:center;
+  padding:20px;
+}
+
+.modal-card{
+  width:min(520px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:white;
+  padding:24px;
+  border-radius:18px;
+  text-align:center;
+}
+
+#qrContainer{
+  display:grid;
+  place-items:center;
+  min-height:270px;
+  margin:15px auto;
+  background:white;
+  padding:15px;
+}
+
+#qrContainer img,
+#qrContainer canvas{
+  max-width:250px!important;
+  width:250px!important;
+  height:250px!important;
+}
+
+.url-box{
+  background:#eef4fa;
+  border-radius:8px;
+  padding:10px;
+  word-break:break-all;
+  font-size:.85rem;
+}
+
+/* IDENTIFICATION */
+
+.identification{
+  border:3px solid #83bff2;
+}
+
+.required-note{
+  color:#7a4b09;
+  font-weight:bold;
+}
+
+.teacher-panel{
+  border-left:5px solid var(--navy);
+}
+
+.teacher-only{
+  display:none;
+}
+
+.projection-mode .answer-sensitive{
+  visibility:hidden;
+}
+
+.print-sheet{
+  display:none;
+}
+
+@media print{
+  header,nav,.no-print,.page:not(#teacherPage){
+    display:none!important;
+  }
+
+  #teacherPage{
+    display:block!important;
+  }
+
+  .teacher-panel{
+    display:none!important;
+  }
+
+  .print-sheet{
+    display:block!important;
+  }
+
+  body{
+    background:white;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      Systèmes d’équations interactif — 5e qualifiant
+    </div>
+
+    <div class="student-chip" id="headerStudent">
+      👤 Aucun élève identifié
+    </div>
+
+    <button class="header-btn qr-command" id="qrCodeBtn" type="button">
+      📱 QR code élèves
     </button>
 
-    <button class="btn ghost" id="changeStudent">
-      Changer d’élève
+    <button class="header-btn" id="changeStudentTop" type="button">
+      👤 Changer d’élève
+    </button>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn active" data-page="home">Accueil</button>
+    <button class="nav-btn" data-page="explore">Découvrir</button>
+    <button class="nav-btn" data-page="understand">Comprendre</button>
+    <button class="nav-btn" data-page="train">S’entraîner</button>
+    <button class="nav-btn" data-page="reason">Raisonner</button>
+    <button class="nav-btn" data-page="transfer">Transférer</button>
+    <button class="nav-btn" data-page="quiz">Quiz final</button>
+    <button class="nav-btn" data-page="progress">Mes progrès</button>
+    <button class="nav-btn" data-page="teacherPage">Espace enseignant</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ACCUEIL -->
+<section class="page active" id="home">
+
+  <div class="hero">
+    <div class="badge">Mathématiques • 5e secondaire • Enseignement qualifiant belge</div>
+
+    <h1>Systèmes d’équations interactif</h1>
+
+    <p>
+      Apprends à résoudre, représenter et utiliser des systèmes d’équations
+      pour résoudre des problèmes de géométrie, de mouvement et de vie pratique.
+    </p>
+
+    <button class="btn success" id="startBtn">
+      Commencer l’activité
     </button>
   </div>
 
-  <div id="studentWelcome" class="feedback"></div>
+  <div class="grid two" style="margin-top:20px">
+
+    <div class="card identification">
+      <h2>👤 Identification de l’élève</h2>
+
+      <p>
+        Indique ton prénom et ton nom avant de commencer.
+        Ta progression sera enregistrée sur cet appareil.
+      </p>
+
+      <div class="form-row">
+        <div>
+          <label for="studentFirstName">Prénom</label>
+          <input id="studentFirstName"
+                 type="text"
+                 autocomplete="given-name"
+                 placeholder="Ex. Sarah">
+        </div>
+
+        <div>
+          <label for="studentLastName">Nom</label>
+          <input id="studentLastName"
+                 type="text"
+                 autocomplete="family-name"
+                 placeholder="Ex. Dupont">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn success" id="saveStudentName">
+          ✓ Enregistrer mon profil
+        </button>
+
+        <button class="btn ghost" id="changeStudent">
+          Changer d’élève
+        </button>
+      </div>
+
+      <div id="studentWelcome" class="feedback hint">
+        Tu dois d’abord t’identifier.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Ma progression</h2>
+
+      <div class="progress-wrap">
+        <div class="progress">
+          <div id="homeProgressBar"></div>
+        </div>
+      </div>
+
+      <p id="homeProgressText">0 % du parcours complété</p>
+
+      <button class="btn primary" data-page-go="progress">
+        Voir mes progrès
+      </button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>À la fin, je serai capable de…</h2>
+
+    <ul>
+      <li>identifier les inconnues d’un système de deux équations ;</li>
+      <li>vérifier si un couple satisfait les deux équations ;</li>
+      <li>résoudre un système par substitution ou élimination ;</li>
+      <li>interpréter graphiquement l’intersection de deux droites ;</li>
+      <li>calculer des déterminants d’ordre 2 et d’ordre 3 ;</li>
+      <li>utiliser la règle de Cramer lorsque le déterminant est non nul ;</li>
+      <li>modéliser un problème concret par un système ;</li>
+      <li>interpréter la solution dans le contexte avec les unités adaptées.</li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- EXPLORER -->
+<section class="page" id="explore">
+
+  <h1>Découvrir et explorer</h1>
+
+  <div class="grid two">
+
+    <div class="card">
+      <h2>Deux équations, deux droites</h2>
+
+      <p>
+        Modifie les coefficients et observe ce qui arrive au point
+        d’intersection des deux droites.
+      </p>
+
+      <label for="m1">Pente de la droite 1 : <span id="m1Value">1</span></label>
+      <input type="range" id="m1" min="-4" max="4" value="1" step="1">
+
+      <label for="p1">Ordonnée à l’origine 1 : <span id="p1Value">2</span></label>
+      <input type="range" id="p1" min="-6" max="6" value="2" step="1">
+
+      <label for="m2">Pente de la droite 2 : <span id="m2Value">-1</span></label>
+      <input type="range" id="m2" min="-4" max="4" value="-1" step="1">
+
+      <label for="p2">Ordonnée à l’origine 2 : <span id="p2Value">4</span></label>
+      <input type="range" id="p2" min="-6" max="6" value="4" step="1">
+
+      <div class="actions">
+        <button class="btn ghost" id="resetGraph">Réinitialiser</button>
+        <button class="btn primary" id="randomGraph">Nouvel exemple</button>
+        <button class="btn orange" id="graphHint">Indice</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <canvas id="systemGraph" width="700" height="520"
+              aria-label="Représentation graphique de deux droites"></canvas>
+
+      <div class="feedback" id="graphObservation"></div>
+
+      <div class="actions">
+        <button class="btn ghost" id="toggleGrid">Grille : oui</button>
+        <button class="btn ghost" id="zoomGraph">Zoom</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>Alternative textuelle</h2>
+    <div id="graphText"></div>
+  </div>
+
+</section>
+
+<!-- COMPRENDRE -->
+<section class="page" id="understand">
+
+  <h1>Comprendre les notions</h1>
+
+  <div class="grid three">
+
+    <article class="card">
+      <h2>Système 2 × 2</h2>
+      <p>
+        Un système est un ensemble d’équations qui doivent être vérifiées simultanément.
+      </p>
+      <div class="big-math">
+        x + y = 8<br>
+        2x − y = 4
+      </div>
+      <p><strong>Erreur fréquente :</strong> résoudre seulement une équation.</p>
+    </article>
+
+    <article class="card">
+      <h2>Substitution</h2>
+      <p>
+        On exprime une inconnue à partir d’une équation puis on la remplace
+        dans l’autre équation.
+      </p>
+      <div class="big-math">
+        y = 8 − x
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Élimination</h2>
+      <p>
+        On additionne ou soustrait les équations afin de faire disparaître
+        une inconnue.
+      </p>
+      <div class="big-math">
+        x + y = 8<br>
+        2x − y = 4<br>
+        ———————<br>
+        3x = 12
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Interprétation graphique</h2>
+      <p>
+        La solution d’un système correspond au point d’intersection des deux droites.
+      </p>
+    </article>
+
+    <article class="card">
+      <h2>Déterminant 2 × 2</h2>
+      <div class="big-math">
+        | a b |<br>
+        | c d |<br><br>
+        Δ = ad − bc
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Règle de Cramer</h2>
+      <p>
+        Lorsque <span class="math">Δ ≠ 0</span>, le système possède une solution unique.
+      </p>
+      <div class="big-math">
+        x = Δx / Δ<br>
+        y = Δy / Δ
+      </div>
+    </article>
+
+  </div>
+
+  <div class="grid two" style="margin-top:20px">
+
+    <div class="card">
+      <h2>Calculateur de déterminant 2 × 2</h2>
+
+      <div class="form-row">
+        <input type="number" id="d2a" value="2" aria-label="a">
+        <input type="number" id="d2b" value="3" aria-label="b">
+        <input type="number" id="d2c" value="1" aria-label="c">
+        <input type="number" id="d2d" value="4" aria-label="d">
+      </div>
+
+      <button class="btn primary" id="calcDet2" style="margin-top:12px">
+        Calculer
+      </button>
+
+      <div id="det2Result" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h2>Calculateur de déterminant 3 × 3</h2>
+
+      <div class="grid three">
+        <input class="d3" type="number" value="1">
+        <input class="d3" type="number" value="2">
+        <input class="d3" type="number" value="3">
+
+        <input class="d3" type="number" value="0">
+        <input class="d3" type="number" value="1">
+        <input class="d3" type="number" value="4">
+
+        <input class="d3" type="number" value="5">
+        <input class="d3" type="number" value="6">
+        <input class="d3" type="number" value="0">
+      </div>
+
+      <button class="btn primary" id="calcDet3" style="margin-top:12px">
+        Calculer par Sarrus
+      </button>
+
+      <div id="det3Result" class="feedback"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ENTRAINEMENT -->
+<section class="page" id="train">
+
+  <h1>S’entraîner</h1>
+
+  <div class="card">
+
+    <div class="form-row">
+      <div>
+        <label for="exerciseLevel">Niveau cognitif</label>
+        <select id="exerciseLevel">
+          <option value="comprendre">Comprendre</option>
+          <option value="appliquer">Appliquer</option>
+          <option value="raisonner">Raisonner</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="exerciseDifficulty">Difficulté</label>
+        <select id="exerciseDifficulty">
+          <option value="facile">Facile</option>
+          <option value="intermediaire">Intermédiaire</option>
+          <option value="avance">Avancée</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="separator">
+
+    <div id="exerciseBadges"></div>
+    <h2 id="exerciseTitle">Exercice</h2>
+    <div id="exerciseStatement"></div>
+
+    <div id="exerciseInputs" style="margin-top:15px"></div>
+
+    <div class="actions">
+      <button class="btn primary" id="checkExercise">Vérifier</button>
+      <button class="btn orange" id="exerciseHint">Indice</button>
+      <button class="btn ghost" id="newExercise">Nouvel exercice</button>
+      <button class="btn ghost" id="showCorrection">Correction</button>
+    </div>
+
+    <div id="exerciseFeedback"></div>
+
+  </div>
+
+</section>
+
+<!-- RAISONNER -->
+<section class="page" id="reason">
+
+  <h1>Raisonner et résoudre</h1>
+
+  <div class="card">
+    <span class="badge orange">RAISONNER</span>
+
+    <h2>Vente de tickets</h2>
+
+    <p>
+      Pour un spectacle, 26 tickets sont vendus.
+      Le ticket étudiant coûte 8 € et le ticket adulte 12 €.
+      La recette totale est de 232 €.
+    </p>
+
+    <div class="callout">
+      Une réponse mathématique ou physique doit être interprétée
+      dans le contexte du problème.
+    </div>
+
+    <div class="step">
+      <strong>1. Choisis les inconnues.</strong>
+      <textarea id="reasonUnknowns"
+        placeholder="Ex. x représente... et y représente..."></textarea>
+    </div>
+
+    <div class="step">
+      <strong>2. Écris les deux équations.</strong>
+      <textarea id="reasonEquations"
+        placeholder="Écris le système..."></textarea>
+    </div>
+
+    <div class="step">
+      <strong>3. Résous le système.</strong>
+
+      <div class="form-row">
+        <div>
+          <label for="reasonX">Nombre de tickets étudiants</label>
+          <input id="reasonX" type="text">
+        </div>
+
+        <div>
+          <label for="reasonY">Nombre de tickets adultes</label>
+          <input id="reasonY" type="text">
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <strong>4. Interprète ton résultat.</strong>
+      <textarea id="reasonConclusion"
+        placeholder="Rédige une phrase complète avec le contexte."></textarea>
+    </div>
+
+    <button class="btn primary" id="checkReason">
+      Vérifier ma résolution
+    </button>
+
+    <div id="reasonFeedback"></div>
+  </div>
+
+</section>
+
+<!-- TRANSFERER -->
+<section class="page" id="transfer">
+
+  <h1>Transférer et modéliser</h1>
+
+  <div class="callout">
+    Une réponse mathématique ou physique doit être interprétée
+    dans le contexte du problème.
+  </div>
+
+  <div class="grid three">
+
+    <article class="card">
+      <span class="badge">TRR1 • Géométrie</span>
+      <h2>Le rectangle</h2>
+
+      <p>
+        Un rectangle a un périmètre de 54 cm.
+        Sa longueur mesure 5 cm de plus que sa largeur.
+        Détermine ses dimensions.
+      </p>
+
+      <label>Longueur (cm)</label>
+      <input id="geoL" type="text">
+
+      <label style="margin-top:10px">Largeur (cm)</label>
+      <input id="geoW" type="text">
+
+      <button class="btn primary transfer-check"
+              data-problem="geo"
+              style="margin-top:12px">
+        Vérifier
+      </button>
+
+      <div id="geoFeedback"></div>
+    </article>
+
+    <article class="card">
+      <span class="badge">TRR2 • Mouvement</span>
+      <h2>Deux cyclistes</h2>
+
+      <p>
+        Deux cyclistes partent du même point dans des directions opposées.
+        Après 2 h, ils sont séparés de 70 km.
+        Le premier roule 5 km/h plus vite que le second.
+      </p>
+
+      <label>Vitesse du premier (km/h)</label>
+      <input id="moveV1" type="text">
+
+      <label style="margin-top:10px">Vitesse du second (km/h)</label>
+      <input id="moveV2" type="text">
+
+      <button class="btn primary transfer-check"
+              data-problem="move"
+              style="margin-top:12px">
+        Vérifier
+      </button>
+
+      <div id="moveFeedback"></div>
+    </article>
+
+    <article class="card">
+      <span class="badge">Vie pratique</span>
+      <h2>Boissons</h2>
+
+      <p>
+        Une association vend 18 boissons.
+        Les jus coûtent 2 € et les smoothies 3 €.
+        La recette est de 44 €.
+      </p>
+
+      <label>Nombre de jus</label>
+      <input id="lifeX" type="text">
+
+      <label style="margin-top:10px">Nombre de smoothies</label>
+      <input id="lifeY" type="text">
+
+      <button class="btn primary transfer-check"
+              data-problem="life"
+              style="margin-top:12px">
+        Vérifier
+      </button>
+
+      <div id="lifeFeedback"></div>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- QUIZ -->
+<section class="page" id="quiz">
+
+  <h1>Quiz final</h1>
+
+  <div class="card">
+    <p>
+      Le quiz contient 15 questions portant sur les différents niveaux
+      de maîtrise.
+    </p>
+
+    <button class="btn primary" id="startQuiz">
+      Démarrer un nouveau quiz
+    </button>
+
+    <div id="quizZone" style="margin-top:20px"></div>
+  </div>
+
+</section>
+
+<!-- PROGRES -->
+<section class="page" id="progress">
+
+  <h1>Mes progrès</h1>
+
+  <div class="grid four">
+    <div class="kpi">
+      <strong id="progressOverall">0 %</strong>
+      Progression
+    </div>
+
+    <div class="kpi">
+      <strong id="progressAttempts">0</strong>
+      Exercices tentés
+    </div>
+
+    <div class="kpi">
+      <strong id="progressSuccess">0</strong>
+      Réussites
+    </div>
+
+    <div class="kpi">
+      <strong id="progressQuiz">—</strong>
+      Meilleur quiz
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>Résultats par compétence</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Compétence</th>
+            <th>Réussites</th>
+            <th>Tentatives</th>
+            <th>Taux</th>
+          </tr>
+        </thead>
+        <tbody id="progressSkills"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>Conseil de révision</h2>
+    <div id="progressAdvice" class="feedback"></div>
+  </div>
+
+</section>
+
+<!-- PROF -->
+<section class="page" id="teacherPage">
+
+  <h1>Espace enseignant</h1>
+
+  <div class="card" id="teacherLogin">
+    <h2>🔐 Accès enseignant</h2>
+
+    <label for="teacherPassword">Mot de passe</label>
+    <input type="password"
+           id="teacherPassword"
+           placeholder="Mot de passe enseignant">
+
+    <button class="btn primary" id="teacherLoginBtn" style="margin-top:12px">
+      Se connecter
+    </button>
+
+    <div id="teacherLoginFeedback"></div>
+  </div>
+
+  <div id="teacherContent" class="hidden">
+
+    <div class="card teacher-panel">
+      <h2>👥 Suivi des élèves enregistrés</h2>
+
+      <p>
+        Les profils enregistrés sur ce navigateur apparaissent ici.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Élève</th>
+              <th>Progression</th>
+              <th>Réussite</th>
+              <th>Quiz</th>
+              <th>Dernière activité</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="teacherStudentTable"></tbody>
+        </table>
+      </div>
+
+      <div id="studentDetailTeacher"
+           class="callout hidden"></div>
+    </div>
+
+    <div class="grid two" style="margin-top:20px">
+
+      <div class="card teacher-panel">
+        <h2>📱 Accès des élèves</h2>
+
+        <p>
+          Affichez le QR code de l’adresse GitHub Pages afin que les élèves
+          puissent ouvrir l’activité.
+        </p>
+
+        <button class="btn primary" id="teacherQrBtn">
+          📱 Afficher le QR code élèves
+        </button>
+      </div>
+
+      <div class="card teacher-panel">
+        <h2>📥 Export des résultats</h2>
+
+        <button class="btn success" id="exportCSV">
+          Télécharger les résultats CSV
+        </button>
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:20px">
+
+      <div class="card teacher-panel">
+        <h2>🖥 Mode projection</h2>
+
+        <p>
+          Masque certaines réponses pendant une correction collective.
+        </p>
+
+        <button class="btn primary" id="projectionBtn">
+          Activer le mode projection
+        </button>
+      </div>
+
+      <div class="card teacher-panel">
+        <h2>🖨 Exercices imprimables</h2>
+
+        <button class="btn primary" id="generatePrint">
+          Générer 10 exercices
+        </button>
+
+        <button class="btn ghost" onclick="window.print()">
+          Imprimer
+        </button>
+      </div>
+
+    </div>
+
+    <div class="card teacher-panel" style="margin-top:20px">
+      <h2>⚙ Données de l’application</h2>
+
+      <button class="btn danger" id="resetAllData">
+        Effacer toutes les données locales
+      </button>
+    </div>
+
+  </div>
+
+  <div class="print-sheet" id="printSheet"></div>
+
+</section>
+
+</main>
+
+<footer>
+  Application pédagogique — Systèmes d’équations — 5e secondaire qualifiant
+</footer>
+
+<!-- QR MODAL -->
+<div id="qrModal"
+     class="modal hidden"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="qrTitle">
+
+  <div class="modal-card">
+
+    <h2 id="qrTitle">📱 QR code élèves</h2>
+
+    <p>
+      Scanne ce QR code pour ouvrir l’activité.
+    </p>
+
+    <div id="qrContainer"></div>
+
+    <div class="url-box" id="qrAddress"></div>
+
+    <div id="qrWarning" class="feedback hint"></div>
+
+    <div class="actions" style="justify-content:center">
+      <button class="btn primary" id="copyActivityLink">
+        Copier le lien
+      </button>
+
+      <button class="btn ghost" id="closeQr">
+        Fermer
+      </button>
+    </div>
+
+  </div>
 </div>
+
+<!-- QR CODE LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+"use strict";
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+const CONFIG = {
+  matiere: "Mathématiques",
+  niveau: "5e secondaire — Enseignement qualifiant belge",
+  chapitre: "Systèmes d’équations",
+  teacherPassword: "prof2026",
+
+  storage: {
+    students: "systemes5e_students_v3",
+    currentStudent: "systemes5e_current_student_v3"
+  }
+};
+
+/* =========================================================
+   DONNÉES PAR DÉFAUT
+========================================================= */
+
+const DEFAULT_STATE = {
+  attempts: 0,
+  successes: 0,
+  bestQuiz: null,
+
+  scores: {
+    comprendre: {ok:0,total:0},
+    appliquer: {ok:0,total:0},
+    raisonner: {ok:0,total:0},
+    transferer: {ok:0,total:0}
+  },
+
+  modules: {
+    explore:false,
+    understand:false,
+    train:false,
+    reason:false,
+    transfer:false,
+    quiz:false
+  },
+
+  errors: {},
+  history: []
+};
+
+let state = structuredClone(DEFAULT_STATE);
+let currentStudentId = "";
+
+/* =========================================================
+   UTILITAIRES
+========================================================= */
+
+function normalizeName(value){
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g," ");
+}
+
+function escapeHTML(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
+}
+
+function parseNumber(value){
+  if(value === null || value === undefined) return NaN;
+
+  let v = String(value)
+    .trim()
+    .replace(",",".")
+    .replace(/\s/g,"");
+
+  v = v.replace(/[a-zA-Z€²³/%]+/g,"");
+
+  if(v.includes("/")){
+    const parts = v.split("/");
+
+    if(parts.length === 2){
+      const a = Number(parts[0]);
+      const b = Number(parts[1]);
+
+      if(Number.isFinite(a) && Number.isFinite(b) && b !== 0){
+        return a/b;
+      }
+    }
+  }
+
+  return Number(v);
+}
+
+function nearlyEqual(a,b,tolerance=.001){
+  return Number.isFinite(a) &&
+         Number.isFinite(b) &&
+         Math.abs(a-b) <= tolerance;
+}
+
+function randomInt(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function deepClone(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function createStudentId(first,last){
+  const base = `${first}-${last}`
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"");
+
+  return base + "-" + Date.now().toString(36);
+}
+
+/* =========================================================
+   PROFILS ÉLÈVES
+========================================================= */
+
+function getStudents(){
+  try{
+    return JSON.parse(
+      localStorage.getItem(CONFIG.storage.students)
+    ) || {};
+  }catch{
+    return {};
+  }
+}
+
+function saveStudents(students){
+  localStorage.setItem(
+    CONFIG.storage.students,
+    JSON.stringify(students)
+  );
+}
+
+function stateKey(studentId){
+  return `systemes5e_state_${studentId}`;
+}
+
+function loadStudentState(studentId){
+  if(!studentId){
+    return structuredClone(DEFAULT_STATE);
+  }
+
+  try{
+    const saved = JSON.parse(
+      localStorage.getItem(stateKey(studentId))
+    );
+
+    return saved
+      ? Object.assign(structuredClone(DEFAULT_STATE),saved,{
+          scores:Object.assign(
+            structuredClone(DEFAULT_STATE.scores),
+            saved.scores || {}
+          ),
+          modules:Object.assign(
+            structuredClone(DEFAULT_STATE.modules),
+            saved.modules || {}
+          )
+        })
+      : structuredClone(DEFAULT_STATE);
+
+  }catch{
+    return structuredClone(DEFAULT_STATE);
+  }
+}
+
+function saveState(){
+  if(!currentStudentId) return;
+
+  localStorage.setItem(
+    stateKey(currentStudentId),
+    JSON.stringify(state)
+  );
+
+  updateStudentSummary();
+  renderProgress();
+}
+
+function updateStudentSummary(){
+  if(!currentStudentId) return;
+
+  const students = getStudents();
+  const student = students[currentStudentId];
+
+  if(!student) return;
+
+  student.lastActivity = new Date().toISOString();
+  student.progress = overallProgress();
+  student.attempts = state.attempts;
+  student.successes = state.successes;
+  student.bestQuiz = state.bestQuiz;
+  student.scores = deepClone(state.scores);
+  student.errors = deepClone(state.errors);
+
+  saveStudents(students);
+}
+
+function identifyStudent(){
+
+  const first = normalizeName(
+    document.getElementById("studentFirstName").value
+  );
+
+  const last = normalizeName(
+    document.getElementById("studentLastName").value
+  );
+
+  const feedback =
+    document.getElementById("studentWelcome");
+
+  if(!first || !last){
+    feedback.className = "feedback bad";
+    feedback.textContent =
+      "Indique ton prénom et ton nom avant de commencer.";
+    return false;
+  }
+
+  const students = getStudents();
+
+  let id = Object.keys(students).find(key=>{
+    const s = students[key];
+
+    return s.firstName.toLowerCase() === first.toLowerCase() &&
+           s.lastName.toLowerCase() === last.toLowerCase();
+  });
+
+  if(!id){
+    id = createStudentId(first,last);
+
+    students[id] = {
+      id,
+      firstName:first,
+      lastName:last,
+      created:new Date().toISOString(),
+      lastActivity:new Date().toISOString()
+    };
+  }
+
+  currentStudentId = id;
+
+  localStorage.setItem(
+    CONFIG.storage.currentStudent,
+    id
+  );
+
+  saveStudents(students);
+
+  state = loadStudentState(id);
+
+  feedback.className = "feedback ok";
+  feedback.innerHTML =
+    `✓ Bonjour <strong>${escapeHTML(first)}</strong>. ` +
+    `Ta progression est maintenant enregistrée.`;
+
+  updateStudentInterface();
+  saveState();
+
+  return true;
+}
+
+function restoreCurrentStudent(){
+
+  const id =
+    localStorage.getItem(CONFIG.storage.currentStudent);
+
+  if(!id) return;
+
+  const students = getStudents();
+
+  if(!students[id]) return;
+
+  currentStudentId = id;
+  state = loadStudentState(id);
+
+  const s = students[id];
+
+  document.getElementById("studentFirstName").value =
+    s.firstName;
+
+  document.getElementById("studentLastName").value =
+    s.lastName;
+
+  document.getElementById("studentWelcome").className =
+    "feedback ok";
+
+  document.getElementById("studentWelcome").innerHTML =
+    `✓ Profil actif : <strong>${escapeHTML(s.firstName)} ` +
+    `${escapeHTML(s.lastName)}</strong>.`;
+}
+
+function changeStudent(){
+
+  currentStudentId = "";
+
+  localStorage.removeItem(
+    CONFIG.storage.currentStudent
+  );
+
+  state = structuredClone(DEFAULT_STATE);
+
+  document.getElementById("studentFirstName").value = "";
+  document.getElementById("studentLastName").value = "";
+
+  document.getElementById("studentWelcome").className =
+    "feedback hint";
+
+  document.getElementById("studentWelcome").textContent =
+    "Entre le nom du nouvel élève.";
+
+  updateStudentInterface();
+  showPage("home");
+
+  document.getElementById("studentFirstName").focus();
+}
+
+function requireStudent(){
+  if(currentStudentId) return true;
+
+  showPage("home");
+
+  const feedback =
+    document.getElementById("studentWelcome");
+
+  feedback.className = "feedback bad";
+  feedback.textContent =
+    "Identifie-toi avant de commencer l’activité.";
+
+  document.getElementById("studentFirstName").focus();
+
+  return false;
+}
+
+function updateStudentInterface(){
+
+  const chip =
+    document.getElementById("headerStudent");
+
+  if(!currentStudentId){
+    chip.textContent = "👤 Aucun élève identifié";
+    renderProgress();
+    return;
+  }
+
+  const students = getStudents();
+  const s = students[currentStudentId];
+
+  if(s){
+    chip.textContent =
+      `👤 ${s.firstName} ${s.lastName}`;
+  }
+
+  renderProgress();
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(id){
+
+  document.querySelectorAll(".page")
+    .forEach(page=>{
+      page.classList.toggle(
+        "active",
+        page.id === id
+      );
+    });
+
+  document.querySelectorAll(".nav-btn")
+    .forEach(btn=>{
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === id
+      );
+    });
+
+  if(id === "explore"){
+    state.modules.explore = true;
+    drawGraph();
+  }
+
+  if(id === "understand"){
+    state.modules.understand = true;
+  }
+
+  if(id === "train"){
+    state.modules.train = true;
+
+    if(!currentExercise){
+      generateExercise();
+    }
+  }
+
+  if(id === "reason"){
+    state.modules.reason = true;
+  }
+
+  if(id === "transfer"){
+    state.modules.transfer = true;
+  }
+
+  if(currentStudentId){
+    saveState();
+  }
+
+  if(id === "progress"){
+    renderProgress();
+  }
+
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll(".nav-btn")
+  .forEach(btn=>{
+    btn.addEventListener("click",()=>{
+
+      const target = btn.dataset.page;
+
+      if(
+        target !== "home" &&
+        target !== "teacherPage" &&
+        !requireStudent()
+      ){
+        return;
+      }
+
+      showPage(target);
+    });
+  });
+
+document.querySelectorAll("[data-page-go]")
+  .forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      showPage(btn.dataset.pageGo);
+    });
+  });
+
+/* =========================================================
+   PROGRESSION
+========================================================= */
+
+function overallProgress(){
+
+  const moduleValues =
+    Object.values(state.modules);
+
+  const completed =
+    moduleValues.filter(Boolean).length;
+
+  const moduleProgress =
+    completed / moduleValues.length * 60;
+
+  const practiceProgress =
+    Math.min(state.successes,10) / 10 * 40;
+
+  return Math.round(
+    Math.min(100,moduleProgress+practiceProgress)
+  );
+}
+
+function skillPercentage(key){
+
+  const s = state.scores[key];
+
+  if(!s || !s.total) return 0;
+
+  return Math.round(
+    s.ok/s.total*100
+  );
+}
+
+function renderProgress(){
+
+  const progress =
+    overallProgress();
+
+  document.getElementById("homeProgressBar").style.width =
+    `${progress}%`;
+
+  document.getElementById("homeProgressText").textContent =
+    `${progress} % du parcours complété`;
+
+  document.getElementById("progressOverall").textContent =
+    `${progress} %`;
+
+  document.getElementById("progressAttempts").textContent =
+    state.attempts;
+
+  document.getElementById("progressSuccess").textContent =
+    state.successes;
+
+  document.getElementById("progressQuiz").textContent =
+    state.bestQuiz === null
+      ? "—"
+      : `${state.bestQuiz}/20`;
+
+  const labels = {
+    comprendre:"Comprendre",
+    appliquer:"Appliquer",
+    raisonner:"Raisonner",
+    transferer:"Transférer"
+  };
+
+  const tbody =
+    document.getElementById("progressSkills");
+
+  tbody.innerHTML =
+    Object.keys(labels)
+      .map(key=>{
+        const s = state.scores[key];
+
+        return `
+          <tr>
+            <td>${labels[key]}</td>
+            <td>${s.ok}</td>
+            <td>${s.total}</td>
+            <td>${skillPercentage(key)} %</td>
+          </tr>
+        `;
+      })
+      .join("");
+
+  const rates =
+    Object.keys(labels)
+      .map(key=>({
+        key,
+        rate:skillPercentage(key)
+      }))
+      .filter(item=>state.scores[item.key].total>0);
+
+  const advice =
+    document.getElementById("progressAdvice");
+
+  if(!rates.length){
+    advice.textContent =
+      "Commence quelques exercices pour obtenir une recommandation personnalisée.";
+    return;
+  }
+
+  rates.sort((a,b)=>a.rate-b.rate);
+
+  const weakest = rates[0];
+
+  const suggestions = {
+    comprendre:
+      "Revois la signification des inconnues, la vérification d’un couple et la lecture d’un système.",
+    appliquer:
+      "Entraîne-toi à résoudre les systèmes par substitution et élimination, puis vérifie tes solutions.",
+    raisonner:
+      "Travaille le choix de la méthode et explique davantage tes étapes de raisonnement.",
+    transferer:
+      "Entraîne-toi à définir les inconnues et à transformer un problème concret en deux équations."
+  };
+
+  advice.innerHTML =
+    `<strong>Priorité :</strong> ${labels[weakest.key]}. ` +
+    suggestions[weakest.key];
+}
+
+/* =========================================================
+   ENREGISTREMENT DES RÉSULTATS
+========================================================= */
+
+function recordAttempt(level,success,error=""){
+
+  state.attempts++;
+
+  if(success){
+    state.successes++;
+  }
+
+  if(state.scores[level]){
+    state.scores[level].total++;
+
+    if(success){
+      state.scores[level].ok++;
+    }
+  }
+
+  if(!success && error){
+    state.errors[error] =
+      (state.errors[error] || 0)+1;
+  }
+
+  state.history.unshift({
+    date:new Date().toISOString(),
+    level,
+    success
+  });
+
+  state.history =
+    state.history.slice(0,100);
+
+  saveState();
+}
+
+/* =========================================================
+   GRAPHIQUE
+========================================================= */
+
+const canvas =
+  document.getElementById("systemGraph");
+
+const ctx =
+  canvas.getContext("2d");
+
+let graphGrid = true;
+let graphRange = 10;
+
+function graphValues(){
+  return {
+    m1:Number(document.getElementById("m1").value),
+    p1:Number(document.getElementById("p1").value),
+    m2:Number(document.getElementById("m2").value),
+    p2:Number(document.getElementById("p2").value)
+  };
+}
+
+function updateGraphLabels(){
+
+  ["m1","p1","m2","p2"].forEach(id=>{
+    document.getElementById(id+"Value").textContent =
+      document.getElementById(id).value;
+  });
+}
+
+function drawGraph(){
+
+  updateGraphLabels();
+
+  const W = canvas.width;
+  const H = canvas.height;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0,0,W,H);
+
+  const unit =
+    Math.min(W,H)/(graphRange*2);
+
+  const cx = W/2;
+  const cy = H/2;
+
+  function pxX(x){
+    return cx+x*unit;
+  }
+
+  function pxY(y){
+    return cy-y*unit;
+  }
+
+  if(graphGrid){
+
+    ctx.strokeStyle = "#e4edf5";
+    ctx.lineWidth = 1;
+
+    for(let i=-graphRange;i<=graphRange;i++){
+
+      ctx.beginPath();
+      ctx.moveTo(pxX(i),pxY(-graphRange));
+      ctx.lineTo(pxX(i),pxY(graphRange));
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(pxX(-graphRange),pxY(i));
+      ctx.lineTo(pxX(graphRange),pxY(i));
+      ctx.stroke();
+    }
+  }
+
+  ctx.strokeStyle = "#243a52";
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.moveTo(pxX(-graphRange),pxY(0));
+  ctx.lineTo(pxX(graphRange),pxY(0));
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(pxX(0),pxY(-graphRange));
+  ctx.lineTo(pxX(0),pxY(graphRange));
+  ctx.stroke();
+
+  ctx.fillStyle = "#243a52";
+  ctx.font = "14px Arial";
+
+  for(let i=-graphRange;i<=graphRange;i+=2){
+    if(i !== 0){
+      ctx.fillText(String(i),pxX(i)-5,pxY(0)+18);
+      ctx.fillText(String(i),pxX(0)+7,pxY(i)+5);
+    }
+  }
+
+  ctx.fillText("x",W-20,cy-8);
+  ctx.fillText("y",cx+8,18);
+  ctx.fillText("0",cx+6,cy+17);
+
+  const {m1,p1,m2,p2} =
+    graphValues();
+
+  function line(m,p,color){
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+    const xA = -graphRange;
+    const xB = graphRange;
+
+    ctx.moveTo(
+      pxX(xA),
+      pxY(m*xA+p)
+    );
+
+    ctx.lineTo(
+      pxX(xB),
+      pxY(m*xB+p)
+    );
+
+    ctx.stroke();
+  }
+
+  line(m1,p1,"#1677d2");
+  line(m2,p2,"#168a55");
+
+  const obs =
+    document.getElementById("graphObservation");
+
+  const text =
+    document.getElementById("graphText");
+
+  if(m1 === m2){
+
+    if(p1 === p2){
+      obs.className = "feedback hint";
+      obs.innerHTML =
+        "<strong>J’observe :</strong> les deux droites sont confondues. " +
+        "Le système possède une infinité de solutions.";
+
+      text.innerHTML =
+        `<p>Les deux équations représentent la même droite :
+        <span class="math">y = ${m1}x + ${p1}</span>.</p>`;
+    }else{
+      obs.className = "feedback hint";
+      obs.innerHTML =
+        "<strong>J’observe :</strong> les droites sont parallèles. " +
+        "Elles ne se coupent pas : le système n’a aucune solution.";
+
+      text.innerHTML =
+        `<p>Droite 1 : y = ${m1}x + ${p1}.<br>
+        Droite 2 : y = ${m2}x + ${p2}.<br>
+        Elles ont la même pente mais des ordonnées à l’origine différentes.</p>`;
+    }
+
+  }else{
+
+    const x =
+      (p2-p1)/(m1-m2);
+
+    const y =
+      m1*x+p1;
+
+    ctx.fillStyle = "#d85815";
+
+    ctx.beginPath();
+    ctx.arc(
+      pxX(x),
+      pxY(y),
+      7,
+      0,
+      Math.PI*2
+    );
+    ctx.fill();
+
+    ctx.fillStyle = "#8b3b0b";
+    ctx.fillText(
+      `(${x.toFixed(2)} ; ${y.toFixed(2)})`,
+      pxX(x)+10,
+      pxY(y)-10
+    );
+
+    obs.className = "feedback ok";
+    obs.innerHTML =
+      `<strong>J’observe :</strong> les deux droites se coupent en
+       <strong>(${x.toFixed(2)} ; ${y.toFixed(2)})</strong>.
+       Ce point est la solution du système.`;
+
+    text.innerHTML =
+      `<table>
+        <tr>
+          <th></th>
+          <th>Équation</th>
+        </tr>
+        <tr>
+          <td>Droite 1</td>
+          <td>y = ${m1}x + ${p1}</td>
+        </tr>
+        <tr>
+          <td>Droite 2</td>
+          <td>y = ${m2}x + ${p2}</td>
+        </tr>
+        <tr>
+          <td>Intersection</td>
+          <td>x ≈ ${x.toFixed(2)}, y ≈ ${y.toFixed(2)}</td>
+        </tr>
+       </table>`;
+  }
+}
+
+["m1","p1","m2","p2"].forEach(id=>{
+  document.getElementById(id)
+    .addEventListener("input",drawGraph);
+});
+
+document.getElementById("resetGraph")
+  .addEventListener("click",()=>{
+
+    document.getElementById("m1").value = 1;
+    document.getElementById("p1").value = 2;
+    document.getElementById("m2").value = -1;
+    document.getElementById("p2").value = 4;
+
+    graphRange = 10;
+
+    drawGraph();
+  });
+
+document.getElementById("randomGraph")
+  .addEventListener("click",()=>{
+
+    let m1 = randomInt(-3,3);
+    let m2 = randomInt(-3,3);
+
+    if(Math.random()>.25){
+      while(m2 === m1){
+        m2 = randomInt(-3,3);
+      }
+    }
+
+    document.getElementById("m1").value = m1;
+    document.getElementById("m2").value = m2;
+    document.getElementById("p1").value =
+      randomInt(-5,5);
+    document.getElementById("p2").value =
+      randomInt(-5,5);
+
+    drawGraph();
+  });
+
+document.getElementById("graphHint")
+  .addEventListener("click",()=>{
+
+    alert(
+      "Indice : la solution graphique d’un système correspond aux coordonnées du point qui appartient aux deux droites."
+    );
+  });
+
+document.getElementById("toggleGrid")
+  .addEventListener("click",event=>{
+
+    graphGrid = !graphGrid;
+
+    event.currentTarget.textContent =
+      `Grille : ${graphGrid ? "oui" : "non"}`;
+
+    drawGraph();
+  });
+
+document.getElementById("zoomGraph")
+  .addEventListener("click",()=>{
+
+    graphRange =
+      graphRange === 10 ? 6 : 10;
+
+    drawGraph();
+  });
+
+/* =========================================================
+   DÉTERMINANTS
+========================================================= */
+
+function determinant2(a,b,c,d){
+  return a*d-b*c;
+}
+
+function determinant3(m){
+
+  const [
+    a,b,c,
+    d,e,f,
+    g,h,i
+  ] = m;
+
+  return (
+    a*e*i +
+    b*f*g +
+    c*d*h -
+    c*e*g -
+    b*d*i -
+    a*f*h
+  );
+}
+
+document.getElementById("calcDet2")
+  .addEventListener("click",()=>{
+
+    const a =
+      Number(document.getElementById("d2a").value);
+
+    const b =
+      Number(document.getElementById("d2b").value);
+
+    const c =
+      Number(document.getElementById("d2c").value);
+
+    const d =
+      Number(document.getElementById("d2d").value);
+
+    const det =
+      determinant2(a,b,c,d);
+
+    document.getElementById("det2Result").innerHTML =
+      `Δ = (${a} × ${d}) − (${b} × ${c}) = <strong>${det}</strong>.`;
+  });
+
+document.getElementById("calcDet3")
+  .addEventListener("click",()=>{
+
+    const values =
+      [...document.querySelectorAll(".d3")]
+        .map(input=>Number(input.value));
+
+    const det =
+      determinant3(values);
+
+    document.getElementById("det3Result").innerHTML =
+      `Avec la règle de Sarrus, le déterminant vaut
+       <strong>${det}</strong>.`;
+  });
+
+/* =========================================================
+   EXERCICES
+========================================================= */
+
+let currentExercise = null;
+let exerciseAttempts = 0;
+
+function makeSystem(difficulty){
+
+  let range =
+    difficulty === "facile"
+      ? 5
+      : difficulty === "intermediaire"
+        ? 8
+        : 12;
+
+  let x = randomInt(-range,range);
+  let y = randomInt(-range,range);
+
+  let a,b,c,d,det;
+
+  do{
+    a = randomInt(1,5);
+    b = randomInt(-5,5) || 1;
+    c = randomInt(-5,5) || 2;
+    d = randomInt(1,5);
+
+    det = a*d-b*c;
+
+  }while(det === 0);
+
+  return {
+    x,y,a,b,c,d,
+    e:a*x+b*y,
+    f:c*x+d*y
+  };
+}
+
+function generateExercise(){
+
+  if(!requireStudent()) return;
+
+  exerciseAttempts = 0;
+
+  const level =
+    document.getElementById("exerciseLevel").value;
+
+  const difficulty =
+    document.getElementById("exerciseDifficulty").value;
+
+  const badge =
+    document.getElementById("exerciseBadges");
+
+  badge.innerHTML =
+    `<span class="badge">${level.toUpperCase()}</span>
+     <span class="badge orange">${difficulty}</span>`;
+
+  const statement =
+    document.getElementById("exerciseStatement");
+
+  const inputs =
+    document.getElementById("exerciseInputs");
+
+  const feedback =
+    document.getElementById("exerciseFeedback");
+
+  feedback.innerHTML = "";
+
+  if(level === "comprendre"){
+
+    const sys =
+      makeSystem(difficulty);
+
+    const correctX =
+      Math.random()>.5
+        ? sys.x
+        : sys.x+randomInt(1,3);
+
+    const correctY =
+      Math.random()>.5
+        ? sys.y
+        : sys.y+randomInt(1,3);
+
+    const trueAnswer =
+      nearlyEqual(
+        sys.a*correctX+sys.b*correctY,
+        sys.e
+      ) &&
+      nearlyEqual(
+        sys.c*correctX+sys.d*correctY,
+        sys.f
+      );
+
+    currentExercise = {
+      level,
+      type:"verify",
+      answer:trueAnswer,
+      correction:
+        `On remplace x par ${correctX} et y par ${correctY} dans les deux équations. ` +
+        `Le couple ${trueAnswer ? "vérifie" : "ne vérifie pas"} simultanément les deux équations.`
+    };
+
+    document.getElementById("exerciseTitle").textContent =
+      "Vérifier un couple";
+
+    statement.innerHTML =
+      `<p>Le couple <strong>(${correctX} ; ${correctY})</strong>
+       est-il solution du système ?</p>
+
+       <div class="big-math">
+         ${sys.a}x ${sys.b>=0?"+":"−"} ${Math.abs(sys.b)}y = ${sys.e}<br>
+         ${sys.c}x ${sys.d>=0?"+":"−"} ${Math.abs(sys.d)}y = ${sys.f}
+       </div>`;
+
+    inputs.innerHTML =
+      `<label for="exerciseChoice">Réponse</label>
+       <select id="exerciseChoice">
+         <option value="">Choisir…</option>
+         <option value="true">Oui</option>
+         <option value="false">Non</option>
+       </select>`;
+
+  }else{
+
+    const sys =
+      makeSystem(difficulty);
+
+    currentExercise = {
+      level,
+      type:"solve",
+      x:sys.x,
+      y:sys.y,
+      correction:
+        `La solution est <strong>(${sys.x} ; ${sys.y})</strong>. ` +
+        `Après résolution, vérifie cette solution dans les deux équations.`
+    };
+
+    document.getElementById("exerciseTitle").textContent =
+      level === "appliquer"
+        ? "Résoudre le système"
+        : "Choisir et appliquer une méthode";
+
+    statement.innerHTML =
+      `<p>Résous le système suivant.</p>
+
+       <div class="big-math">
+         ${sys.a}x ${sys.b>=0?"+":"−"} ${Math.abs(sys.b)}y = ${sys.e}<br>
+         ${sys.c}x ${sys.d>=0?"+":"−"} ${Math.abs(sys.d)}y = ${sys.f}
+       </div>`;
+
+    inputs.innerHTML =
+      `<div class="form-row">
+        <div>
+          <label for="exerciseX">x =</label>
+          <input id="exerciseX" type="text">
+        </div>
+
+        <div>
+          <label for="exerciseY">y =</label>
+          <input id="exerciseY" type="text">
+        </div>
+       </div>`;
+  }
+}
+
+function checkExercise(){
+
+  if(!currentExercise) return;
+
+  exerciseAttempts++;
+
+  let success = false;
+
+  if(currentExercise.type === "verify"){
+
+    const choice =
+      document.getElementById("exerciseChoice").value;
+
+    if(choice !== ""){
+      success =
+        (choice === "true") ===
+        currentExercise.answer;
+    }
+
+  }else{
+
+    const x =
+      parseNumber(
+        document.getElementById("exerciseX").value
+      );
+
+    const y =
+      parseNumber(
+        document.getElementById("exerciseY").value
+      );
+
+    success =
+      nearlyEqual(x,currentExercise.x) &&
+      nearlyEqual(y,currentExercise.y);
+  }
+
+  const feedback =
+    document.getElementById("exerciseFeedback");
+
+  if(success){
+
+    feedback.innerHTML =
+      `<div class="feedback ok">
+         ✓ Bonne réponse. Pense toujours à vérifier la solution
+         dans les deux équations.
+       </div>`;
+
+    recordAttempt(
+      currentExercise.level,
+      true
+    );
+
+  }else{
+
+    let extra =
+      exerciseAttempts >= 2
+        ? `<br><strong>Correction :</strong> ${currentExercise.correction}`
+        : "";
+
+    feedback.innerHTML =
+      `<div class="feedback bad">
+         Ce n’est pas encore correct.
+         Vérifie les signes et remplace ton résultat dans les deux équations.
+         ${extra}
+       </div>`;
+
+    recordAttempt(
+      currentExercise.level,
+      false,
+      "Résolution ou vérification du système"
+    );
+  }
+}
+
+document.getElementById("newExercise")
+  .addEventListener("click",generateExercise);
+
+document.getElementById("exerciseLevel")
+  .addEventListener("change",generateExercise);
+
+document.getElementById("exerciseDifficulty")
+  .addEventListener("change",generateExercise);
+
+document.getElementById("checkExercise")
+  .addEventListener("click",checkExercise);
+
+document.getElementById("exerciseHint")
+  .addEventListener("click",()=>{
+
+    if(!currentExercise) return;
+
+    const message =
+      currentExercise.type === "verify"
+        ? "Remplace x et y par les valeurs proposées dans la première équation, puis dans la seconde."
+        : "Essaie l’élimination : multiplie éventuellement une équation afin d’obtenir deux coefficients opposés devant une inconnue.";
+
+    document.getElementById("exerciseFeedback").innerHTML =
+      `<div class="feedback hint">
+         <strong>Indice :</strong> ${message}
+       </div>`;
+  });
+
+document.getElementById("showCorrection")
+  .addEventListener("click",()=>{
+
+    if(!currentExercise) return;
+
+    document.getElementById("exerciseFeedback").innerHTML =
+      `<div class="feedback hint">
+         <strong>Correction :</strong>
+         ${currentExercise.correction}
+       </div>`;
+  });
+
+/* =========================================================
+   RAISONNER
+========================================================= */
+
+document.getElementById("checkReason")
+  .addEventListener("click",()=>{
+
+    if(!requireStudent()) return;
+
+    const x =
+      parseNumber(
+        document.getElementById("reasonX").value
+      );
+
+    const y =
+      parseNumber(
+        document.getElementById("reasonY").value
+      );
+
+    const unknowns =
+      document.getElementById("reasonUnknowns").value.trim();
+
+    const equations =
+      document.getElementById("reasonEquations").value.trim();
+
+    const conclusion =
+      document.getElementById("reasonConclusion").value.trim();
+
+    const numerical =
+      nearlyEqual(x,20) &&
+      nearlyEqual(y,6);
+
+    const process =
+      unknowns.length >= 10 &&
+      equations.length >= 8 &&
+      conclusion.length >= 10;
+
+    const success =
+      numerical && process;
+
+    const feedback =
+      document.getElementById("reasonFeedback");
+
+    if(success){
+
+      feedback.innerHTML =
+        `<div class="feedback ok">
+          ✓ Très bien.<br><br>
+          On peut poser x = nombre de tickets étudiants
+          et y = nombre de tickets adultes.<br>
+          Le système est :
+          <span class="math">x + y = 26</span> et
+          <span class="math">8x + 12y = 232</span>.<br>
+          On obtient <strong>x = 20</strong> et <strong>y = 6</strong>.<br>
+          Il y a donc 20 tickets étudiants et 6 tickets adultes.
+        </div>`;
+
+      recordAttempt("raisonner",true);
+
+    }else{
+
+      feedback.innerHTML =
+        `<div class="feedback bad">
+          Vérifie toutes les étapes. Les valeurs finales attendues
+          sont 20 tickets étudiants et 6 tickets adultes.
+          Il faut aussi définir les inconnues, écrire le système
+          et rédiger une conclusion.
+        </div>`;
+
+      recordAttempt(
+        "raisonner",
+        false,
+        "Modélisation ou interprétation"
+      );
+    }
+  });
+
+/* =========================================================
+   TRANSFERT
+========================================================= */
+
+const transferAnswers = {
+
+  geo:{
+    ids:["geoL","geoW"],
+    values:[16,11],
+    feedback:"geoFeedback",
+    correction:
+      "On pose L = longueur et l = largeur. " +
+      "2L + 2l = 54 et L = l + 5. " +
+      "On obtient L = 16 cm et l = 11 cm."
+  },
+
+  move:{
+    ids:["moveV1","moveV2"],
+    values:[20,15],
+    feedback:"moveFeedback",
+    correction:
+      "En 2 h, la distance totale vaut 70 km. " +
+      "2v₁ + 2v₂ = 70 et v₁ = v₂ + 5. " +
+      "Les vitesses sont 20 km/h et 15 km/h."
+  },
+
+  life:{
+    ids:["lifeX","lifeY"],
+    values:[10,8],
+    feedback:"lifeFeedback",
+    correction:
+      "Si x est le nombre de jus et y le nombre de smoothies : " +
+      "x + y = 18 et 2x + 3y = 44. " +
+      "On obtient 10 jus et 8 smoothies."
+  }
+};
+
+document.querySelectorAll(".transfer-check")
+  .forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+      if(!requireStudent()) return;
+
+      const problem =
+        transferAnswers[
+          button.dataset.problem
+        ];
+
+      const values =
+        problem.ids.map(id=>
+          parseNumber(
+            document.getElementById(id).value
+          )
+        );
+
+      const success =
+        values.every(
+          (value,index)=>
+            nearlyEqual(
+              value,
+              problem.values[index]
+            )
+        );
+
+      const box =
+        document.getElementById(
+          problem.feedback
+        );
+
+      if(success){
+
+        box.innerHTML =
+          `<div class="feedback ok">
+            ✓ Correct. ${problem.correction}
+          </div>`;
+
+        recordAttempt("transferer",true);
+
+      }else{
+
+        box.innerHTML =
+          `<div class="feedback bad">
+            Ce résultat n’est pas correct.<br>
+            ${problem.correction}
+          </div>`;
+
+        recordAttempt(
+          "transferer",
+          false,
+          "Transfert vers une situation concrète"
+        );
+      }
+    });
+  });
+
+/* =========================================================
+   QUIZ FINAL
+========================================================= */
+
+let quizQuestions = [];
+
+function createQuizQuestion(level,index){
+
+  const sys =
+    makeSystem(
+      index < 5
+        ? "facile"
+        : index < 10
+          ? "intermediaire"
+          : "avance"
+    );
+
+  return {
+    level,
+    statement:
+      `Résous : ${sys.a}x ${sys.b>=0?"+":"−"} ${Math.abs(sys.b)}y = ${sys.e} ` +
+      `et ${sys.c}x ${sys.d>=0?"+":"−"} ${Math.abs(sys.d)}y = ${sys.f}.`,
+    x:sys.x,
+    y:sys.y
+  };
+}
+
+function startQuiz(){
+
+  if(!requireStudent()) return;
+
+  const levels = [
+    "comprendre","comprendre","comprendre",
+    "appliquer","appliquer","appliquer","appliquer","appliquer",
+    "raisonner","raisonner","raisonner","raisonner",
+    "transferer","transferer","transferer"
+  ];
+
+  quizQuestions =
+    levels.map((level,index)=>
+      createQuizQuestion(level,index)
+    );
+
+  const zone =
+    document.getElementById("quizZone");
+
+  zone.innerHTML =
+    quizQuestions.map((q,index)=>`
+      <div class="card" style="margin:15px 0">
+        <span class="badge">${q.level}</span>
+        <h3>Question ${index+1}</h3>
+
+        <p>${q.statement}</p>
+
+        <div class="form-row">
+          <div>
+            <label for="qx${index}">x =</label>
+            <input id="qx${index}" type="text">
+          </div>
+
+          <div>
+            <label for="qy${index}">y =</label>
+            <input id="qy${index}" type="text">
+          </div>
+        </div>
+      </div>
+    `).join("") +
+    `<button class="btn success" id="submitQuiz">
+       Corriger le quiz
+     </button>
+     <div id="quizResult"></div>`;
+
+  document.getElementById("submitQuiz")
+    .addEventListener("click",correctQuiz);
+}
+
+function correctQuiz(){
+
+  let correct = 0;
+
+  const byLevel = {
+    comprendre:{ok:0,total:0},
+    appliquer:{ok:0,total:0},
+    raisonner:{ok:0,total:0},
+    transferer:{ok:0,total:0}
+  };
+
+  quizQuestions.forEach((q,index)=>{
+
+    const x =
+      parseNumber(
+        document.getElementById(`qx${index}`).value
+      );
+
+    const y =
+      parseNumber(
+        document.getElementById(`qy${index}`).value
+      );
+
+    const ok =
+      nearlyEqual(x,q.x) &&
+      nearlyEqual(y,q.y);
+
+    byLevel[q.level].total++;
+
+    if(ok){
+      correct++;
+      byLevel[q.level].ok++;
+    }
+  });
+
+  const note =
+    Math.round(
+      correct /
+      quizQuestions.length *
+      20 *
+      10
+    ) / 10;
+
+  if(
+    state.bestQuiz === null ||
+    note > state.bestQuiz
+  ){
+    state.bestQuiz = note;
+  }
+
+  state.modules.quiz = true;
+
+  Object.entries(byLevel)
+    .forEach(([level,result])=>{
+
+      state.scores[level].total +=
+        result.total;
+
+      state.scores[level].ok +=
+        result.ok;
+    });
+
+  saveState();
+
+  const result =
+    document.getElementById("quizResult");
+
+  const weakest =
+    Object.entries(byLevel)
+      .map(([level,v])=>({
+        level,
+        rate:v.ok/v.total
+      }))
+      .sort((a,b)=>a.rate-b.rate)[0];
+
+  result.innerHTML =
+    `<div class="feedback ${note>=10?"ok":"hint"}">
+      <h2>Résultat : ${note} / 20</h2>
+
+      <p>Bonnes réponses : ${correct} / ${quizQuestions.length}</p>
+
+      <ul>
+        <li>Comprendre : ${byLevel.comprendre.ok}/${byLevel.comprendre.total}</li>
+        <li>Appliquer : ${byLevel.appliquer.ok}/${byLevel.appliquer.total}</li>
+        <li>Raisonner : ${byLevel.raisonner.ok}/${byLevel.raisonner.total}</li>
+        <li>Transférer : ${byLevel.transferer.ok}/${byLevel.transferer.total}</li>
+      </ul>
+
+      <p>
+        <strong>À retravailler en priorité :</strong>
+        ${weakest.level}.
+      </p>
+    </div>`;
+}
+
+document.getElementById("startQuiz")
+  .addEventListener("click",startQuiz);
+
+/* =========================================================
+   QR CODE GITHUB PAGES
+========================================================= */
+
+function getActivityURL(){
+
+  const url =
+    window.location.href
+      .split("#")[0]
+      .split("?")[0];
+
+  return url;
+}
+
+function showQRCode(){
+
+  const modal =
+    document.getElementById("qrModal");
+
+  const container =
+    document.getElementById("qrContainer");
+
+  const address =
+    document.getElementById("qrAddress");
+
+  const warning =
+    document.getElementById("qrWarning");
+
+  const url =
+    getActivityURL();
+
+  container.innerHTML = "";
+  address.textContent = url;
+
+  if(
+    location.protocol === "file:"
+  ){
+    warning.innerHTML =
+      `<strong>Attention :</strong> l’application est actuellement
+       ouverte comme fichier local. Publiez-la d’abord sur GitHub Pages
+       pour que les téléphones des élèves puissent l’ouvrir.`;
+  }else{
+    warning.className = "feedback ok";
+    warning.innerHTML =
+      `✓ Ce QR code pointe vers l’adresse publiée de l’application.`;
+  }
+
+  if(typeof QRCode !== "undefined"){
+
+    new QRCode(container,{
+      text:url,
+      width:250,
+      height:250,
+      colorDark:"#0b1f3a",
+      colorLight:"#ffffff",
+      correctLevel:QRCode.CorrectLevel.H
+    });
+
+  }else{
+
+    container.innerHTML =
+      `<div class="feedback bad">
+         Le générateur de QR code n’a pas pu être chargé.
+         Vérifie la connexion Internet puis recharge la page.
+       </div>`;
+  }
+
+  modal.classList.remove("hidden");
+}
+
+document.getElementById("qrCodeBtn")
+  .addEventListener("click",showQRCode);
+
+document.getElementById("teacherQrBtn")
+  .addEventListener("click",showQRCode);
+
+document.getElementById("closeQr")
+  .addEventListener("click",()=>{
+    document.getElementById("qrModal")
+      .classList.add("hidden");
+  });
+
+document.getElementById("qrModal")
+  .addEventListener("click",event=>{
+    if(event.target.id === "qrModal"){
+      event.currentTarget.classList.add("hidden");
+    }
+  });
+
+document.addEventListener("keydown",event=>{
+  if(event.key === "Escape"){
+    document.getElementById("qrModal")
+      .classList.add("hidden");
+  }
+});
+
+document.getElementById("copyActivityLink")
+  .addEventListener("click",async()=>{
+
+    const url =
+      getActivityURL();
+
+    try{
+      await navigator.clipboard.writeText(url);
+
+      alert(
+        "Le lien de l’activité a été copié."
+      );
+
+    }catch{
+      window.prompt(
+        "Copiez ce lien :",
+        url
+      );
+    }
+  });
+
+/* =========================================================
+   ESPACE ENSEIGNANT
+========================================================= */
+
+let teacherUnlocked = false;
+
+document.getElementById("teacherLoginBtn")
+  .addEventListener("click",()=>{
+
+    const password =
+      document.getElementById("teacherPassword").value;
+
+    const feedback =
+      document.getElementById("teacherLoginFeedback");
+
+    if(password === CONFIG.teacherPassword){
+
+      teacherUnlocked = true;
+
+      document.getElementById("teacherLogin")
+        .classList.add("hidden");
+
+      document.getElementById("teacherContent")
+        .classList.remove("hidden");
+
+      renderTeacherTracking();
+
+    }else{
+
+      feedback.innerHTML =
+        `<div class="feedback bad">
+          Mot de passe incorrect.
+        </div>`;
+    }
+  });
+
+function renderTeacherTracking(){
+
+  const tbody =
+    document.getElementById("teacherStudentTable");
+
+  const students =
+    Object.values(getStudents())
+      .sort((a,b)=>
+        a.lastName.localeCompare(
+          b.lastName,
+          "fr"
+        )
+      );
+
+  if(!students.length){
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="6">
+          Aucun élève enregistré sur cet appareil.
+        </td>
+       </tr>`;
+
+    return;
+  }
+
+  tbody.innerHTML =
+    students.map(student=>{
+
+      const attempts =
+        student.attempts || 0;
+
+      const successes =
+        student.successes || 0;
+
+      const rate =
+        attempts
+          ? Math.round(
+              successes/attempts*100
+            )
+          : 0;
+
+      const quiz =
+        student.bestQuiz === null ||
+        student.bestQuiz === undefined
+          ? "—"
+          : `${student.bestQuiz}/20`;
+
+      const date =
+        student.lastActivity
+          ? new Date(
+              student.lastActivity
+            ).toLocaleString("fr-BE")
+          : "—";
+
+      return `
+        <tr>
+          <td>
+            <strong>
+              ${escapeHTML(student.lastName)}
+              ${escapeHTML(student.firstName)}
+            </strong>
+          </td>
+
+          <td>${student.progress || 0} %</td>
+          <td>${rate} %</td>
+          <td>${quiz}</td>
+          <td>${date}</td>
+
+          <td>
+            <button class="btn small ghost"
+                    data-student="${student.id}">
+              Détails
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+  document.querySelectorAll("[data-student]")
+    .forEach(button=>{
+      button.addEventListener("click",()=>{
+        showStudentDetail(
+          button.dataset.student
+        );
+      });
+    });
+}
+
+function showStudentDetail(id){
+
+  const students =
+    getStudents();
+
+  const student =
+    students[id];
+
+  if(!student) return;
+
+  const studentState =
+    loadStudentState(id);
+
+  function rate(level){
+
+    const s =
+      studentState.scores[level];
+
+    return s.total
+      ? Math.round(s.ok/s.total*100)
+      : 0;
+  }
+
+  const errors =
+    Object.entries(
+      studentState.errors || {}
+    )
+      .sort((a,b)=>b[1]-a[1])
+      .slice(0,5);
+
+  const box =
+    document.getElementById(
+      "studentDetailTeacher"
+    );
+
+  box.innerHTML =
+    `<h3>
+       ${escapeHTML(student.firstName)}
+       ${escapeHTML(student.lastName)}
+     </h3>
+
+     <div class="grid four">
+
+       <div class="kpi">
+         <strong>${rate("comprendre")} %</strong>
+         Comprendre
+       </div>
+
+       <div class="kpi">
+         <strong>${rate("appliquer")} %</strong>
+         Appliquer
+       </div>
+
+       <div class="kpi">
+         <strong>${rate("raisonner")} %</strong>
+         Raisonner
+       </div>
+
+       <div class="kpi">
+         <strong>${rate("transferer")} %</strong>
+         Transférer
+       </div>
+
+     </div>
+
+     <h4 style="margin-top:18px">
+       Erreurs fréquentes
+     </h4>
+
+     ${
+       errors.length
+         ? `<ul>
+            ${errors.map(
+              ([name,count])=>
+                `<li>${escapeHTML(name)} : ${count}</li>`
+            ).join("")}
+            </ul>`
+         : "<p>Aucune erreur enregistrée.</p>"
+     }`;
+
+  box.classList.remove("hidden");
+}
+
+/* =========================================================
+   CSV
+========================================================= */
+
+function csvEscape(value){
+  const text =
+    String(value ?? "");
+
+  return `"${text.replaceAll('"','""')}"`;
+}
+
+document.getElementById("exportCSV")
+  .addEventListener("click",()=>{
+
+    const students =
+      Object.values(getStudents());
+
+    const rows = [
+      [
+        "Nom",
+        "Prénom",
+        "Progression",
+        "Tentatives",
+        "Réussites",
+        "Meilleur quiz",
+        "Comprendre",
+        "Appliquer",
+        "Raisonner",
+        "Transférer",
+        "Dernière activité"
+      ]
+    ];
+
+    students.forEach(student=>{
+
+      const s =
+        loadStudentState(student.id);
+
+      function pct(level){
+        const score = s.scores[level];
+
+        return score.total
+          ? Math.round(
+              score.ok/score.total*100
+            )
+          : 0;
+      }
+
+      rows.push([
+        student.lastName,
+        student.firstName,
+        student.progress || 0,
+        s.attempts,
+        s.successes,
+        s.bestQuiz ?? "",
+        pct("comprendre"),
+        pct("appliquer"),
+        pct("raisonner"),
+        pct("transferer"),
+        student.lastActivity || ""
+      ]);
+    });
+
+    const csv =
+      "\uFEFF" +
+      rows.map(row=>
+        row.map(csvEscape).join(";")
+      ).join("\n");
+
+    const blob =
+      new Blob(
+        [csv],
+        {type:"text/csv;charset=utf-8"}
+      );
+
+    const url =
+      URL.createObjectURL(blob);
+
+    const a =
+      document.createElement("a");
+
+    a.href = url;
+    a.download =
+      "resultats-systemes-equations.csv";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+  });
+
+/* =========================================================
+   MODE PROJECTION
+========================================================= */
+
+document.getElementById("projectionBtn")
+  .addEventListener("click",event=>{
+
+    document.body.classList.toggle(
+      "projection-mode"
+    );
+
+    const active =
+      document.body.classList.contains(
+        "projection-mode"
+      );
+
+    event.currentTarget.textContent =
+      active
+        ? "Désactiver le mode projection"
+        : "Activer le mode projection";
+  });
+
+/* =========================================================
+   IMPRESSION DE 10 EXERCICES
+========================================================= */
+
+document.getElementById("generatePrint")
+  .addEventListener("click",()=>{
+
+    const exercises = [];
+
+    for(let i=0;i<10;i++){
+      exercises.push(
+        makeSystem(
+          i<4
+            ? "facile"
+            : i<8
+              ? "intermediaire"
+              : "avance"
+        )
+      );
+    }
+
+    document.getElementById("printSheet").innerHTML =
+      `<h1>Systèmes d’équations — Série d’exercices</h1>
+       <p>Nom : __________________________ Date : _______________</p>
+
+       ${exercises.map((s,i)=>`
+         <div style="margin:22px 0">
+           <strong>${i+1}. Résous le système :</strong><br>
+           ${s.a}x ${s.b>=0?"+":"−"} ${Math.abs(s.b)}y = ${s.e}<br>
+           ${s.c}x ${s.d>=0?"+":"−"} ${Math.abs(s.d)}y = ${s.f}
+         </div>
+       `).join("")}
+
+       <hr>
+
+       <h2>Corrigé enseignant</h2>
+
+       ${exercises.map((s,i)=>`
+         <p>
+           ${i+1}. Solution :
+           (${s.x} ; ${s.y})
+         </p>
+       `).join("")}`;
+  });
+
+/* =========================================================
+   RESET
+========================================================= */
+
+document.getElementById("resetAllData")
+  .addEventListener("click",()=>{
+
+    const confirmation =
+      confirm(
+        "Effacer tous les profils et toutes les progressions enregistrées sur cet appareil ?"
+      );
+
+    if(!confirmation) return;
+
+    const students =
+      getStudents();
+
+    Object.keys(students)
+      .forEach(id=>{
+        localStorage.removeItem(
+          stateKey(id)
+        );
+      });
+
+    localStorage.removeItem(
+      CONFIG.storage.students
+    );
+
+    localStorage.removeItem(
+      CONFIG.storage.currentStudent
+    );
+
+    currentStudentId = "";
+    state = structuredClone(DEFAULT_STATE);
+
+    updateStudentInterface();
+    renderTeacherTracking();
+
+    alert(
+      "Les données locales ont été supprimées."
+    );
+  });
+
+/* =========================================================
+   COMMANDES ÉLÈVE
+========================================================= */
+
+document.getElementById("saveStudentName")
+  .addEventListener("click",identifyStudent);
+
+document.getElementById("changeStudent")
+  .addEventListener("click",changeStudent);
+
+document.getElementById("changeStudentTop")
+  .addEventListener("click",changeStudent);
+
+document.getElementById("startBtn")
+  .addEventListener("click",()=>{
+
+    if(!currentStudentId){
+      const ok =
+        identifyStudent();
+
+      if(!ok) return;
+    }
+
+    showPage("explore");
+  });
+
+document.getElementById("studentLastName")
+  .addEventListener("keydown",event=>{
+
+    if(event.key === "Enter"){
+      identifyStudent();
+    }
+  });
+
+/* =========================================================
+   INITIALISATION
+========================================================= */
+
+restoreCurrentStudent();
+updateStudentInterface();
+renderProgress();
+drawGraph();
+
+</script>
+
+</body>
+</html>
