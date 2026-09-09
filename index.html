@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systèmes d’équations interactif – 5e secondaire qualifiant</title>
+<style>
+:root{
+  --navy:#0b1f3a;
+  --navy2:#102d52;
+  --blue:#3aa7ff;
+  --blueSoft:#e9f5ff;
+  --white:#ffffff;
+  --green:#168a55;
+  --greenSoft:#e8f8ef;
+  --orange:#e57a14;
+  --orangeSoft:#fff3e4;
+  --red:#c43d3d;
+  --redSoft:#fff0f0;
+  --text:#172033;
+  --muted:#607087;
+  --border:#d9e2ec;
+  --bg:#f5f8fc;
+  --shadow:0 10px 30px rgba(11,31,58,.08);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  line-height:1.55;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{
+  outline:4px solid rgba(58,167,255,.35);
+  outline-offset:2px;
+}
+a{color:inherit}
+.hidden{display:none!important}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,31,58,.97);
+  color:white;
+  box-shadow:0 4px 16px rgba(0,0,0,.15);
+}
+.topbar{
+  max-width:1500px;margin:auto;padding:10px 18px;
+  display:flex;align-items:center;gap:14px;
+}
+.brand{font-weight:900;letter-spacing:.2px;flex:1}
+.brand small{display:block;font-size:.72rem;font-weight:600;color:#bcdfff}
+.menu-toggle{
+  display:none;background:#173b65;border:1px solid #315a84;color:white;
+  border-radius:10px;padding:9px 12px
+}
+nav{
+  background:var(--navy2);
+  border-top:1px solid rgba(255,255,255,.1)
+}
+.nav-wrap{
+  max-width:1500px;margin:auto;display:flex;overflow-x:auto;padding:0 12px
+}
+.nav-btn{
+  border:0;background:transparent;color:#dcecff;
+  padding:12px 14px;white-space:nowrap;font-weight:700;
+  border-bottom:4px solid transparent
+}
+.nav-btn:hover,.nav-btn.active{
+  color:white;background:rgba(255,255,255,.07);border-bottom-color:var(--blue)
+}
+.progress-top{
+  height:5px;background:#25496d
+}
+.progress-top div{
+  height:100%;width:0;background:linear-gradient(90deg,var(--blue),#63d7b0);
+  transition:.4s
+}
+main{max-width:1320px;margin:auto;padding:24px 18px 70px}
+.page{display:none;animation:fade .2s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hero{
+  background:linear-gradient(135deg,var(--navy),#154975);
+  color:white;padding:34px;border-radius:26px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center
+}
+.hero h1{font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;margin:0 0 12px}
+.hero p{color:#dcecff;font-size:1.08rem}
+.hero-visual{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  padding:22px;border-radius:22px
+}
+.mini-system{
+  font-family:"Cambria Math",Georgia,serif;font-size:1.45rem;
+  display:grid;gap:10px
+}
+.btn{
+  border:0;border-radius:12px;padding:11px 16px;font-weight:800;
+  background:var(--navy);color:white;transition:.15s
+}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.btn.primary{background:var(--blue);color:#05213b}
+.btn.success{background:var(--green)}
+.btn.orange{background:var(--orange)}
+.btn.light{background:var(--blueSoft);color:var(--navy)}
+.btn.ghost{background:white;color:var(--navy);border:1px solid var(--border)}
+.btn.danger{background:var(--red)}
+.btn.small{padding:7px 10px;font-size:.9rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.grid{display:grid;gap:18px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{
+  background:white;border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow)
+}
+.card h2,.card h3{margin-top:0;color:var(--navy)}
+.card.accent{border-left:6px solid var(--blue)}
+.callout{
+  padding:16px;border-radius:14px;margin:14px 0;border-left:5px solid var(--blue);
+  background:var(--blueSoft)
+}
+.callout.success{background:var(--greenSoft);border-left-color:var(--green)}
+.callout.orange{background:var(--orangeSoft);border-left-color:var(--orange)}
+.callout.error{background:var(--redSoft);border-left-color:var(--red)}
+.tag{
+  display:inline-flex;align-items:center;gap:5px;border-radius:999px;
+  background:#eef3f8;color:#31445e;padding:5px 10px;font-size:.82rem;font-weight:800
+}
+.tag.blue{background:var(--blueSoft);color:#075b98}
+.tag.green{background:var(--greenSoft);color:#0f7045}
+.tag.orange{background:var(--orangeSoft);color:#a5570b}
+.tag.purple{background:#f1ebff;color:#6940a8}
+.kpi{
+  text-align:center;background:white;border:1px solid var(--border);
+  border-radius:16px;padding:18px
+}
+.kpi strong{display:block;font-size:2rem;color:var(--navy)}
+.section-title{
+  display:flex;align-items:center;gap:12px;margin:8px 0 20px
+}
+.section-title .number{
+  width:42px;height:42px;border-radius:12px;background:var(--navy);
+  color:white;display:grid;place-items:center;font-weight:900
+}
+.progress-box{
+  background:#dbe5ef;border-radius:999px;height:14px;overflow:hidden
+}
+.progress-box>div{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));transition:.4s}
+fieldset{border:1px solid var(--border);border-radius:12px;padding:14px}
+legend{font-weight:800;color:var(--navy)}
+label{font-weight:700}
+input[type="number"],input[type="text"],input[type="password"],select,textarea{
+  width:100%;padding:11px 12px;border:1px solid #aebfd1;border-radius:10px;
+  background:white;color:var(--text)
+}
+input[type="range"]{width:100%}
+.form-row{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0
+}
+.equation{
+  font-family:"Cambria Math",Georgia,serif;font-size:1.3rem;
+  background:#f7f9fc;border:1px solid var(--border);padding:10px 14px;border-radius:10px
+}
+.math-big{
+  font-family:"Cambria Math",Georgia,serif;font-size:1.5rem;
+  color:var(--navy);font-weight:700
+}
+.canvas-wrap{
+  position:relative;overflow:auto;background:white;border:1px solid var(--border);
+  border-radius:14px;padding:8px
+}
+canvas{display:block;max-width:100%;margin:auto}
+.graph-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.graph-controls label{
+  display:flex;align-items:center;gap:6px;background:#f3f6f9;padding:7px 10px;border-radius:8px
+}
+.obs{
+  background:#eef8ff;border:1px solid #b8e0ff;border-radius:14px;padding:15px
+}
+.flashcards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px
+}
+.flip-card{perspective:1000px;min-height:280px}
+.flip-inner{
+  position:relative;width:100%;height:100%;min-height:280px;transition:transform .5s;
+  transform-style:preserve-3d
+}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+  position:absolute;inset:0;backface-visibility:hidden;background:white;
+  border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow);
+  overflow:auto
+}
+.flip-back{transform:rotateY(180deg);background:#f8fbff}
+.match-row{
+  display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:center;margin:8px 0
+}
+.exercise-box{border-top:5px solid var(--blue)}
+.feedback{margin-top:12px;padding:13px;border-radius:12px;min-height:48px}
+.feedback:empty{display:none}
+.feedback.ok{background:var(--greenSoft);color:#0c5f39}
+.feedback.bad{background:var(--redSoft);color:#7b2525}
+.feedback.hint{background:var(--orangeSoft);color:#85500c}
+.steps{counter-reset:step}
+.step{
+  position:relative;margin:15px 0;padding:15px 15px 15px 55px;background:#f9fbfd;
+  border:1px solid var(--border);border-radius:14px
+}
+.step::before{
+  counter-increment:step;content:counter(step);position:absolute;left:14px;top:14px;
+  width:28px;height:28px;display:grid;place-items:center;border-radius:50%;
+  color:white;background:var(--navy);font-weight:900
+}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid var(--border);padding:10px;text-align:left;vertical-align:top}
+th{background:#edf4fb;color:var(--navy)}
+.table-wrap{overflow:auto}
+.quiz-question{
+  border:1px solid var(--border);border-radius:14px;background:white;padding:16px;margin:12px 0
+}
+.quiz-question.correct{border-left:6px solid var(--green)}
+.quiz-question.wrong{border-left:6px solid var(--red)}
+.choice{display:block;padding:8px;border-radius:9px}
+.choice:hover{background:#f3f7fb}
+.badge{
+  background:#f0f5fb;border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center
+}
+.badge.unlocked{background:var(--greenSoft);border-color:#abdcc5}
+.teacher-panel{border-top:5px solid var(--orange)}
+footer{
+  text-align:center;padding:30px;color:var(--muted);font-size:.9rem
+}
+.dark{
+  --bg:#0b1523;--text:#edf5ff;--muted:#a6b7c9;--border:#2c4157;--white:#122236;
+  --blueSoft:#0d3453;--greenSoft:#123a2b;--orangeSoft:#3c2b16;--redSoft:#401f23;
+}
+.dark .card,.dark .kpi,.dark input,.dark select,.dark textarea,.dark .quiz-question,
+.dark .flip-front,.dark .canvas-wrap{background:#122236;color:var(--text)}
+.dark .flip-back,.dark .equation,.dark .step,.dark th,.dark .graph-controls label{
+  background:#182d44;color:var(--text)
+}
+.dark .progress-box{background:#31465c}
+@media(max-width:900px){
+  .hero,.grid.two,.grid.three,.grid.four{grid-template-columns:1fr}
+  .menu-toggle{display:block}
+  nav.mobile-hidden{display:none}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  main{padding:15px 10px 50px}
+  .hero{padding:23px}
+  .card{padding:15px}
+  .match-row{grid-template-columns:1fr}
+}
+@media print{
+  header,.no-print,footer{display:none!important}
+  body{background:white}
+  main{max-width:none;padding:0}
+  .page{display:none!important}
+  #teacher{display:block!important}
+  .card{box-shadow:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      Systèmes d’équations interactif
+      <small>5e secondaire — Enseignement qualifiant belge</small>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="true" aria-controls="mainNav">☰ Menu</button>
+    <button class="btn small light" id="darkToggle" type="button">◐ Contraste</button>
+  </div>
+  <nav id="mainNav">
+    <div class="nav-wrap">
+      <button class="nav-btn active" data-page="home">Accueil</button>
+      <button class="nav-btn" data-page="explore">Découvrir et explorer</button>
+      <button class="nav-btn" data-page="learn">Comprendre</button>
+      <button class="nav-btn" data-page="train">S’entraîner</button>
+      <button class="nav-btn" data-page="reason">Raisonner</button>
+      <button class="nav-btn" data-page="transfer">Transférer</button>
+      <button class="nav-btn" data-page="quiz">Quiz final</button>
+      <button class="nav-btn" data-page="progress">Mes progrès</button>
+      <button class="nav-btn" data-page="teacher">Espace enseignant</button>
+    </div>
+  </nav>
+  <div class="progress-top" aria-label="Progression globale"><div id="topProgress"></div></div>
+</header>
+
+<main>
+<section class="page active" id="home">
+  <div class="hero">
+    <div>
+      <span class="tag blue">Mathématiques • 5e secondaire qualifiant</span>
+      <h1>Systèmes d’équations interactif</h1>
+      <h2>Comprendre, manipuler, s’entraîner et réussir.</h2>
+      <p>Dans cette activité, tu vas apprendre à résoudre des systèmes par substitution, élimination, graphique et déterminants, puis à les utiliser pour résoudre des problèmes de géométrie, de mouvement et de la vie pratique.</p>
+      <div class="actions">
+        <button class="btn primary" data-goto="explore">Commencer l’activité</button>
+        <button class="btn ghost" data-goto="progress">Voir ma progression</button>
+      </div>
+      <p><strong>Progression globale</strong></p>
+      <div class="progress-box" aria-label="Progression globale"><div id="homeProgress" style="width:0%"></div></div>
+      <p id="homeProgressText">0 % réalisé</p>
+    </div>
+    <div class="hero-visual" aria-label="Exemple de système de deux équations représenté par deux droites">
+      <div class="mini-system">
+        <div>{ 2x + y = 7</div>
+        <div>{ x − y = 2</div>
+        <div style="color:#74d5ff">→ intersection : (3 ; 1)</div>
+      </div>
+      <svg viewBox="0 0 360 220" role="img" aria-label="Deux droites se coupent au point représentant la solution du système" style="width:100%;margin-top:15px">
+        <rect width="360" height="220" rx="15" fill="#ffffff12"/>
+        <g stroke="#ffffff22">
+          <path d="M40 20V200M80 20V200M120 20V200M160 20V200M200 20V200M240 20V200M280 20V200M320 20V200"/>
+          <path d="M20 40H340M20 80H340M20 120H340M20 160H340M20 200H340"/>
+        </g>
+        <path d="M20 110H340M180 20V205" stroke="#fff" stroke-width="2"/>
+        <path d="M30 185L330 50" stroke="#45b4ff" stroke-width="4"/>
+        <path d="M35 45L325 190" stroke="#63d7b0" stroke-width="4"/>
+        <circle cx="180" cy="117" r="7" fill="#ffb65c"/>
+        <text x="190" y="108" fill="white" font-size="16">(3 ; 1)</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card accent" style="margin-top:20px">
+    <h2>À la fin, je serai capable de…</h2>
+    <div class="grid two">
+      <ul>
+        <li>identifier les inconnues d’un système ;</li>
+        <li>vérifier si un couple satisfait deux équations ;</li>
+        <li>résoudre un système 2 × 2 par substitution ou élimination ;</li>
+        <li>représenter graphiquement deux équations et lire leur intersection ;</li>
+        <li>interpréter les cas : une solution, aucune solution ou une infinité de solutions.</li>
+      </ul>
+      <ul>
+        <li>calculer des déterminants d’ordre 2 et 3 ;</li>
+        <li>utiliser la règle de Cramer lorsque Δ ≠ 0 ;</li>
+        <li>construire un système à partir d’un problème ;</li>
+        <li>résoudre des situations de géométrie, mouvement, prix et quantités ;</li>
+        <li>vérifier et interpréter ma réponse avec les unités adaptées.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid four" style="margin-top:18px">
+    <div class="kpi"><strong>2 × 2</strong>Systèmes algébriques</div>
+    <div class="kpi"><strong>Δ</strong>Déterminants et Cramer</div>
+    <div class="kpi"><strong>📈</strong>Résolution graphique</div>
+    <div class="kpi"><strong>TRR</strong>Transfert vers des problèmes</div>
+  </div>
+</section>
+
+<section class="page" id="explore">
+  <div class="section-title"><span class="number">1</span><div><h1>Découvrir et explorer</h1><p>Manipule deux droites et observe la solution du système.</p></div></div>
+
+  <div class="grid two">
+    <div class="card">
+      <h2>Laboratoire de systèmes</h2>
+      <p>Les deux équations sont écrites sous la forme <strong>y = mx + p</strong>.</p>
+
+      <fieldset>
+        <legend>Droite 1 — y = m₁x + p₁</legend>
+        <label for="m1">Pente m₁ : <span id="m1Val">1</span></label>
+        <input id="m1" type="range" min="-4" max="4" step="0.5" value="1">
+        <label for="p1">Ordonnée à l’origine p₁ : <span id="p1Val">1</span></label>
+        <input id="p1" type="range" min="-6" max="6" step="1" value="1">
+      </fieldset>
+
+      <fieldset style="margin-top:12px">
+        <legend>Droite 2 — y = m₂x + p₂</legend>
+        <label for="m2">Pente m₂ : <span id="m2Val">-1</span></label>
+        <input id="m2" type="range" min="-4" max="4" step="0.5" value="-1">
+        <label for="p2">Ordonnée à l’origine p₂ : <span id="p2Val">5</span></label>
+        <input id="p2" type="range" min="-6" max="6" step="1" value="5">
+      </fieldset>
+
+      <div class="actions">
+        <button class="btn ghost" id="resetGraph">Réinitialiser</button>
+        <button class="btn light" id="newGraph">Nouvel exemple</button>
+        <button class="btn orange" id="randomChallenge">Défi aléatoire</button>
+        <button class="btn ghost" id="graphHint">Afficher un indice</button>
+      </div>
+      <div id="challengeText" class="callout orange hidden"></div>
+      <div id="graphHintText" class="feedback hint hidden"></div>
+    </div>
+
+    <div class="card">
+      <h2>Représentation graphique</h2>
+      <div class="graph-controls no-print">
+        <label><input type="checkbox" id="gridToggle" checked> Grille</label>
+        <label><input type="checkbox" id="coordToggle" checked> Coordonnées</label>
+        <label><input type="checkbox" id="labelToggle" checked> Étiquettes</label>
+        <button class="btn small ghost" id="zoomIn">Zoom +</button>
+        <button class="btn small ghost" id="zoomOut">Zoom −</button>
+        <button class="btn small light" id="preciseMode">Lecture précise</button>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="systemGraph" width="620" height="440" tabindex="0" aria-describedby="graphDescription"></canvas>
+      </div>
+      <div id="graphDescription" class="callout">
+        Le graphique contient deux droites. Leur point d’intersection éventuel représente le couple solution.
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption><strong>Alternative textuelle : valeurs des deux droites</strong></caption>
+          <thead><tr><th>x</th><th>y₁</th><th>y₂</th></tr></thead>
+          <tbody id="graphTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="obs" style="margin-top:18px">
+    <h2>J’observe</h2>
+    <p id="observation"></p>
+  </div>
+</section>
+
+<section class="page" id="learn">
+  <div class="section-title"><span class="number">2</span><div><h1>Comprendre les notions</h1><p>Retourne les cartes pour voir exemples, erreurs fréquentes et méthodes.</p></div></div>
+
+  <div class="flashcards" id="flashcards"></div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>Association : quelle méthode convient ?</h2>
+    <p>Associe chaque situation à la meilleure proposition.</p>
+    <div id="matchingActivity"></div>
+    <div class="actions">
+      <button class="btn primary" id="checkMatching">Vérifier les associations</button>
+      <button class="btn ghost" id="resetMatching">Recommencer</button>
+    </div>
+    <div id="matchingFeedback" class="feedback"></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>Mini-laboratoire : déterminant d’ordre 2</h2>
+    <div class="form-row">
+      <label>a <input type="number" id="da" value="2"></label>
+      <label>b <input type="number" id="db" value="3"></label>
+      <label>c <input type="number" id="dc" value="1"></label>
+      <label>d <input type="number" id="dd" value="-2"></label>
+    </div>
+    <p class="math-big">Δ = ad − bc</p>
+    <button class="btn primary" id="calcDet2">Calculer</button>
+    <div id="det2Result" class="feedback"></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>Déterminant d’ordre 3 — règle de Sarrus</h2>
+    <p>Entre les neuf coefficients. La règle de Sarrus calcule :</p>
+    <div class="math-big">det = aei + bfg + cdh − ceg − bdi − afh</div>
+    <div class="grid three" id="matrix3Inputs"></div>
+    <button class="btn primary" id="calcDet3" style="margin-top:12px">Calculer le déterminant</button>
+    <div id="det3Result" class="feedback"></div>
+  </div>
+</section>
+
+<section class="page" id="train">
+  <div class="section-title"><span class="number">3</span><div><h1>S’entraîner</h1><p>Exercices générés aléatoirement et différenciés.</p></div></div>
+
+  <div class="card">
+    <div class="form-row">
+      <label for="cognitiveLevel">Niveau cognitif
+        <select id="cognitiveLevel">
+          <option value="comprendre">Comprendre</option>
+          <option value="appliquer" selected>Appliquer</option>
+          <option value="raisonner">Raisonner</option>
+          <option value="transferer">Transférer</option>
+        </select>
+      </label>
+      <label for="difficulty">Difficulté
+        <select id="difficulty">
+          <option value="facile">Facile</option>
+          <option value="intermediaire" selected>Intermédiaire</option>
+          <option value="avancee">Avancée</option>
+        </select>
+      </label>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="generateExercise">Nouvel exercice</button>
+      <button class="btn ghost" id="guidedMode">Mode guidé : désactivé</button>
+    </div>
+  </div>
+
+  <div class="card exercise-box" id="exerciseCard" style="margin-top:18px">
+    <div id="exerciseTags"></div>
+    <h2 id="exerciseTitle">Exercice</h2>
+    <div id="exerciseStatement"></div>
+    <div id="exerciseInput" style="margin-top:15px"></div>
+    <div class="actions">
+      <button class="btn success" id="checkExercise">Vérifier</button>
+      <button class="btn orange" id="exerciseHint">Indice</button>
+      <button class="btn ghost" id="showCorrection">Voir la correction</button>
+    </div>
+    <div id="exerciseFeedback" class="feedback"></div>
+    <div id="exerciseCorrection" class="callout hidden"></div>
+  </div>
+</section>
+
+<section class="page" id="reason">
+  <div class="section-title"><span class="number">4</span><div><h1>Raisonner et résoudre</h1><p>Construis une solution complète, étape par étape.</p></div></div>
+
+  <div class="card">
+    <h2>Problème guidé — Billets pour une activité scolaire</h2>
+    <p>Une classe achète <strong>26 billets</strong>. Un billet élève coûte <strong>8 €</strong> et un billet accompagnateur coûte <strong>12 €</strong>. La dépense totale est de <strong>232 €</strong>. Combien de billets de chaque type ont été achetés ?</p>
+    <div class="steps">
+      <div class="step">
+        <strong>Identifier les inconnues.</strong>
+        <div class="form-row">
+          <label>x représente… <input type="text" id="r_xMeaning" placeholder="Ex. nombre de..."></label>
+          <label>y représente… <input type="text" id="r_yMeaning" placeholder="Ex. nombre de..."></label>
+        </div>
+      </div>
+      <div class="step">
+        <strong>Construire les équations.</strong>
+        <div class="form-row">
+          <label>Équation du nombre total <input type="text" id="r_eq1" placeholder="x+y=..."></label>
+          <label>Équation du prix total <input type="text" id="r_eq2" placeholder="...x+...y=..."></label>
+        </div>
+      </div>
+      <div class="step">
+        <strong>Choisir une méthode.</strong>
+        <select id="r_method">
+          <option value="">Choisir…</option>
+          <option value="elimination">Élimination</option>
+          <option value="substitution">Substitution</option>
+          <option value="graphique">Graphique</option>
+        </select>
+      </div>
+      <div class="step">
+        <strong>Calculer.</strong>
+        <div class="form-row">
+          <label>x = <input type="number" id="r_x"></label>
+          <label>y = <input type="number" id="r_y"></label>
+        </div>
+      </div>
+      <div class="step">
+        <strong>Vérifier.</strong>
+        <label>Explique comment tu contrôles le résultat.
+          <textarea id="r_check" rows="3"></textarea>
+        </label>
+      </div>
+      <div class="step">
+        <strong>Interpréter.</strong>
+        <label>Phrase-réponse
+          <textarea id="r_conclusion" rows="3" placeholder="La classe a acheté..."></textarea>
+        </label>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn success" id="checkReason">Vérifier mon raisonnement</button>
+      <button class="btn orange" id="reasonHint">Indice progressif</button>
+      <button class="btn ghost" id="reasonCorrection">Correction détaillée</button>
+    </div>
+    <div id="reasonFeedback" class="feedback"></div>
+    <div id="reasonCorrectionBox" class="callout hidden"></div>
+  </div>
+
+  <div class="callout orange">
+    <strong>À retenir :</strong> Une réponse mathématique ou physique doit être interprétée dans le contexte du problème.
+  </div>
+</section>
+
+<section class="page" id="transfer">
+  <div class="section-title"><span class="number">5</span><div><h1>Transférer et modéliser</h1><p>TRR 1, TRR 2 et situations de la vie pratique.</p></div></div>
+
+  <div class="grid three" id="transferCards"></div>
+
+  <div class="card" style="margin-top:20px">
+    <h2 id="transferProblemTitle">Choisis une situation ci-dessus</h2>
+    <div id="transferProblemStatement">Le problème apparaîtra ici.</div>
+    <div id="transferWorkspace" class="hidden">
+      <div class="steps">
+        <div class="step">
+          <label>1. Quelles sont les deux inconnues ?
+            <textarea id="t_unknowns" rows="2"></textarea>
+          </label>
+        </div>
+        <div class="step">
+          <label>2. Écris le système.
+            <textarea id="t_system" rows="3"></textarea>
+          </label>
+        </div>
+        <div class="step">
+          <label>3. Quelle méthode choisis-tu ?
+            <select id="t_method">
+              <option>Élimination</option>
+              <option>Substitution</option>
+              <option>Graphique puis contrôle algébrique</option>
+              <option>Cramer</option>
+            </select>
+          </label>
+        </div>
+        <div class="step">
+          <div class="form-row">
+            <label>Valeur de x <input type="text" id="t_x"></label>
+            <label>Valeur de y <input type="text" id="t_y"></label>
+          </div>
+        </div>
+        <div class="step">
+          <label>5. Vérification et phrase-réponse
+            <textarea id="t_conclusion" rows="4"></textarea>
+          </label>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn success" id="checkTransfer">Vérifier</button>
+        <button class="btn orange" id="transferHint">Indice</button>
+        <button class="btn ghost" id="transferCorrection">Correction</button>
+      </div>
+      <div id="transferFeedback" class="feedback"></div>
+      <div id="transferCorrectionBox" class="callout hidden"></div>
+    </div>
+  </div>
+
+  <div class="callout orange">
+    <strong>Une réponse mathématique ou physique doit être interprétée dans le contexte du problème.</strong>
+  </div>
+</section>
+
+<section class="page" id="quiz">
+  <div class="section-title"><span class="number">6</span><div><h1>Quiz final</h1><p>15 questions variées, note convertie sur 20.</p></div></div>
+  <div class="card">
+    <p>Le quiz contient au minimum 3 questions de compréhension, 5 d’application, 4 de raisonnement et 2 de transfert.</p>
+    <div class="actions">
+      <button class="btn primary" id="startQuiz">Générer un nouveau quiz</button>
+      <button class="btn success hidden" id="submitQuiz">Corriger le quiz</button>
+    </div>
+  </div>
+  <div id="quizContainer"></div>
+  <div id="quizResult" class="card hidden" style="margin-top:18px"></div>
+</section>
+
+<section class="page" id="progress">
+  <div class="section-title"><span class="number">7</span><div><h1>Mes progrès</h1><p>Ton tableau de bord personnel, enregistré sur cet appareil.</p></div></div>
+
+  <div class="grid four">
+    <div class="kpi"><strong id="progressOverall">0%</strong>Progression</div>
+    <div class="kpi"><strong id="successCount">0</strong>Exercices réussis</div>
+    <div class="kpi"><strong id="attemptCount">0</strong>Tentatives</div>
+    <div class="kpi"><strong id="bestQuiz">—</strong>Meilleur quiz /20</div>
+  </div>
+
+  <div class="grid two" style="margin-top:18px">
+    <div class="card">
+      <h2>Scores par niveau cognitif</h2>
+      <div id="cognitiveProgress"></div>
+    </div>
+    <div class="card">
+      <h2>Progression par module</h2>
+      <div id="moduleProgress"></div>
+    </div>
+  </div>
+
+  <div class="grid two" style="margin-top:18px">
+    <div class="card">
+      <h2>Erreurs fréquentes</h2>
+      <ul id="errorList"></ul>
+    </div>
+    <div class="card">
+      <h2>Recommandations</h2>
+      <div id="recommendations"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h2>Badges pédagogiques</h2>
+    <div class="grid four" id="badgeArea"></div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h2>Historique</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Activité</th><th>Niveau</th><th>Résultat</th></tr></thead>
+        <tbody id="historyTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="teacher">
+  <div class="section-title"><span class="number">8</span><div><h1>Espace enseignant</h1><p>Paramétrage, projection, impression et export local.</p></div></div>
+
+  <div id="teacherLogin" class="card teacher-panel">
+    <h2>Accès protégé</h2>
+    <p>Mot de passe de démonstration configurable dans le code.</p>
+    <label for="teacherPassword">Mot de passe
+      <input type="password" id="teacherPassword">
+    </label>
+    <button class="btn primary" id="teacherLoginBtn" style="margin-top:12px">Ouvrir l’espace enseignant</button>
+    <div id="teacherLoginFeedback" class="feedback"></div>
+  </div>
+
+  <div id="teacherContent" class="hidden">
+    <div class="grid three">
+      <div class="kpi"><strong id="teacherAttempts">0</strong>Tentatives locales</div>
+      <div class="kpi"><strong id="teacherSuccess">0%</strong>Réussite</div>
+      <div class="kpi"><strong id="teacherQuiz">—</strong>Dernier quiz</div>
+    </div>
+
+    <div class="grid two" style="margin-top:18px">
+      <div class="card teacher-panel">
+        <h2>Paramètres pédagogiques</h2>
+        <label>Difficulté par défaut
+          <select id="teacherDifficulty">
+            <option value="facile">Facile</option>
+            <option value="intermediaire" selected>Intermédiaire</option>
+            <option value="avancee">Avancée</option>
+          </select>
+        </label>
+        <h3>Modules actifs</h3>
+        <div id="moduleToggles"></div>
+        <label style="display:flex;gap:8px;align-items:center;margin-top:15px">
+          <input type="checkbox" id="projectionMode"> Mode projection : masquer les corrections immédiates
+        </label>
+      </div>
+
+      <div class="card teacher-panel">
+        <h2>Analyse des erreurs</h2>
+        <div id="teacherErrors"></div>
+      </div>
+    </div>
+
+    <div class="card teacher-panel" style="margin-top:18px">
+      <h2>Générer une série imprimable</h2>
+      <div class="actions no-print">
+        <button class="btn primary" id="generatePrintSet">Générer 10 exercices</button>
+        <button class="btn ghost" id="togglePrintAnswers">Afficher / masquer le corrigé</button>
+        <button class="btn ghost" onclick="window.print()">Imprimer</button>
+        <button class="btn success" id="exportCSV">Exporter les résultats CSV</button>
+        <button class="btn danger" id="resetDemo">Réinitialiser les données locales</button>
+      </div>
+      <div id="printSet"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  Application pédagogique autonome • Systèmes d’équations • 5e secondaire qualifiant
+</footer>
+
+<script>
+"use strict";
+
+/* ==========================================================
+   1. CONFIGURATION PÉDAGOGIQUE CENTRALE
+   ========================================================== */
+const CONFIG = {
+  matiere: "Mathématiques",
+  niveau: "5e secondaire — Enseignement qualifiant belge",
+  chapitre: "Systèmes d’équations",
+  duree: "4 à 6 périodes de 50 minutes",
+  teacherPassword: "prof2026",
+  colors: {
+    navy:"#0b1f3a", blue:"#3aa7ff", green:"#168a55", orange:"#e57a14"
+  },
+  competences: [
+    "Reconnaître et vérifier un système de deux équations à deux inconnues.",
+    "Résoudre un système 2 × 2 par substitution et élimination.",
+    "Choisir une méthode adaptée et vérifier la solution.",
+    "Résoudre graphiquement et interpréter les cas particuliers.",
+    "Calculer des déterminants d’ordre 2 et 3.",
+    "Utiliser la règle de Cramer lorsque Δ ≠ 0.",
+    "Modéliser des problèmes de géométrie, mouvement et vie pratique.",
+    "Interpréter la solution avec une phrase-réponse et les unités."
+  ],
+  modules:["explore","learn","train","reason","transfer","quiz"],
+  cognitive:["comprendre","appliquer","raisonner","transferer"]
+};
+
+/* ==========================================================
+   2. ÉTAT ET STOCKAGE LOCAL
+   ========================================================== */
+const defaultState = {
+  attempts:0,
+  successes:0,
+  scores:{comprendre:{ok:0,total:0},appliquer:{ok:0,total:0},raisonner:{ok:0,total:0},transferer:{ok:0,total:0}},
+  modules:{explore:0,learn:0,train:0,reason:0,transfer:0,quiz:0},
+  errors:{},
+  history:[],
+  quizzes:[],
+  bestQuiz:null,
+  dark:false,
+  guided:false,
+  projection:false,
+  activeModules:{explore:true,learn:true,train:true,reason:true,transfer:true,quiz:true}
+};
+
+function loadState(){
+  try{
+    const saved=JSON.parse(localStorage.getItem("systemes5eState"));
+    return saved ? deepMerge(structuredClone(defaultState),saved) : structuredClone(defaultState);
+  }catch(e){return structuredClone(defaultState)}
+}
+function deepMerge(target,source){
+  for(const k in source){
+    if(source[k] && typeof source[k]==="object" && !Array.isArray(source[k])){
+      target[k]=deepMerge(target[k]||{},source[k]);
+    }else target[k]=source[k];
+  }
+  return target;
+}
+let state=loadState();
+function saveState(){
+  localStorage.setItem("systemes5eState",JSON.stringify(state));
+  updateAllProgress();
+}
+function addHistory(activity,level,result){
+  state.history.unshift({
+    date:new Date().toLocaleString("fr-BE"),
+    activity,level,result
+  });
+  state.history=state.history.slice(0,40);
+}
+function recordAttempt(level,ok,errorType=""){
+  state.attempts++;
+  if(ok) state.successes++;
+  if(state.scores[level]){
+    state.scores[level].total++;
+    if(ok) state.scores[level].ok++;
+  }
+  if(!ok && errorType) state.errors[errorType]=(state.errors[errorType]||0)+1;
+}
+function markModule(name,value){
+  state.modules[name]=Math.max(state.modules[name]||0,value);
+  saveState();
+}
+
+/* ==========================================================
+   3. UTILITAIRES MATHÉMATIQUES
+   ========================================================== */
+const rand=(min,max)=>Math.floor(Math.random()*(max-min+1))+min;
+const choice=a=>a[rand(0,a.length-1)];
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const round=(x,n=2)=>Number(x.toFixed(n));
+
+function gcd(a,b){
+  a=Math.abs(a);b=Math.abs(b);
+  while(b){[a,b]=[b,a%b]} return a||1;
+}
+function formatNumber(n){
+  if(Math.abs(n-Math.round(n))<1e-9) return String(Math.round(n));
+  return String(round(n,2)).replace(".",",");
+}
+function parseMathValue(value){
+  if(value===undefined||value===null) return NaN;
+  let s=String(value).trim().toLowerCase().replace(/\s/g,"").replace(",",".");
+  s=s.replace(/[€kmhscm²m²]/g,"");
+  if(s.includes("/")){
+    const p=s.split("/");
+    if(p.length===2){
+      const a=Number(p[0]),b=Number(p[1]);
+      if(Number.isFinite(a)&&Number.isFinite(b)&&b!==0)return a/b;
+    }
+  }
+  return Number(s);
+}
+function approx(a,b,tol=.01){return Number.isFinite(a)&&Math.abs(a-b)<=tol}
+function det2(a,b,c,d){return a*d-b*c}
+function det3(m){
+  const [a,b,c,d,e,f,g,h,i]=m;
+  return a*e*i+b*f*g+c*d*h-c*e*g-b*d*i-a*f*h;
+}
+function solve2(a,b,c,d,e,f){
+  const D=det2(a,b,d,e);
+  if(Math.abs(D)<1e-10)return null;
+  return {x:(c*e-b*f)/D,y:(a*f-c*d)/D,D};
+}
+function signTerm(n,variable){
+  if(n===0)return "";
+  if(n===1)return ` + ${variable}`;
+  if(n===-1)return ` − ${variable}`;
+  return n>0?` + ${n}${variable}`:` − ${Math.abs(n)}${variable}`;
+}
+function equationText(a,b,c){
+  let left="";
+  if(a===1)left="x"; else if(a===-1)left="−x"; else left=`${a}x`;
+  left+=signTerm(b,"y");
+  return `${left} = ${c}`;
+}
+function sanitizeEquation(s){
+  return String(s).toLowerCase().replace(/\s/g,"").replace(/−/g,"-").replace(/,/g,".");
+}
+
+/* ==========================================================
+   4. NAVIGATION
+   ========================================================== */
+const navBtns=[...document.querySelectorAll(".nav-btn")];
+function showPage(id){
+  if(state.activeModules[id]===false && !["home","progress","teacher"].includes(id)){
+    alert("Ce module est actuellement désactivé par l’enseignant.");
+    return;
+  }
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  navBtns.forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="progress")renderProgress();
+  if(id==="teacher")renderTeacher();
+  if(id==="explore"){drawGraph();markModule("explore",20)}
+}
+navBtns.forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.goto)));
+document.getElementById("menuToggle").addEventListener("click",()=>{
+  const nav=document.getElementById("mainNav");
+  nav.classList.toggle("mobile-hidden");
+  document.getElementById("menuToggle").setAttribute("aria-expanded",String(!nav.classList.contains("mobile-hidden")));
+});
+document.getElementById("darkToggle").addEventListener("click",()=>{
+  state.dark=!state.dark;
+  document.body.classList.toggle("dark",state.dark);
+  saveState();
+  drawGraph();
+});
+if(state.dark)document.body.classList.add("dark");
+
+/* ==========================================================
+   5. MODULE EXPLORATION — GRAPHIQUE
+   ========================================================== */
+const canvas=document.getElementById("systemGraph");
+const ctx=canvas.getContext("2d");
+let graphZoom=1,precise=false;
+const graphInputs=["m1","p1","m2","p2"].map(id=>document.getElementById(id));
+
+graphInputs.forEach(el=>el.addEventListener("input",()=>{
+  document.getElementById(el.id+"Val").textContent=formatNumber(Number(el.value));
+  drawGraph();
+}));
+
+function graphParams(){
+  return {
+    m1:Number(document.getElementById("m1").value),
+    p1:Number(document.getElementById("p1").value),
+    m2:Number(document.getElementById("m2").value),
+    p2:Number(document.getElementById("p2").value)
+  };
+}
+function drawGraph(){
+  if(!ctx)return;
+  const {m1,p1,m2,p2}=graphParams();
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=getComputedStyle(document.body).getPropertyValue("--white")||"#fff";
+  ctx.fillRect(0,0,W,H);
+
+  const range=10/graphZoom;
+  const sx=W/(2*range),sy=H/(2*range);
+  const X=x=>W/2+x*sx, Y=y=>H/2-y*sy;
+
+  const grid=document.getElementById("gridToggle").checked;
+  const coords=document.getElementById("coordToggle").checked;
+  const labels=document.getElementById("labelToggle").checked;
+
+  if(grid){
+    for(let i=Math.ceil(-range);i<=range;i++){
+      ctx.beginPath();
+      ctx.strokeStyle=i===0?"#8898aa":"#dfe7ef";
+      ctx.lineWidth=i===0?1.8:1;
+      ctx.moveTo(X(i),0);ctx.lineTo(X(i),H);ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0,Y(i));ctx.lineTo(W,Y(i));ctx.stroke();
+    }
+  }
+
+  ctx.strokeStyle="#52667b";ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(0,Y(0));ctx.lineTo(W,Y(0));ctx.stroke();
+  ctx.beginPath();ctx.moveTo(X(0),0);ctx.lineTo(X(0),H);ctx.stroke();
+
+  ctx.fillStyle="#40546b";
+  ctx.font="12px system-ui";
+  for(let i=Math.ceil(-range);i<=range;i++){
+    if(i===0)continue;
+    ctx.beginPath();ctx.moveTo(X(i),Y(0)-4);ctx.lineTo(X(i),Y(0)+4);ctx.stroke();
+    ctx.fillText(i,X(i)-4,Y(0)+17);
+    ctx.beginPath();ctx.moveTo(X(0)-4,Y(i));ctx.lineTo(X(0)+4,Y(i));ctx.stroke();
+    ctx.fillText(i,X(0)+7,Y(i)+4);
+  }
+  ctx.fillText("x",W-15,Y(0)-8);
+  ctx.fillText("y",X(0)+8,14);
+  ctx.fillText("O",X(0)+6,Y(0)+15);
+
+  function line(m,p,color){
+    ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=3;
+    ctx.moveTo(X(-range),Y(m*(-range)+p));
+    ctx.lineTo(X(range),Y(m*range+p));ctx.stroke();
+  }
+  line(m1,p1,"#268ee6");
+  line(m2,p2,"#168a55");
+
+  let description="";
+  let solution=null;
+  if(Math.abs(m1-m2)<1e-9){
+    if(Math.abs(p1-p2)<1e-9){
+      description="Les deux droites sont confondues : le système admet une infinité de solutions.";
+    }else{
+      description="Les deux droites sont parallèles et distinctes : le système n’admet aucune solution.";
+    }
+  }else{
+    const x=(p2-p1)/(m1-m2),y=m1*x+p1;
+    solution={x,y};
+    if(coords && x>=-range&&x<=range&&y>=-range&&y<=range){
+      ctx.beginPath();ctx.arc(X(x),Y(y),6,0,Math.PI*2);ctx.fillStyle="#e57a14";ctx.fill();
+      if(labels){
+        ctx.font="bold 14px system-ui";ctx.fillStyle="#9c5009";
+        ctx.fillText(`(${formatNumber(x)} ; ${formatNumber(y)})`,X(x)+10,Y(y)-10);
+      }
+    }
+    description=`Les droites se coupent en (${formatNumber(x)} ; ${formatNumber(y)}). Le système admet une solution unique. Une lecture graphique peut être approximative : le calcul permet de la contrôler.`;
+  }
+
+  document.getElementById("graphDescription").textContent=description;
+  document.getElementById("observation").textContent=description;
+  canvas.setAttribute("aria-label",description);
+
+  const tbody=document.getElementById("graphTable");
+  tbody.innerHTML="";
+  [-2,-1,0,1,2].forEach(x=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${formatNumber(x)}</td><td>${formatNumber(m1*x+p1)}</td><td>${formatNumber(m2*x+p2)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+["gridToggle","coordToggle","labelToggle"].forEach(id=>document.getElementById(id).addEventListener("change",drawGraph));
+document.getElementById("zoomIn").onclick=()=>{graphZoom=clamp(graphZoom*1.25,.5,2.5);drawGraph()};
+document.getElementById("zoomOut").onclick=()=>{graphZoom=clamp(graphZoom/1.25,.5,2.5);drawGraph()};
+document.getElementById("preciseMode").onclick=()=>{
+  precise=!precise;
+  document.getElementById("coordToggle").checked=precise||document.getElementById("coordToggle").checked;
+  document.getElementById("preciseMode").textContent=precise?"Lecture précise : activée":"Lecture précise";
+  graphZoom=precise?1.5:1;
+  drawGraph();
+};
+document.getElementById("resetGraph").onclick=()=>{
+  [["m1",1],["p1",1],["m2",-1],["p2",5]].forEach(([id,v])=>{
+    document.getElementById(id).value=v;
+    document.getElementById(id+"Val").textContent=v;
+  });
+  graphZoom=1;drawGraph();
+};
+document.getElementById("newGraph").onclick=()=>{
+  let m1=rand(-3,3),m2=rand(-3,3);
+  while(m1===m2)m2=rand(-3,3);
+  const p1=rand(-4,4),p2=rand(-4,4);
+  [["m1",m1],["p1",p1],["m2",m2],["p2",p2]].forEach(([id,v])=>{
+    document.getElementById(id).value=v;
+    document.getElementById(id+"Val").textContent=v;
+  });
+  drawGraph();
+};
+document.getElementById("randomChallenge").onclick=()=>{
+  const type=choice(["unique","parallel","same"]);
+  let m1=rand(-3,3),m2=rand(-3,3),p1=rand(-4,4),p2=rand(-4,4);
+  if(type==="parallel"){m2=m1;while(p2===p1)p2=rand(-4,4)}
+  if(type==="same"){m2=m1;p2=p1}
+  if(type==="unique"){while(m2===m1)m2=rand(-3,3)}
+  [["m1",m1],["p1",p1],["m2",m2],["p2",p2]].forEach(([id,v])=>{
+    document.getElementById(id).value=v;
+    document.getElementById(id+"Val").textContent=v;
+  });
+  drawGraph();
+  const box=document.getElementById("challengeText");
+  box.classList.remove("hidden");
+  box.innerHTML="<strong>Défi :</strong> observe le graphique et décide si le système possède une solution, aucune solution ou une infinité de solutions. Justifie avec la position des droites.";
+  markModule("explore",55);
+};
+document.getElementById("graphHint").onclick=()=>{
+  const {m1,p1,m2,p2}=graphParams();
+  const box=document.getElementById("graphHintText");
+  box.classList.remove("hidden");
+  box.textContent=Math.abs(m1-m2)<1e-9
+    ?"Compare les pentes. Deux droites de même pente sont parallèles ou confondues. Compare ensuite leurs ordonnées à l’origine."
+    :"Les pentes sont différentes : les deux droites finissent par se couper. Le point commun est la solution.";
+};
+canvas.addEventListener("keydown",e=>{
+  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)){
+    e.preventDefault();
+    document.getElementById("graphDescription").focus?.();
+  }
+});
+
+/* ==========================================================
+   6. CARTES DE NOTIONS
+   ========================================================== */
+const cardsData=[
+  {
+    title:"Système 2 × 2",
+    front:"Deux équations qui doivent être satisfaites simultanément par les mêmes valeurs de x et y.",
+    back:`<strong>Exemple :</strong><div class="equation">{ x + y = 7<br>{ 2x − y = 2</div>
+    <p><strong>Solution :</strong> un couple (x ; y) vérifiant les deux équations.</p>
+    <p><strong>Erreur fréquente :</strong> vérifier une seule équation.</p>`
+  },
+  {
+    title:"Substitution",
+    front:"Isoler une inconnue dans une équation, puis remplacer cette inconnue dans l’autre.",
+    back:`<strong>Exemple :</strong><p>x + y = 7 ⇒ y = 7 − x.</p>
+    <p>On remplace y dans la seconde équation.</p>
+    <p><strong>Conseil :</strong> pratique lorsqu’une inconnue est déjà isolée ou a un coefficient 1.</p>
+    <p><strong>Erreur fréquente :</strong> oublier les parenthèses lors du remplacement.</p>`
+  },
+  {
+    title:"Élimination",
+    front:"Additionner ou soustraire des équations afin de faire disparaître une inconnue.",
+    back:`<strong>Exemple :</strong><div class="equation">x + y = 7<br>2x − y = 2</div>
+    <p>En additionnant : 3x = 9, donc x = 3.</p>
+    <p><strong>Erreur fréquente :</strong> modifier un seul membre d’une équation.</p>`
+  },
+  {
+    title:"Résolution graphique",
+    front:"Chaque équation du premier degré à deux inconnues représente une droite.",
+    back:`<p><strong>Une intersection :</strong> une solution.</p>
+    <p><strong>Droites parallèles distinctes :</strong> aucune solution.</p>
+    <p><strong>Droites confondues :</strong> infinité de solutions.</p>
+    <p><strong>Attention :</strong> la lecture graphique peut être approximative.</p>`
+  },
+  {
+    title:"Déterminant 2 × 2",
+    front:"Pour une matrice de coefficients, le déterminant vaut ad − bc.",
+    back:`<div class="math-big">Δ = |a b; c d| = ad − bc</div>
+    <p>Si Δ ≠ 0, le système admet une solution unique et la règle de Cramer peut être appliquée.</p>
+    <p>Si Δ = 0, Cramer ne fournit pas de solution unique.</p>`
+  },
+  {
+    title:"Règle de Cramer",
+    front:"Une méthode basée sur des déterminants pour les systèmes dont le déterminant principal est non nul.",
+    back:`<div class="math-big">x = Δx / Δ &nbsp;&nbsp; y = Δy / Δ</div>
+    <p><strong>Procédure :</strong> calculer Δ, puis remplacer successivement la colonne de x et celle de y par les constantes.</p>
+    <p><strong>Vérification :</strong> remplacer x et y dans les équations initiales.</p>`
+  },
+  {
+    title:"Sarrus — ordre 3",
+    front:"Une procédure de calcul du déterminant d’une matrice 3 × 3.",
+    back:`<div class="math-big">aei + bfg + cdh − ceg − bdi − afh</div>
+    <p>Elle s’utilise uniquement pour un déterminant d’ordre 3.</p>
+    <p><strong>Erreur fréquente :</strong> oublier de soustraire les trois produits des diagonales remontantes.</p>`
+  },
+  {
+    title:"Modélisation",
+    front:"Transformer une situation réelle en inconnues, équations et système.",
+    back:`<p><strong>1.</strong> Définir précisément x et y.</p>
+    <p><strong>2.</strong> Traduire chaque information par une équation.</p>
+    <p><strong>3.</strong> Résoudre et vérifier.</p>
+    <p><strong>4.</strong> Interpréter avec les unités et une phrase-réponse.</p>`
+  }
+];
+function renderCards(){
+  const area=document.getElementById("flashcards");
+  area.innerHTML="";
+  cardsData.forEach((c,i)=>{
+    const d=document.createElement("div");
+    d.className="flip-card";
+    d.tabIndex=0;
+    d.setAttribute("role","button");
+    d.setAttribute("aria-label",`${c.title}. Appuyer pour retourner la carte.`);
+    d.innerHTML=`<div class="flip-inner">
+      <div class="flip-front"><span class="tag blue">Notion ${i+1}</span><h3>${c.title}</h3><p>${c.front}</p><p><strong>Appuie pour voir l’explication.</strong></p></div>
+      <div class="flip-back"><h3>${c.title}</h3>${c.back}<p><strong>Appuie pour revenir.</strong></p></div>
+    </div>`;
+    d.addEventListener("click",()=>{d.classList.toggle("flipped");markModule("learn",35)});
+    d.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();d.click()}});
+    area.appendChild(d);
+  });
+}
+renderCards();
+
+const matching=[
+  ["Une inconnue est déjà isolée","Substitution"],
+  ["Les coefficients de y sont opposés","Élimination"],
+  ["On souhaite visualiser l’intersection","Résolution graphique"],
+  ["Δ ≠ 0 et on demande les déterminants","Règle de Cramer"],
+  ["Deux droites ont la même pente mais des ordonnées à l’origine différentes","Aucune solution"]
+];
+function renderMatching(){
+  const opts=["Substitution","Élimination","Résolution graphique","Règle de Cramer","Aucune solution"];
+  document.getElementById("matchingActivity").innerHTML=matching.map((m,i)=>`
+    <div class="match-row">
+      <div>${m[0]}</div>
+      <select id="match${i}" aria-label="Réponse pour ${m[0]}">
+        <option value="">Choisir…</option>${opts.map(o=>`<option>${o}</option>`).join("")}
+      </select>
+      <span id="matchMark${i}"></span>
+    </div>`).join("");
+}
+renderMatching();
+document.getElementById("checkMatching").onclick=()=>{
+  let score=0;
+  matching.forEach((m,i)=>{
+    const ok=document.getElementById("match"+i).value===m[1];
+    if(ok)score++;
+    document.getElementById("matchMark"+i).textContent=ok?"✓":"✗";
+  });
+  const ok=score===matching.length;
+  const f=document.getElementById("matchingFeedback");
+  f.className="feedback "+(ok?"ok":"bad");
+  f.textContent=`${score}/${matching.length} association(s) correcte(s). ${ok?"Très bien : tu relies les situations aux méthodes adaptées.":"Relis les cartes correspondant aux associations incorrectes."}`;
+  recordAttempt("comprendre",ok,"choix de méthode");
+  addHistory("Association des méthodes","Comprendre",`${score}/${matching.length}`);
+  markModule("learn",ok?100:70);saveState();
+};
+document.getElementById("resetMatching").onclick=()=>{renderMatching();document.getElementById("matchingFeedback").textContent=""};
+
+document.getElementById("calcDet2").onclick=()=>{
+  const a=+da.value,b=+db.value,c=+dc.value,d=+dd.value;
+  const D=det2(a,b,c,d);
+  const box=document.getElementById("det2Result");
+  box.className="feedback ok";
+  box.innerHTML=`Δ = (${a}) × (${d}) − (${b}) × (${c}) = <strong>${D}</strong>. ${D===0?"Comme Δ = 0, Cramer ne permet pas d’obtenir une solution unique.":"Comme Δ ≠ 0, Cramer peut être utilisé pour obtenir une solution unique."}`;
+};
+const matrixArea=document.getElementById("matrix3Inputs");
+const initial3=[1,2,3,0,1,4,5,6,0];
+matrixArea.innerHTML=initial3.map((v,i)=>`<label>Coefficient ${i+1}<input type="number" id="mat${i}" value="${v}"></label>`).join("");
+document.getElementById("calcDet3").onclick=()=>{
+  const m=initial3.map((_,i)=>Number(document.getElementById("mat"+i).value));
+  const d=det3(m);
+  const [a,b,c,e,f,g,h,i,j]=m;
+  const box=document.getElementById("det3Result");
+  box.className="feedback ok";
+  box.innerHTML=`Sarrus : (${a}×${f}×${j}) + (${b}×${g}×${h}) + (${c}×${e}×${i}) − (${c}×${f}×${h}) − (${b}×${e}×${j}) − (${a}×${g}×${i}) = <strong>${d}</strong>.`;
+  markModule("learn",90);
+};
+
+/* ==========================================================
+   7. MOTEUR D’EXERCICES
+   ========================================================== */
+let currentExercise=null,exerciseAttempts=0,hintIndex=0;
+function makeSolvableSystem(diff="intermediaire"){
+  let x,y,a,b,d,e,c,f,D;
+  do{
+    x=rand(diff==="avancee"?-8:-5,8);
+    y=rand(diff==="avancee"?-8:-5,8);
+    a=choice([-4,-3,-2,-1,1,2,3,4]);
+    b=choice([-4,-3,-2,-1,1,2,3,4]);
+    d=choice([-4,-3,-2,-1,1,2,3,4]);
+    e=choice([-4,-3,-2,-1,1,2,3,4]);
+    D=det2(a,b,d,e);
+  }while(D===0);
+  c=a*x+b*y;f=d*x+e*y;
+  return {a,b,c,d,e,f,x,y,D};
+}
+function exerciseGenerators(){
+  return {
+    comprendre:[
+      ()=>{
+        const s=makeSolvableSystem();
+        const couple=choice([[s.x,s.y],[s.x+1,s.y],[s.x,s.y-1]]);
+        const ok=couple[0]===s.x&&couple[1]===s.y;
+        return {
+          title:"Vérifier un couple",
+          statement:`<p>Le couple <strong>(${couple[0]} ; ${couple[1]})</strong> est-il solution du système ?</p>
+          <div class="equation">{ ${equationText(s.a,s.b,s.c)}<br>{ ${equationText(s.d,s.e,s.f)}</div>`,
+          input:"choice",options:["Oui","Non"],answer:ok?"Oui":"Non",
+          hints:["Remplace x et y par les valeurs du couple dans la première équation.","Fais ensuite la même vérification dans la deuxième équation."],
+          correction:`On remplace x = ${couple[0]} et y = ${couple[1]} dans <strong>les deux</strong> équations. 
+          ${ok?`Les deux égalités sont vraies : le couple est donc solution.`:`Au moins une égalité est fausse : le couple n’est pas solution.`}`,
+          error:"vérification incomplète"
+        };
+      },
+      ()=>{
+        const type=choice(["unique","none","infinite"]);
+        let desc,ans;
+        if(type==="unique"){desc="Deux droites de pentes différentes.";ans="Une solution"}
+        else if(type==="none"){desc="Deux droites distinctes ont la même pente.";ans="Aucune solution"}
+        else{desc="Les deux équations représentent exactement la même droite.";ans="Une infinité de solutions"}
+        return {
+          title:"Interpréter deux droites",statement:`<p>${desc} Combien de solutions possède le système ?</p>`,
+          input:"choice",options:["Une solution","Aucune solution","Une infinité de solutions"],answer:ans,
+          hints:["La solution graphique correspond aux points communs aux deux droites."],
+          correction:`${desc} La bonne réponse est : <strong>${ans}</strong>.`,error:"interprétation graphique"
+        };
+      }
+    ],
+    appliquer:[
+      ()=>{
+        const s=makeSolvableSystem();
+        return {
+          title:"Résoudre un système 2 × 2",
+          statement:`<p>Résous le système suivant par substitution ou élimination :</p>
+          <div class="equation">{ ${equationText(s.a,s.b,s.c)}<br>{ ${equationText(s.d,s.e,s.f)}</div>`,
+          input:"xy",answer:{x:s.x,y:s.y},
+          hints:["Choisis l’équation dans laquelle une inconnue est la plus facile à isoler, ou cherche des coefficients faciles à éliminer.","Après avoir trouvé une inconnue, remplace-la dans une équation pour trouver l’autre.","Vérifie le couple dans les deux équations."],
+          correction:`La solution est <strong>(${s.x} ; ${s.y})</strong>. Par exemple, on élimine une inconnue en combinant les deux équations, puis on calcule l’autre. Vérification : ${s.a}×${s.x} ${s.b>=0?"+":"−"} ${Math.abs(s.b)}×${s.y} = ${s.c} et ${s.d}×${s.x} ${s.e>=0?"+":"−"} ${Math.abs(s.e)}×${s.y} = ${s.f}.`,
+          error:"résolution algébrique"
+        };
+      },
+      ()=>{
+        const s=makeSolvableSystem();
+        return {
+          title:"Règle de Cramer — système 2 × 2",
+          statement:`<p>Pour le système :</p><div class="equation">{ ${equationText(s.a,s.b,s.c)}<br>{ ${equationText(s.d,s.e,s.f)}</div>
+          <p>Calcule Δ puis la solution.</p>`,
+          input:"dxy",answer:{D:s.D,x:s.x,y:s.y},
+          hints:["Δ = ae − bd pour la matrice des coefficients.","Pour Δx, remplace la colonne des coefficients de x par les constantes.","x = Δx/Δ et y = Δy/Δ."],
+          correction:`Δ = ${s.a}×${s.e} − ${s.b}×${s.d} = <strong>${s.D}</strong>. Comme Δ ≠ 0, Cramer s’applique. On obtient <strong>x = ${s.x}</strong> et <strong>y = ${s.y}</strong>.`,
+          error:"déterminants de Cramer"
+        };
+      }
+    ],
+    raisonner:[
+      ()=>{
+        const s=makeSolvableSystem();
+        const obvious=Math.abs(s.a)===1||Math.abs(s.b)===1||Math.abs(s.d)===1||Math.abs(s.e)===1;
+        const ans=obvious?"Substitution":"Élimination";
+        return {
+          title:"Choisir une stratégie",
+          statement:`<p>Pour le système suivant, quelle méthode algébrique paraît la plus directe ?</p>
+          <div class="equation">{ ${equationText(s.a,s.b,s.c)}<br>{ ${equationText(s.d,s.e,s.f)}</div>`,
+          input:"choice",options:["Substitution","Élimination"],answer:ans,
+          hints:[obvious?"Repère un coefficient 1 ou −1 : il permet d’isoler facilement une inconnue.":"Regarde si une combinaison simple des équations permet de supprimer une inconnue."],
+          correction:`Une stratégie particulièrement directe ici est <strong>${ans}</strong>. D’autres méthodes correctes restent possibles si elles sont menées rigoureusement.`,
+          error:"choix de méthode"
+        };
+      },
+      ()=>{
+        const s=makeSolvableSystem();
+        return {
+          title:"Repérer une erreur de raisonnement",
+          statement:`<p>Un élève trouve x = ${s.x} et y = ${s.y+1} pour le système :</p>
+          <div class="equation">{ ${equationText(s.a,s.b,s.c)}<br>{ ${equationText(s.d,s.e,s.f)}</div>
+          <p>Cette réponse est-elle correcte ?</p>`,
+          input:"choice",options:["Oui","Non"],answer:"Non",
+          hints:["Une solution doit vérifier simultanément les deux équations.","Remplace les deux valeurs proposées."],
+          correction:`La bonne solution est <strong>(${s.x} ; ${s.y})</strong>. Le couple proposé contient y = ${s.y+1} : il ne vérifie donc pas simultanément les deux équations.`,
+          error:"absence de vérification"
+        };
+      }
+    ],
+    transferer:[
+      ()=>{
+        const adults=rand(3,10),students=rand(8,20);
+        const total=adults+students,price=adults*12+students*7;
+        return {
+          title:"Vie pratique — tickets",
+          statement:`<p>Une association vend ${total} tickets. Un ticket jeune coûte 7 € et un ticket adulte 12 €. La recette est de ${price} €. Combien de tickets de chaque type ont été vendus ?</p>`,
+          input:"xy",answer:{x:students,y:adults},
+          hints:["Pose x = nombre de tickets jeunes et y = nombre de tickets adultes.","Le nombre total donne x + y. La recette donne 7x + 12y."],
+          correction:`On pose x = tickets jeunes et y = tickets adultes. Système : x + y = ${total} et 7x + 12y = ${price}. On obtient <strong>x = ${students}</strong> et <strong>y = ${adults}</strong>. Donc ${students} tickets jeunes et ${adults} tickets adultes ont été vendus.`,
+          error:"modélisation d’un problème"
+        };
+      },
+      ()=>{
+        const t=rand(2,5),v1=rand(40,70),v2=rand(20,35);
+        const d1=v1*t,d2=v2*t;
+        return {
+          title:"TRR 2 — mouvement",
+          statement:`<p>Deux véhicules roulent pendant ${t} h. Le premier parcourt ${d1} km et le second ${d2} km. On note x et y leurs vitesses constantes. Trouve x et y.</p>`,
+          input:"xy",answer:{x:v1,y:v2},
+          hints:["Utilise d = v × t.","Donc v = d ÷ t pour chaque véhicule. Le problème peut être présenté sous forme d’un système de deux relations."],
+          correction:`Avec d = v × t : ${d1} = ${t}x et ${d2} = ${t}y. Donc <strong>x = ${v1} km/h</strong> et <strong>y = ${v2} km/h</strong>.`,
+          error:"relation distance-vitesse-temps"
+        };
+      }
+    ]
+  };
+}
+
+function generateExercise(){
+  const level=document.getElementById("cognitiveLevel").value;
+  const diff=document.getElementById("difficulty").value;
+  const generators=exerciseGenerators()[level];
+  currentExercise=choice(generators)();
+  currentExercise.level=level;
+  currentExercise.diff=diff;
+  exerciseAttempts=0;hintIndex=0;
+  document.getElementById("exerciseTags").innerHTML=`<span class="tag blue">${capitalize(level)}</span> <span class="tag orange">${capitalize(diff)}</span>`;
+  document.getElementById("exerciseTitle").textContent=currentExercise.title;
+  document.getElementById("exerciseStatement").innerHTML=currentExercise.statement;
+  renderExerciseInput(currentExercise);
+  document.getElementById("exerciseFeedback").textContent="";
+  document.getElementById("exerciseFeedback").className="feedback";
+  document.getElementById("exerciseCorrection").classList.add("hidden");
+  if(state.guided)showHint();
+}
+function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function renderExerciseInput(ex){
+  const area=document.getElementById("exerciseInput");
+  if(ex.input==="choice"){
+    area.innerHTML=`<fieldset><legend>Ta réponse</legend>${ex.options.map((o,i)=>`
+      <label class="choice"><input type="radio" name="exChoice" value="${o}"> ${o}</label>`).join("")}</fieldset>`;
+  }else if(ex.input==="xy"){
+    area.innerHTML=`<div class="form-row"><label>x = <input type="text" id="exX" inputmode="decimal"></label><label>y = <input type="text" id="exY" inputmode="decimal"></label></div>`;
+  }else if(ex.input==="dxy"){
+    area.innerHTML=`<div class="grid three"><label>Δ = <input type="text" id="exD"></label><label>x = <input type="text" id="exX"></label><label>y = <input type="text" id="exY"></label></div>`;
+  }
+}
+function checkCurrentExercise(){
+  if(!currentExercise)return;
+  let ok=false;
+  if(currentExercise.input==="choice"){
+    const sel=document.querySelector('input[name="exChoice"]:checked');
+    ok=!!sel&&sel.value===currentExercise.answer;
+  }else if(currentExercise.input==="xy"){
+    ok=approx(parseMathValue(document.getElementById("exX").value),currentExercise.answer.x)&&
+       approx(parseMathValue(document.getElementById("exY").value),currentExercise.answer.y);
+  }else if(currentExercise.input==="dxy"){
+    ok=approx(parseMathValue(document.getElementById("exD").value),currentExercise.answer.D)&&
+       approx(parseMathValue(document.getElementById("exX").value),currentExercise.answer.x)&&
+       approx(parseMathValue(document.getElementById("exY").value),currentExercise.answer.y);
+  }
+  exerciseAttempts++;
+  const fb=document.getElementById("exerciseFeedback");
+  recordAttempt(currentExercise.level,ok,currentExercise.error);
+  addHistory(currentExercise.title,capitalize(currentExercise.level),ok?"Réussi":"À revoir");
+  if(ok){
+    fb.className="feedback ok";
+    fb.innerHTML="✓ <strong>Correct.</strong> Pense toujours à vérifier et à interpréter la solution.";
+    markModule("train",100);
+  }else{
+    fb.className="feedback bad";
+    fb.innerHTML=exerciseAttempts===1
+      ?"Ce n’est pas encore correct. Reprends les données et demande un indice si nécessaire."
+      :"La réponse reste incorrecte. La correction détaillée est maintenant disponible.";
+    if(exerciseAttempts>=2)showExerciseCorrection();
+    markModule("train",60);
+  }
+  saveState();
+}
+function showHint(){
+  if(!currentExercise)return;
+  const hints=currentExercise.hints||[];
+  const fb=document.getElementById("exerciseFeedback");
+  fb.className="feedback hint";
+  fb.textContent=hints[Math.min(hintIndex,hints.length-1)]||"Relis l’énoncé et commence par identifier les inconnues.";
+  hintIndex++;
+}
+function showExerciseCorrection(){
+  if(!currentExercise)return;
+  const box=document.getElementById("exerciseCorrection");
+  box.innerHTML="<h3>Correction détaillée</h3>"+currentExercise.correction+"<p><strong>Contrôle :</strong> une solution d’un système doit vérifier toutes les équations concernées.</p>";
+  box.classList.remove("hidden");
+}
+document.getElementById("generateExercise").onclick=generateExercise;
+document.getElementById("checkExercise").onclick=checkCurrentExercise;
+document.getElementById("exerciseHint").onclick=showHint;
+document.getElementById("showCorrection").onclick=showExerciseCorrection;
+document.getElementById("guidedMode").onclick=()=>{
+  state.guided=!state.guided;
+  document.getElementById("guidedMode").textContent=`Mode guidé : ${state.guided?"activé":"désactivé"}`;
+  saveState();
+};
+generateExercise();
+
+/* ==========================================================
+   8. RAISONNEMENT GUIDÉ
+   ========================================================== */
+let reasonHintIndex=0;
+document.getElementById("reasonHint").onclick=()=>{
+  const hints=[
+    "Pose x = nombre de billets élèves et y = nombre de billets accompagnateurs.",
+    "Le nombre total donne x + y = 26.",
+    "Le prix total donne 8x + 12y = 232.",
+    "Tu peux simplifier la deuxième équation par 4 : 2x + 3y = 58.",
+    "À partir de x + y = 26, double la première équation puis compare."
+  ];
+  const fb=document.getElementById("reasonFeedback");
+  fb.className="feedback hint";fb.textContent=hints[Math.min(reasonHintIndex,hints.length-1)];
+  reasonHintIndex++;
+};
+document.getElementById("checkReason").onclick=()=>{
+  const x=Number(document.getElementById("r_x").value),y=Number(document.getElementById("r_y").value);
+  const eq1=sanitizeEquation(document.getElementById("r_eq1").value);
+  const eq2=sanitizeEquation(document.getElementById("r_eq2").value);
+  const meanings=(document.getElementById("r_xMeaning").value+" "+document.getElementById("r_yMeaning").value).toLowerCase();
+  const conclusion=document.getElementById("r_conclusion").value.toLowerCase();
+  let points=0;
+  if(meanings.includes("él")||meanings.includes("billet"))points++;
+  if(eq1.includes("26")&&eq1.includes("x")&&eq1.includes("y"))points++;
+  if(eq2.includes("232")&&eq2.includes("8")&&eq2.includes("12"))points++;
+  if(x===20&&y===6)points+=2;
+  if(conclusion.includes("20")&&conclusion.includes("6"))points++;
+  const ok=points>=5;
+  const fb=document.getElementById("reasonFeedback");
+  fb.className="feedback "+(ok?"ok":"bad");
+  fb.innerHTML=`${ok?"✓ Raisonnement cohérent.":"Certains éléments doivent être corrigés."} Score de démarche : <strong>${points}/6</strong>.`;
+  recordAttempt("raisonner",ok,"construction et interprétation");
+  addHistory("Problème guidé des billets","Raisonner",`${points}/6`);
+  markModule("reason",ok?100:60);saveState();
+};
+document.getElementById("reasonCorrection").onclick=()=>{
+  const b=document.getElementById("reasonCorrectionBox");
+  b.innerHTML=`<h3>Correction structurée</h3>
+  <p><strong>1. Inconnues :</strong> x = nombre de billets élèves ; y = nombre de billets accompagnateurs.</p>
+  <p><strong>2. Système :</strong></p><div class="equation">{ x + y = 26<br>{ 8x + 12y = 232</div>
+  <p><strong>3. Élimination :</strong> 8x + 8y = 208. En soustrayant cette équation de la seconde : 4y = 24, donc y = 6.</p>
+  <p><strong>4. Retour :</strong> x + 6 = 26, donc x = 20.</p>
+  <p><strong>5. Vérification :</strong> 20 + 6 = 26 et 8×20 + 12×6 = 160 + 72 = 232.</p>
+  <p><strong>Réponse :</strong> la classe a acheté <strong>20 billets élèves et 6 billets accompagnateurs</strong>.</p>`;
+  b.classList.remove("hidden");
+};
+
+/* ==========================================================
+   9. TRANSFERT
+   ========================================================== */
+const transferProblems=[
+  {
+    id:"geo",icon:"📐",title:"TRR 1 — Géométrie",
+    short:"Rectangle et dimensions",
+    statement:"Un rectangle a un périmètre de 54 cm. Sa longueur mesure 5 cm de plus que sa largeur. Détermine ses dimensions.",
+    x:16,y:11,
+    hints:["Pose x = longueur et y = largeur.","Le périmètre donne 2x + 2y = 54.","La longueur dépasse la largeur de 5 cm : x − y = 5."],
+    correction:`On pose x = longueur et y = largeur. Le système est 2x + 2y = 54 et x − y = 5. La première équation donne x + y = 27. En additionnant avec x − y = 5 : 2x = 32, donc x = 16. Alors y = 11. <strong>Le rectangle mesure 16 cm sur 11 cm.</strong>`
+  },
+  {
+    id:"move",icon:"🚲",title:"TRR 2 — Mouvement",
+    short:"Deux cyclistes",
+    statement:"Deux cyclistes partent du même point dans des directions opposées. Après 2 h, ils sont séparés de 70 km. Le premier roule 5 km/h plus vite que le second. Détermine leurs vitesses.",
+    x:20,y:15,
+    hints:["Pose x et y comme vitesses en km/h.","En 2 h, les distances sont 2x et 2y.","Comme ils s’éloignent en directions opposées : 2x + 2y = 70. Et x − y = 5."],
+    correction:`On pose x et y comme vitesses. Avec d = v × t : 2x + 2y = 70, donc x + y = 35. De plus x − y = 5. Addition : 2x = 40, donc x = 20 et y = 15. <strong>Les vitesses sont 20 km/h et 15 km/h.</strong>`
+  },
+  {
+    id:"life",icon:"🛒",title:"Vie pratique — Prix",
+    short:"Achats pour une fête",
+    statement:"Pour une fête, on achète 18 boissons : certaines coûtent 2 € et les autres 3 €. Le total est de 44 €. Combien de boissons de chaque prix ont été achetées ?",
+    x:10,y:8,
+    hints:["Pose x = nombre de boissons à 2 € et y = nombre de boissons à 3 €.","Le nombre total donne x + y = 18.","Le coût total donne 2x + 3y = 44."],
+    correction:`On pose x = boissons à 2 € et y = boissons à 3 €. Système : x + y = 18 ; 2x + 3y = 44. On double la première : 2x + 2y = 36. Soustraction : y = 8, puis x = 10. <strong>Il y a 10 boissons à 2 € et 8 boissons à 3 €.</strong>`
+  }
+];
+let activeTransfer=null,transferHintIndex=0;
+function renderTransferCards(){
+  const area=document.getElementById("transferCards");
+  area.innerHTML=transferProblems.map((p,i)=>`
+    <div class="card">
+      <div style="font-size:2.3rem">${p.icon}</div>
+      <span class="tag ${i===0?"blue":i===1?"green":"orange"}">${p.title}</span>
+      <h3>${p.short}</h3>
+      <button class="btn primary" data-transfer="${p.id}">Résoudre ce problème</button>
+    </div>`).join("");
+  area.querySelectorAll("[data-transfer]").forEach(b=>b.onclick=()=>openTransfer(b.dataset.transfer));
+}
+function openTransfer(id){
+  activeTransfer=transferProblems.find(p=>p.id===id);transferHintIndex=0;
+  document.getElementById("transferProblemTitle").textContent=activeTransfer.title+" — "+activeTransfer.short;
+  document.getElementById("transferProblemStatement").innerHTML=`<div class="callout">${activeTransfer.statement}</div>`;
+  document.getElementById("transferWorkspace").classList.remove("hidden");
+  ["t_unknowns","t_system","t_x","t_y","t_conclusion"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("transferFeedback").textContent="";
+  document.getElementById("transferCorrectionBox").classList.add("hidden");
+}
+renderTransferCards();
+document.getElementById("transferHint").onclick=()=>{
+  if(!activeTransfer)return;
+  const fb=document.getElementById("transferFeedback");
+  fb.className="feedback hint";
+  fb.textContent=activeTransfer.hints[Math.min(transferHintIndex,activeTransfer.hints.length-1)];
+  transferHintIndex++;
+};
+document.getElementById("checkTransfer").onclick=()=>{
+  if(!activeTransfer)return;
+  const x=parseMathValue(document.getElementById("t_x").value),y=parseMathValue(document.getElementById("t_y").value);
+  const unk=document.getElementById("t_unknowns").value.trim();
+  const sys=document.getElementById("t_system").value.trim();
+  const concl=document.getElementById("t_conclusion").value.trim();
+  let points=0;
+  if(unk.length>8)points++;
+  if(sys.includes("=")&&sys.length>8)points++;
+  if(approx(x,activeTransfer.x)&&approx(y,activeTransfer.y))points+=2;
+  if(concl.length>15)points++;
+  const ok=points>=4;
+  const fb=document.getElementById("transferFeedback");
+  fb.className="feedback "+(ok?"ok":"bad");
+  fb.innerHTML=`${ok?"✓ La modélisation et les résultats sont cohérents.":"La démarche n’est pas encore complète."} Score de démarche : <strong>${points}/5</strong>. ${concl.length<=15?"N’oublie pas la phrase-réponse avec le contexte et les unités.":""}`;
+  recordAttempt("transferer",ok,"modélisation d’un problème");
+  addHistory(activeTransfer.title,"Transférer",`${points}/5`);
+  markModule("transfer",ok?100:65);saveState();
+};
+document.getElementById("transferCorrection").onclick=()=>{
+  if(!activeTransfer)return;
+  const b=document.getElementById("transferCorrectionBox");
+  b.innerHTML="<h3>Correction détaillée</h3><p>"+activeTransfer.correction+"</p><p><strong>Contrôle de cohérence :</strong> les valeurs doivent satisfaire les deux relations et être compatibles avec le contexte.</p>";
+  b.classList.remove("hidden");
+};
+
+/* ==========================================================
+   10. QUIZ FINAL
+   ========================================================== */
+let currentQuiz=[];
+function quizQuestion(level,index){
+  const ex=choice(exerciseGenerators()[level])();
+  return {...ex,level,id:`q${index}`};
+}
+function startQuiz(){
+  const levels=[
+    ...Array(3).fill("comprendre"),
+    ...Array(5).fill("appliquer"),
+    ...Array(4).fill("raisonner"),
+    ...Array(3).fill("transferer")
+  ];
+  currentQuiz=levels.map((l,i)=>quizQuestion(l,i));
+  const area=document.getElementById("quizContainer");
+  area.innerHTML=currentQuiz.map((q,i)=>`
+    <div class="quiz-question" id="quizBlock${i}">
+      <span class="tag blue">${i+1}/15</span> <span class="tag orange">${capitalize(q.level)}</span>
+      <h3>${q.title}</h3>
+      ${q.statement}
+      ${quizInputHTML(q,i)}
+      <div id="quizFb${i}" class="feedback"></div>
+    </div>`).join("");
+  document.getElementById("submitQuiz").classList.remove("hidden");
+  document.getElementById("quizResult").classList.add("hidden");
+}
+function quizInputHTML(q,i){
+  if(q.input==="choice"){
+    return `<fieldset><legend>Réponse</legend>${q.options.map(o=>`<label class="choice"><input type="radio" name="quiz${i}" value="${o}"> ${o}</label>`).join("")}</fieldset>`;
+  }
+  if(q.input==="xy"){
+    return `<div class="form-row"><label>x = <input id="qx${i}" type="text"></label><label>y = <input id="qy${i}" type="text"></label></div>`;
+  }
+  return `<div class="grid three"><label>Δ = <input id="qd${i}" type="text"></label><label>x = <input id="qx${i}" type="text"></label><label>y = <input id="qy${i}" type="text"></label></div>`;
+}
+function checkQuizAnswer(q,i){
+  if(q.input==="choice"){
+    const s=document.querySelector(`input[name="quiz${i}"]:checked`);
+    return !!s&&s.value===q.answer;
+  }
+  if(q.input==="xy"){
+    return approx(parseMathValue(document.getElementById("qx"+i).value),q.answer.x)&&approx(parseMathValue(document.getElementById("qy"+i).value),q.answer.y);
+  }
+  return approx(parseMathValue(document.getElementById("qd"+i).value),q.answer.D)&&
+    approx(parseMathValue(document.getElementById("qx"+i).value),q.answer.x)&&
+    approx(parseMathValue(document.getElementById("qy"+i).value),q.answer.y);
+}
+document.getElementById("startQuiz").onclick=startQuiz;
+document.getElementById("submitQuiz").onclick=()=>{
+  if(!currentQuiz.length)return;
+  let correct=0;
+  const breakdown={comprendre:[0,0],appliquer:[0,0],raisonner:[0,0],transferer:[0,0]};
+  currentQuiz.forEach((q,i)=>{
+    const ok=checkQuizAnswer(q,i);
+    breakdown[q.level][1]++;
+    if(ok){correct++;breakdown[q.level][0]++}
+    const block=document.getElementById("quizBlock"+i);
+    block.classList.add(ok?"correct":"wrong");
+    const fb=document.getElementById("quizFb"+i);
+    if(state.projection){
+      fb.className="feedback hint";fb.textContent="Réponse enregistrée. Correction masquée en mode projection.";
+    }else{
+      fb.className="feedback "+(ok?"ok":"bad");
+      fb.innerHTML=ok?"✓ Correct.":`À revoir. ${q.correction}`;
+    }
+    recordAttempt(q.level,ok,q.error);
+  });
+  const score=round(correct/15*20,1);
+  state.quizzes.push({date:new Date().toLocaleString("fr-BE"),score,breakdown});
+  state.bestQuiz=state.bestQuiz===null?score:Math.max(state.bestQuiz,score);
+  addHistory("Quiz final","Mixte",`${formatNumber(score)}/20`);
+  markModule("quiz",100);
+  const result=document.getElementById("quizResult");
+  let advice=score>=18?"Excellent : les notions sont maîtrisées et tu sais les mobiliser dans des situations variées."
+    :score>=14?"Très bon travail : consolide surtout les exercices de raisonnement et de transfert."
+    :score>=10?"Les bases sont présentes. Reprends les activités de compréhension et d’application avant de refaire le quiz."
+    :"Reprends progressivement les modules. Commence par « Découvrir et explorer », puis entraîne-toi avec des exercices de niveau Comprendre.";
+  const weak=Object.entries(breakdown).filter(([k,v])=>v[0]/v[1]<.65).map(([k])=>capitalize(k)).join(", ")||"aucun niveau majeur";
+  result.innerHTML=`<h2>Résultat : ${formatNumber(score)} / 20</h2>
+    <p><strong>${correct}/15</strong> réponses correctes.</p>
+    <div class="grid four">${Object.entries(breakdown).map(([k,v])=>`<div class="kpi"><strong>${v[0]}/${v[1]}</strong>${capitalize(k)}</div>`).join("")}</div>
+    <div class="callout success"><strong>Conseil :</strong> ${advice}</div>
+    <p><strong>Points à retravailler :</strong> ${weak}.</p>`;
+  result.classList.remove("hidden");
+  saveState();
+};
+
+/* ==========================================================
+   11. TABLEAU DE BORD
+   ========================================================== */
+function percentScore(level){
+  const s=state.scores[level];
+  return s.total?Math.round(s.ok/s.total*100):0;
+}
+function overallProgress(){
+  const vals=Object.values(state.modules);
+  return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+}
+function updateAllProgress(){
+  const p=overallProgress();
+  document.getElementById("topProgress").style.width=p+"%";
+  document.getElementById("homeProgress").style.width=p+"%";
+  document.getElementById("homeProgressText").textContent=p+" % réalisé";
+}
+function renderProgress(){
+  const p=overallProgress();
+  document.getElementById("progressOverall").textContent=p+"%";
+  document.getElementById("successCount").textContent=state.successes;
+  document.getElementById("attemptCount").textContent=state.attempts;
+  document.getElementById("bestQuiz").textContent=state.bestQuiz===null?"—":formatNumber(state.bestQuiz);
+
+  document.getElementById("cognitiveProgress").innerHTML=CONFIG.cognitive.map(l=>{
+    const pc=percentScore(l);
+    return `<p><strong>${capitalize(l)} : ${pc}%</strong></p><div class="progress-box"><div style="width:${pc}%"></div></div>`;
+  }).join("");
+
+  const names={explore:"Découvrir",learn:"Comprendre",train:"S’entraîner",reason:"Raisonner",transfer:"Transférer",quiz:"Quiz final"};
+  document.getElementById("moduleProgress").innerHTML=Object.entries(state.modules).map(([k,v])=>
+    `<p><strong>${names[k]} : ${v}%</strong></p><div class="progress-box"><div style="width:${v}%"></div></div>`
+  ).join("");
+
+  const errors=Object.entries(state.errors).sort((a,b)=>b[1]-a[1]);
+  document.getElementById("errorList").innerHTML=errors.length?errors.slice(0,6).map(([e,n])=>`<li>${e} — ${n} fois</li>`).join(""):"<li>Aucune erreur enregistrée pour le moment.</li>";
+
+  let rec=[];
+  if(percentScore("comprendre")<65)rec.push("Revois les cartes de notions et l’activité graphique.");
+  if(percentScore("appliquer")<65)rec.push("Entraîne-toi davantage à l’élimination, la substitution et Cramer.");
+  if(percentScore("raisonner")<65)rec.push("Travaille le choix de méthode et la vérification des solutions.");
+  if(percentScore("transferer")<65)rec.push("Reprends les problèmes TRR en posant d’abord clairement les inconnues.");
+  if(!rec.length)rec.push("Tes résultats sont équilibrés. Essaie des exercices avancés et refais un quiz.");
+  document.getElementById("recommendations").innerHTML=rec.map(r=>`<div class="callout">${r}</div>`).join("");
+
+  const badges=[
+    ["🧭 Explorateur",state.modules.explore>=50],
+    ["🧮 Résolveur",state.successes>=5],
+    ["📈 Lecteur graphique",state.modules.explore>=80],
+    ["Δ Déterminants",percentScore("appliquer")>=70],
+    ["🧠 Raisonnement",percentScore("raisonner")>=70],
+    ["🌍 Modélisateur",percentScore("transferer")>=70],
+    ["🏁 Quiz terminé",state.quizzes.length>0],
+    ["⭐ Maîtrise",state.bestQuiz>=16]
+  ];
+  document.getElementById("badgeArea").innerHTML=badges.map(([b,u])=>`<div class="badge ${u?"unlocked":""}"><strong>${b}</strong><br>${u?"Acquis":"À débloquer"}</div>`).join("");
+
+  document.getElementById("historyTable").innerHTML=state.history.length?state.history.map(h=>`<tr><td>${h.date}</td><td>${h.activity}</td><td>${h.level}</td><td>${h.result}</td></tr>`).join(""):`<tr><td colspan="4">Aucune activité enregistrée.</td></tr>`;
+}
+updateAllProgress();
+
+/* ==========================================================
+   12. ESPACE ENSEIGNANT
+   ========================================================== */
+document.getElementById("teacherLoginBtn").onclick=()=>{
+  const pw=document.getElementById("teacherPassword").value;
+  const fb=document.getElementById("teacherLoginFeedback");
+  if(pw===CONFIG.teacherPassword){
+    document.getElementById("teacherLogin").classList.add("hidden");
+    document.getElementById("teacherContent").classList.remove("hidden");
+    renderTeacher();
+  }else{
+    fb.className="feedback bad";fb.textContent="Mot de passe incorrect.";
+  }
+};
+function renderTeacher(){
+  document.getElementById("teacherAttempts").textContent=state.attempts;
+  document.getElementById("teacherSuccess").textContent=state.attempts?Math.round(state.successes/state.attempts*100)+"%":"0%";
+  document.getElementById("teacherQuiz").textContent=state.quizzes.length?formatNumber(state.quizzes[state.quizzes.length-1].score)+"/20":"—";
+  const errs=Object.entries(state.errors).sort((a,b)=>b[1]-a[1]);
+  document.getElementById("teacherErrors").innerHTML=errs.length?`<table><thead><tr><th>Type d’erreur</th><th>Occurrences</th></tr></thead><tbody>${errs.map(([e,n])=>`<tr><td>${e}</td><td>${n}</td></tr>`).join("")}</tbody></table>`:"Aucune donnée.";
+  const names={explore:"Découvrir et explorer",learn:"Comprendre",train:"S’entraîner",reason:"Raisonner",transfer:"Transférer",quiz:"Quiz final"};
+  document.getElementById("moduleToggles").innerHTML=Object.keys(names).map(k=>`<label style="display:block;margin:7px 0"><input type="checkbox" data-module-toggle="${k}" ${state.activeModules[k]!==false?"checked":""}> ${names[k]}</label>`).join("");
+  document.querySelectorAll("[data-module-toggle]").forEach(c=>c.onchange=()=>{
+    state.activeModules[c.dataset.moduleToggle]=c.checked;saveState();
+  });
+  document.getElementById("projectionMode").checked=state.projection;
+}
+document.getElementById("projectionMode").onchange=e=>{state.projection=e.target.checked;saveState()};
+document.getElementById("teacherDifficulty").onchange=e=>{document.getElementById("difficulty").value=e.target.value};
+
+let printableAnswersVisible=false;
+function printableExercise(i){
+  const s=makeSolvableSystem(i>6?"avancee":"intermediaire");
+  return {
+    q:`Résous le système : ${equationText(s.a,s.b,s.c)} et ${equationText(s.d,s.e,s.f)}.`,
+    a:`Solution : (${s.x} ; ${s.y}). Vérification dans les deux équations.`
+  };
+}
+document.getElementById("generatePrintSet").onclick=()=>{
+  const set=Array.from({length:10},(_,i)=>printableExercise(i));
+  const area=document.getElementById("printSet");
+  area.innerHTML=`<h2>Série d’exercices — Systèmes d’équations</h2>
+  <p>Nom : __________________________ Classe : __________ Date : __________</p>
+  ${set.map((e,i)=>`<div style="margin:20px 0;break-inside:avoid"><strong>${i+1}.</strong> ${e.q}<div style="height:45px;border-bottom:1px dotted #aaa"></div><div class="print-answer ${printableAnswersVisible?"":"hidden"}"><strong>Corrigé :</strong> ${e.a}</div></div>`).join("")}`;
+};
+document.getElementById("togglePrintAnswers").onclick=()=>{
+  printableAnswersVisible=!printableAnswersVisible;
+  document.querySelectorAll(".print-answer").forEach(e=>e.classList.toggle("hidden",!printableAnswersVisible));
+};
+document.getElementById("exportCSV").onclick=()=>{
+  const rows=[["Date","Activité","Niveau","Résultat"],...state.history.map(h=>[h.date,h.activity,h.level,h.result])];
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";")).join("\n");
+  const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download="resultats_systemes_equations.csv";a.click();
+  URL.revokeObjectURL(a.href);
+};
+document.getElementById("resetDemo").onclick=()=>{
+  if(confirm("Réinitialiser toutes les données de progression enregistrées sur cet appareil ?")){
+    state=structuredClone(defaultState);saveState();renderTeacher();renderProgress();
+    alert("Données réinitialisées.");
+  }
+};
+
+/* ==========================================================
+   13. DONNÉES DE DÉMONSTRATION ET INITIALISATION
+   ========================================================== */
+function seedDemo(){
+  if(localStorage.getItem("systemes5eSeeded"))return;
+  state.history=[
+    {date:new Date().toLocaleString("fr-BE"),activity:"Données de démonstration","Niveau":"—",result:"Prêt"}
+  ];
+  localStorage.setItem("systemes5eSeeded","1");
+  saveState();
+}
+seedDemo();
+drawGraph();
+renderProgress();
+
+/* ==========================================================
+   14. PETITE AIDE POUR LES ÉLÈVES EN DIFFICULTÉ
+   ========================================================== */
+const priorityReminder=document.createElement("div");
+priorityReminder.className="sr-only";
+priorityReminder.setAttribute("aria-live","polite");
+priorityReminder.id="priorityReminder";
+priorityReminder.textContent="Commence par poser clairement les inconnues x et y, puis traduis chaque information par une équation.";
+document.body.appendChild(priorityReminder);
+
+window.addEventListener("storage",()=>{
+  state=loadState();updateAllProgress();renderProgress();
+});
+</script>
+</body>
+</html>
