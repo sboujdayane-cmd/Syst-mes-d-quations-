@@ -3,32 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Systèmes d’équations interactif – 5e secondaire qualifiant</title>
+<title>Systèmes d’équations interactif – 5e secondaire</title>
 
 <style>
 :root{
   --navy:#0b1f3a;
-  --blue:#1677d2;
+  --blue:#1976d2;
   --light:#e8f3ff;
   --white:#ffffff;
   --green:#168a55;
-  --orange:#e88216;
+  --orange:#ef8b17;
   --red:#c0392b;
   --text:#182536;
-  --muted:#5c6b7b;
-  --border:#d9e4ef;
-  --shadow:0 8px 30px rgba(10,40,75,.12);
+  --muted:#657585;
+  --border:#d4e0eb;
+  --shadow:0 8px 25px rgba(10,40,70,.12);
 }
 
 *{box-sizing:border-box}
 
-html{scroll-behavior:smooth}
-
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
   background:#f4f8fc;
+  color:var(--text);
   line-height:1.5;
 }
 
@@ -52,7 +50,9 @@ textarea:focus{
   display:none!important;
 }
 
-/* HEADER */
+/* =========================================================
+   EN-TÊTE
+========================================================= */
 
 header{
   position:sticky;
@@ -60,40 +60,39 @@ header{
   z-index:100;
   background:var(--navy);
   color:white;
-  box-shadow:0 3px 14px rgba(0,0,0,.2);
+  box-shadow:0 2px 12px rgba(0,0,0,.22);
 }
 
 .topbar{
   max-width:1400px;
   margin:auto;
-  padding:10px 16px;
+  padding:10px 15px;
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
 }
 
 .brand{
-  font-weight:800;
-  font-size:1.05rem;
   flex:1;
-  min-width:210px;
+  min-width:220px;
+  font-weight:800;
 }
 
 .student-chip{
   padding:7px 12px;
-  background:rgba(255,255,255,.12);
   border-radius:999px;
+  background:rgba(255,255,255,.14);
   font-size:.9rem;
 }
 
 .header-btn{
-  border:1px solid rgba(255,255,255,.4);
-  color:white;
-  background:rgba(255,255,255,.1);
+  border:0;
   border-radius:9px;
   padding:9px 12px;
-  font-weight:700;
+  font-weight:800;
+  background:rgba(255,255,255,.15);
+  color:white;
 }
 
 .header-btn:hover{
@@ -101,18 +100,19 @@ header{
   color:var(--navy);
 }
 
-.qr-command{
+.qr-btn{
   background:#ffbf47;
-  color:#172334;
-  border-color:#ffbf47;
+  color:#142337;
 }
 
-.qr-command:hover{
-  background:#ffd575;
-  color:#172334;
+.qr-btn:hover{
+  background:#ffd46c;
+  color:#142337;
 }
 
-/* NAV */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 nav{
   background:white;
@@ -131,25 +131,27 @@ nav{
 
 .nav-btn{
   border:0;
+  border-radius:8px;
+  padding:9px 12px;
   background:#eef4fa;
   color:var(--navy);
-  padding:9px 12px;
-  border-radius:8px;
-  font-weight:700;
+  font-weight:bold;
 }
 
-.nav-btn.active,
-.nav-btn:hover{
+.nav-btn:hover,
+.nav-btn.active{
   background:var(--blue);
   color:white;
 }
 
-/* LAYOUT */
+/* =========================================================
+   MISE EN PAGE
+========================================================= */
 
 main{
   max-width:1200px;
   margin:auto;
-  padding:24px 16px 80px;
+  padding:25px 16px 80px;
 }
 
 .page{
@@ -161,7 +163,7 @@ main{
 }
 
 .hero{
-  background:linear-gradient(135deg,var(--navy),#165fa8);
+  background:linear-gradient(135deg,var(--navy),#1769aa);
   color:white;
   padding:32px;
   border-radius:20px;
@@ -169,13 +171,13 @@ main{
 }
 
 .hero h1{
-  font-size:clamp(1.9rem,5vw,3rem);
-  margin:.2rem 0 .7rem;
+  font-size:clamp(2rem,5vw,3.1rem);
+  margin:.25rem 0;
 }
 
 .hero p{
-  font-size:1.08rem;
   max-width:850px;
+  font-size:1.08rem;
 }
 
 .grid{
@@ -196,7 +198,9 @@ main{
 }
 
 @media(max-width:850px){
-  .grid.two,.grid.three,.grid.four{
+  .grid.two,
+  .grid.three,
+  .grid.four{
     grid-template-columns:1fr;
   }
 }
@@ -214,11 +218,15 @@ main{
   margin-top:0;
 }
 
+.identification{
+  border:3px solid #77b9ed;
+}
+
 .callout{
-  padding:15px;
-  border-radius:12px;
   background:var(--light);
   border-left:5px solid var(--blue);
+  padding:14px;
+  border-radius:10px;
   margin:15px 0;
 }
 
@@ -230,27 +238,66 @@ main{
 }
 
 .feedback.ok{
-  background:#e6f6ee;
-  color:#075c36;
+  background:#e4f6ed;
+  color:#075d36;
   border-left:5px solid var(--green);
 }
 
 .feedback.bad{
   background:#fff0ee;
-  color:#8e241a;
+  color:#8a2117;
   border-left:5px solid var(--red);
 }
 
 .feedback.hint{
-  background:#fff5df;
-  color:#78430d;
+  background:#fff3df;
+  color:#74410d;
   border-left:5px solid var(--orange);
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+@media(max-width:650px){
+  .form-row{
+    grid-template-columns:1fr;
+  }
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:8px 0 5px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  border:2px solid #c8d7e5;
+  border-radius:9px;
+  padding:11px;
+  background:white;
+}
+
+textarea{
+  min-height:90px;
+}
+
+.actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:14px;
 }
 
 .btn{
   border:0;
-  border-radius:10px;
-  padding:11px 16px;
+  border-radius:9px;
+  padding:11px 15px;
   font-weight:800;
 }
 
@@ -270,7 +317,7 @@ main{
 }
 
 .btn.ghost{
-  background:#eaf0f6;
+  background:#e8eff6;
   color:var(--navy);
 }
 
@@ -279,103 +326,56 @@ main{
   color:white;
 }
 
-.btn.small{
-  padding:7px 10px;
-  font-size:.9rem;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:15px;
-}
-
-label{
-  display:block;
-  font-weight:700;
-  margin-bottom:6px;
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  padding:11px;
-  border:2px solid #cbd9e6;
-  border-radius:9px;
-  background:white;
-  color:var(--text);
-}
-
-textarea{
-  min-height:100px;
-}
-
-.form-row{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
-}
-
-@media(max-width:650px){
-  .form-row{
-    grid-template-columns:1fr;
-  }
-}
-
-.progress-wrap{
-  margin:15px 0;
-}
-
-.progress{
-  height:17px;
-  background:#dce7f1;
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.progress > div{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,var(--blue),var(--green));
-  transition:.4s;
-}
-
 .badge{
   display:inline-block;
   padding:5px 9px;
   border-radius:999px;
-  background:#e9f3ff;
+  background:#e5f1ff;
   color:#11548d;
-  font-size:.83rem;
+  font-size:.82rem;
   font-weight:800;
-}
-
-.badge.orange{
-  background:#fff0db;
-  color:#874d0c;
-}
-
-.badge.green{
-  background:#e3f6ec;
-  color:#08643d;
 }
 
 .math{
   font-family:"Courier New",monospace;
-  font-weight:700;
-  font-size:1.08em;
+  font-weight:bold;
 }
 
 .big-math{
-  font-family:"Courier New",monospace;
-  font-size:1.2rem;
-  font-weight:bold;
-  background:#f2f7fb;
+  padding:14px;
   border-radius:10px;
-  padding:15px;
+  background:#f0f6fb;
+  font-family:"Courier New",monospace;
+  font-weight:bold;
+  font-size:1.1rem;
   margin:12px 0;
+}
+
+.progress{
+  height:18px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#dbe6ef;
+}
+
+.progress div{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  transition:.3s;
+}
+
+.kpi{
+  text-align:center;
+  padding:16px;
+  border-radius:12px;
+  background:#f0f6fb;
+}
+
+.kpi strong{
+  display:block;
+  font-size:1.8rem;
+  color:var(--blue);
 }
 
 table{
@@ -383,9 +383,10 @@ table{
   border-collapse:collapse;
 }
 
-th,td{
-  border-bottom:1px solid var(--border);
+th,
+td{
   padding:10px;
+  border-bottom:1px solid var(--border);
   text-align:left;
 }
 
@@ -397,55 +398,34 @@ th{
   overflow-x:auto;
 }
 
-.kpi{
-  text-align:center;
-  background:#f2f7fb;
-  border-radius:12px;
-  padding:15px;
-}
-
-.kpi strong{
-  display:block;
-  font-size:1.8rem;
-  color:var(--blue);
-}
-
 canvas{
+  display:block;
   width:100%;
-  max-width:700px;
-  border:1px solid #bbcbd9;
-  background:white;
+  max-width:720px;
+  margin:auto;
+  border:1px solid #b9cad9;
   border-radius:12px;
-}
-
-.separator{
-  border:0;
-  border-top:1px solid var(--border);
-  margin:25px 0;
-}
-
-.step{
-  border-left:4px solid var(--blue);
-  background:#f5f9fd;
-  padding:12px 15px;
-  margin:12px 0;
+  background:white;
 }
 
 footer{
+  padding:25px;
   text-align:center;
   color:var(--muted);
-  padding:25px;
 }
 
-/* MODAL */
+/* =========================================================
+   QR MODAL
+========================================================= */
 
 .modal{
   position:fixed;
   inset:0;
-  z-index:1000;
   background:rgba(0,0,0,.7);
-  display:grid;
-  place-items:center;
+  z-index:1000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   padding:20px;
 }
 
@@ -454,64 +434,48 @@ footer{
   max-height:92vh;
   overflow:auto;
   background:white;
-  padding:24px;
   border-radius:18px;
+  padding:25px;
   text-align:center;
 }
 
-#qrContainer{
-  display:grid;
-  place-items:center;
-  min-height:270px;
+#qrImage{
+  display:block;
+  width:260px;
+  height:260px;
+  max-width:100%;
   margin:15px auto;
-  background:white;
-  padding:15px;
-}
-
-#qrContainer img,
-#qrContainer canvas{
-  max-width:250px!important;
-  width:250px!important;
-  height:250px!important;
+  border:12px solid white;
+  box-shadow:0 2px 15px rgba(0,0,0,.16);
 }
 
 .url-box{
-  background:#eef4fa;
-  border-radius:8px;
   padding:10px;
+  margin:10px 0;
+  border-radius:8px;
+  background:#edf4fa;
   word-break:break-all;
   font-size:.85rem;
-}
-
-/* IDENTIFICATION */
-
-.identification{
-  border:3px solid #83bff2;
-}
-
-.required-note{
-  color:#7a4b09;
-  font-weight:bold;
 }
 
 .teacher-panel{
   border-left:5px solid var(--navy);
 }
 
-.teacher-only{
-  display:none;
-}
+/* =========================================================
+   IMPRESSION
+========================================================= */
 
-.projection-mode .answer-sensitive{
-  visibility:hidden;
-}
-
-.print-sheet{
+.print-only{
   display:none;
 }
 
 @media print{
-  header,nav,.no-print,.page:not(#teacherPage){
+  header,
+  nav,
+  footer,
+  .no-print,
+  .page{
     display:none!important;
   }
 
@@ -519,11 +483,11 @@ footer{
     display:block!important;
   }
 
-  .teacher-panel{
+  #teacherPage > *{
     display:none!important;
   }
 
-  .print-sheet{
+  .print-only{
     display:block!important;
   }
 
@@ -538,348 +502,571 @@ footer{
 
 <header>
   <div class="topbar">
+
     <div class="brand">
-      Systèmes d’équations interactif — 5e qualifiant
+      Systèmes d’équations — 5e secondaire qualifiant
     </div>
 
-    <div class="student-chip" id="headerStudent">
-      👤 Aucun élève identifié
+    <div class="student-chip" id="studentChip">
+      👤 Aucun élève
     </div>
 
-    <button class="header-btn qr-command" id="qrCodeBtn" type="button">
+    <button class="header-btn qr-btn"
+            id="openQrTop"
+            type="button">
       📱 QR code élèves
     </button>
 
-    <button class="header-btn" id="changeStudentTop" type="button">
+    <button class="header-btn"
+            id="changeStudentTop"
+            type="button">
       👤 Changer d’élève
     </button>
+
   </div>
 </header>
 
 <nav>
   <div class="nav-inner">
-    <button class="nav-btn active" data-page="home">Accueil</button>
-    <button class="nav-btn" data-page="explore">Découvrir</button>
-    <button class="nav-btn" data-page="understand">Comprendre</button>
-    <button class="nav-btn" data-page="train">S’entraîner</button>
-    <button class="nav-btn" data-page="reason">Raisonner</button>
-    <button class="nav-btn" data-page="transfer">Transférer</button>
-    <button class="nav-btn" data-page="quiz">Quiz final</button>
-    <button class="nav-btn" data-page="progress">Mes progrès</button>
-    <button class="nav-btn" data-page="teacherPage">Espace enseignant</button>
+
+    <button class="nav-btn active" data-page="home">
+      Accueil
+    </button>
+
+    <button class="nav-btn" data-page="explore">
+      Découvrir
+    </button>
+
+    <button class="nav-btn" data-page="understand">
+      Comprendre
+    </button>
+
+    <button class="nav-btn" data-page="train">
+      S’entraîner
+    </button>
+
+    <button class="nav-btn" data-page="reason">
+      Raisonner
+    </button>
+
+    <button class="nav-btn" data-page="transfer">
+      Transférer
+    </button>
+
+    <button class="nav-btn" data-page="quiz">
+      Quiz final
+    </button>
+
+    <button class="nav-btn" data-page="progress">
+      Mes progrès
+    </button>
+
+    <button class="nav-btn" data-page="teacherPage">
+      Espace enseignant
+    </button>
+
   </div>
 </nav>
 
 <main>
 
-<!-- ACCUEIL -->
-<section class="page active" id="home">
+<!-- =======================================================
+     ACCUEIL
+======================================================= -->
+
+<section id="home" class="page active">
 
   <div class="hero">
-    <div class="badge">Mathématiques • 5e secondaire • Enseignement qualifiant belge</div>
+
+    <span class="badge">
+      Mathématiques • 5e secondaire • Enseignement qualifiant
+    </span>
 
     <h1>Systèmes d’équations interactif</h1>
 
     <p>
-      Apprends à résoudre, représenter et utiliser des systèmes d’équations
-      pour résoudre des problèmes de géométrie, de mouvement et de vie pratique.
+      Résoudre, représenter et utiliser des systèmes d’équations
+      dans des situations de géométrie, de mouvement et de vie pratique.
     </p>
 
-    <button class="btn success" id="startBtn">
+    <button class="btn success" id="startActivity">
       Commencer l’activité
     </button>
+
   </div>
 
   <div class="grid two" style="margin-top:20px">
 
     <div class="card identification">
+
       <h2>👤 Identification de l’élève</h2>
 
       <p>
-        Indique ton prénom et ton nom avant de commencer.
-        Ta progression sera enregistrée sur cet appareil.
+        Entre ton prénom et ton nom. Tes résultats seront enregistrés
+        sur cet appareil.
       </p>
 
       <div class="form-row">
+
         <div>
-          <label for="studentFirstName">Prénom</label>
-          <input id="studentFirstName"
+          <label for="firstName">Prénom</label>
+          <input id="firstName"
                  type="text"
                  autocomplete="given-name"
-                 placeholder="Ex. Sarah">
+                 placeholder="Ex. Lucas">
         </div>
 
         <div>
-          <label for="studentLastName">Nom</label>
-          <input id="studentLastName"
+          <label for="lastName">Nom</label>
+          <input id="lastName"
                  type="text"
                  autocomplete="family-name"
                  placeholder="Ex. Dupont">
         </div>
+
       </div>
 
       <div class="actions">
-        <button class="btn success" id="saveStudentName">
-          ✓ Enregistrer mon profil
+
+        <button class="btn success"
+                id="saveStudent">
+          ✓ Enregistrer mon nom
         </button>
 
-        <button class="btn ghost" id="changeStudent">
+        <button class="btn ghost"
+                id="changeStudent">
           Changer d’élève
         </button>
+
       </div>
 
-      <div id="studentWelcome" class="feedback hint">
-        Tu dois d’abord t’identifier.
+      <div id="studentMessage"
+           class="feedback hint">
+        Identifie-toi avant de commencer.
       </div>
+
     </div>
 
     <div class="card">
+
       <h2>📊 Ma progression</h2>
 
-      <div class="progress-wrap">
-        <div class="progress">
-          <div id="homeProgressBar"></div>
-        </div>
+      <div class="progress">
+        <div id="homeProgress"></div>
       </div>
 
-      <p id="homeProgressText">0 % du parcours complété</p>
+      <p id="homeProgressText">
+        0 % du parcours complété
+      </p>
 
-      <button class="btn primary" data-page-go="progress">
+      <button class="btn primary"
+              data-goto="progress">
         Voir mes progrès
       </button>
+
     </div>
+
   </div>
 
   <div class="card" style="margin-top:20px">
+
     <h2>À la fin, je serai capable de…</h2>
 
     <ul>
-      <li>identifier les inconnues d’un système de deux équations ;</li>
-      <li>vérifier si un couple satisfait les deux équations ;</li>
-      <li>résoudre un système par substitution ou élimination ;</li>
-      <li>interpréter graphiquement l’intersection de deux droites ;</li>
-      <li>calculer des déterminants d’ordre 2 et d’ordre 3 ;</li>
-      <li>utiliser la règle de Cramer lorsque le déterminant est non nul ;</li>
-      <li>modéliser un problème concret par un système ;</li>
-      <li>interpréter la solution dans le contexte avec les unités adaptées.</li>
+      <li>identifier les inconnues d’un système ;</li>
+      <li>vérifier si un couple est solution ;</li>
+      <li>résoudre par substitution ou élimination ;</li>
+      <li>interpréter graphiquement la solution ;</li>
+      <li>calculer un déterminant ;</li>
+      <li>utiliser la règle de Cramer ;</li>
+      <li>construire un système à partir d’un problème concret ;</li>
+      <li>interpréter la solution avec les unités correctes.</li>
     </ul>
+
   </div>
 
 </section>
 
-<!-- EXPLORER -->
-<section class="page" id="explore">
+<!-- =======================================================
+     EXPLORER
+======================================================= -->
+
+<section id="explore" class="page">
 
   <h1>Découvrir et explorer</h1>
 
   <div class="grid two">
 
     <div class="card">
+
       <h2>Deux équations, deux droites</h2>
 
       <p>
-        Modifie les coefficients et observe ce qui arrive au point
-        d’intersection des deux droites.
+        Modifie les paramètres puis observe la position des deux droites.
       </p>
 
-      <label for="m1">Pente de la droite 1 : <span id="m1Value">1</span></label>
-      <input type="range" id="m1" min="-4" max="4" value="1" step="1">
+      <label for="m1">
+        Pente de la droite bleue :
+        <span id="m1Text">1</span>
+      </label>
 
-      <label for="p1">Ordonnée à l’origine 1 : <span id="p1Value">2</span></label>
-      <input type="range" id="p1" min="-6" max="6" value="2" step="1">
+      <input id="m1"
+             type="range"
+             min="-4"
+             max="4"
+             step="1"
+             value="1">
 
-      <label for="m2">Pente de la droite 2 : <span id="m2Value">-1</span></label>
-      <input type="range" id="m2" min="-4" max="4" value="-1" step="1">
+      <label for="p1">
+        Ordonnée à l’origine :
+        <span id="p1Text">2</span>
+      </label>
 
-      <label for="p2">Ordonnée à l’origine 2 : <span id="p2Value">4</span></label>
-      <input type="range" id="p2" min="-6" max="6" value="4" step="1">
+      <input id="p1"
+             type="range"
+             min="-6"
+             max="6"
+             step="1"
+             value="2">
+
+      <label for="m2">
+        Pente de la droite verte :
+        <span id="m2Text">-1</span>
+      </label>
+
+      <input id="m2"
+             type="range"
+             min="-4"
+             max="4"
+             step="1"
+             value="-1">
+
+      <label for="p2">
+        Ordonnée à l’origine :
+        <span id="p2Text">4</span>
+      </label>
+
+      <input id="p2"
+             type="range"
+             min="-6"
+             max="6"
+             step="1"
+             value="4">
 
       <div class="actions">
-        <button class="btn ghost" id="resetGraph">Réinitialiser</button>
-        <button class="btn primary" id="randomGraph">Nouvel exemple</button>
-        <button class="btn orange" id="graphHint">Indice</button>
+
+        <button class="btn ghost" id="graphReset">
+          Réinitialiser
+        </button>
+
+        <button class="btn primary" id="graphRandom">
+          Nouvel exemple
+        </button>
+
+        <button class="btn orange" id="graphHint">
+          Indice
+        </button>
+
       </div>
+
     </div>
 
     <div class="card">
-      <canvas id="systemGraph" width="700" height="520"
-              aria-label="Représentation graphique de deux droites"></canvas>
 
-      <div class="feedback" id="graphObservation"></div>
+      <canvas id="graphCanvas"
+              width="700"
+              height="520">
+      </canvas>
 
-      <div class="actions">
-        <button class="btn ghost" id="toggleGrid">Grille : oui</button>
-        <button class="btn ghost" id="zoomGraph">Zoom</button>
+      <div id="graphObservation"
+           class="feedback">
       </div>
+
     </div>
+
   </div>
 
   <div class="card" style="margin-top:20px">
-    <h2>Alternative textuelle</h2>
-    <div id="graphText"></div>
+
+    <h2>Lecture textuelle</h2>
+
+    <div id="graphAlternative"></div>
+
   </div>
 
 </section>
 
-<!-- COMPRENDRE -->
-<section class="page" id="understand">
+<!-- =======================================================
+     COMPRENDRE
+======================================================= -->
+
+<section id="understand" class="page">
 
   <h1>Comprendre les notions</h1>
 
   <div class="grid three">
 
-    <article class="card">
+    <div class="card">
+
       <h2>Système 2 × 2</h2>
+
       <p>
-        Un système est un ensemble d’équations qui doivent être vérifiées simultanément.
+        Deux équations doivent être vérifiées simultanément.
       </p>
+
       <div class="big-math">
         x + y = 8<br>
         2x − y = 4
       </div>
-      <p><strong>Erreur fréquente :</strong> résoudre seulement une équation.</p>
-    </article>
 
-    <article class="card">
-      <h2>Substitution</h2>
       <p>
-        On exprime une inconnue à partir d’une équation puis on la remplace
+        <strong>Solution :</strong>
+        le couple qui vérifie les deux équations.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Substitution</h2>
+
+      <p>
+        On isole une inconnue puis on remplace son expression
         dans l’autre équation.
       </p>
+
       <div class="big-math">
         y = 8 − x
       </div>
-    </article>
 
-    <article class="card">
+    </div>
+
+    <div class="card">
+
       <h2>Élimination</h2>
+
       <p>
-        On additionne ou soustrait les équations afin de faire disparaître
-        une inconnue.
+        On additionne ou soustrait les équations
+        afin de supprimer une inconnue.
       </p>
+
       <div class="big-math">
         x + y = 8<br>
         2x − y = 4<br>
         ———————<br>
         3x = 12
       </div>
-    </article>
 
-    <article class="card">
-      <h2>Interprétation graphique</h2>
+    </div>
+
+    <div class="card">
+
+      <h2>Graphiquement</h2>
+
       <p>
-        La solution d’un système correspond au point d’intersection des deux droites.
+        Une solution unique correspond au point
+        d’intersection des deux droites.
       </p>
-    </article>
 
-    <article class="card">
+    </div>
+
+    <div class="card">
+
       <h2>Déterminant 2 × 2</h2>
+
       <div class="big-math">
-        | a b |<br>
-        | c d |<br><br>
         Δ = ad − bc
       </div>
-    </article>
 
-    <article class="card">
-      <h2>Règle de Cramer</h2>
       <p>
-        Lorsque <span class="math">Δ ≠ 0</span>, le système possède une solution unique.
+        Si Δ ≠ 0, le système possède une solution unique.
       </p>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Règle de Cramer</h2>
+
       <div class="big-math">
         x = Δx / Δ<br>
         y = Δy / Δ
       </div>
-    </article>
+
+    </div>
 
   </div>
 
-  <div class="grid two" style="margin-top:20px">
+  <div class="grid two"
+       style="margin-top:20px">
 
     <div class="card">
-      <h2>Calculateur de déterminant 2 × 2</h2>
+
+      <h2>Déterminant 2 × 2</h2>
 
       <div class="form-row">
-        <input type="number" id="d2a" value="2" aria-label="a">
-        <input type="number" id="d2b" value="3" aria-label="b">
-        <input type="number" id="d2c" value="1" aria-label="c">
-        <input type="number" id="d2d" value="4" aria-label="d">
+
+        <input id="da"
+               type="number"
+               value="2"
+               aria-label="Coefficient a">
+
+        <input id="db"
+               type="number"
+               value="3"
+               aria-label="Coefficient b">
+
+        <input id="dc"
+               type="number"
+               value="1"
+               aria-label="Coefficient c">
+
+        <input id="dd"
+               type="number"
+               value="4"
+               aria-label="Coefficient d">
+
       </div>
 
-      <button class="btn primary" id="calcDet2" style="margin-top:12px">
+      <button class="btn primary"
+              id="det2Button"
+              style="margin-top:12px">
         Calculer
       </button>
 
-      <div id="det2Result" class="feedback"></div>
+      <div id="det2Output"
+           class="feedback">
+      </div>
+
     </div>
 
     <div class="card">
-      <h2>Calculateur de déterminant 3 × 3</h2>
 
-      <div class="grid three">
-        <input class="d3" type="number" value="1">
-        <input class="d3" type="number" value="2">
-        <input class="d3" type="number" value="3">
+      <h2>Résoudre un système par Cramer</h2>
 
-        <input class="d3" type="number" value="0">
-        <input class="d3" type="number" value="1">
-        <input class="d3" type="number" value="4">
-
-        <input class="d3" type="number" value="5">
-        <input class="d3" type="number" value="6">
-        <input class="d3" type="number" value="0">
+      <div class="big-math">
+        ax + by = e<br>
+        cx + dy = f
       </div>
 
-      <button class="btn primary" id="calcDet3" style="margin-top:12px">
-        Calculer par Sarrus
+      <div class="form-row">
+
+        <input id="ca"
+               type="number"
+               value="2"
+               aria-label="a">
+
+        <input id="cb"
+               type="number"
+               value="1"
+               aria-label="b">
+
+        <input id="ce"
+               type="number"
+               value="7"
+               aria-label="e">
+
+        <input id="cc"
+               type="number"
+               value="1"
+               aria-label="c">
+
+        <input id="cd"
+               type="number"
+               value="-1"
+               aria-label="d">
+
+        <input id="cf"
+               type="number"
+               value="2"
+               aria-label="f">
+
+      </div>
+
+      <button class="btn primary"
+              id="cramerButton"
+              style="margin-top:12px">
+        Résoudre
       </button>
 
-      <div id="det3Result" class="feedback"></div>
+      <div id="cramerOutput"
+           class="feedback">
+      </div>
+
     </div>
+
   </div>
 
 </section>
 
-<!-- ENTRAINEMENT -->
-<section class="page" id="train">
+<!-- =======================================================
+     S'ENTRAINER
+======================================================= -->
+
+<section id="train" class="page">
 
   <h1>S’entraîner</h1>
 
   <div class="card">
 
     <div class="form-row">
+
       <div>
-        <label for="exerciseLevel">Niveau cognitif</label>
-        <select id="exerciseLevel">
-          <option value="comprendre">Comprendre</option>
-          <option value="appliquer">Appliquer</option>
-          <option value="raisonner">Raisonner</option>
+        <label for="exerciseDifficulty">
+          Difficulté
+        </label>
+
+        <select id="exerciseDifficulty">
+          <option value="easy">Facile</option>
+          <option value="medium">Intermédiaire</option>
+          <option value="hard">Avancée</option>
         </select>
       </div>
 
       <div>
-        <label for="exerciseDifficulty">Difficulté</label>
-        <select id="exerciseDifficulty">
-          <option value="facile">Facile</option>
-          <option value="intermediaire">Intermédiaire</option>
-          <option value="avance">Avancée</option>
+        <label for="exerciseMethod">
+          Type
+        </label>
+
+        <select id="exerciseMethod">
+          <option value="solve">Résoudre</option>
+          <option value="verify">Vérifier un couple</option>
         </select>
       </div>
+
     </div>
 
-    <hr class="separator">
+    <h2 id="exerciseTitle"
+        style="margin-top:20px">
+      Exercice
+    </h2>
 
-    <div id="exerciseBadges"></div>
-    <h2 id="exerciseTitle">Exercice</h2>
     <div id="exerciseStatement"></div>
 
-    <div id="exerciseInputs" style="margin-top:15px"></div>
+    <div id="exerciseInputs"></div>
 
     <div class="actions">
-      <button class="btn primary" id="checkExercise">Vérifier</button>
-      <button class="btn orange" id="exerciseHint">Indice</button>
-      <button class="btn ghost" id="newExercise">Nouvel exercice</button>
-      <button class="btn ghost" id="showCorrection">Correction</button>
+
+      <button class="btn primary"
+              id="exerciseCheck">
+        Vérifier
+      </button>
+
+      <button class="btn orange"
+              id="exerciseHint">
+        Indice
+      </button>
+
+      <button class="btn ghost"
+              id="exerciseNew">
+        Nouvel exercice
+      </button>
+
+      <button class="btn ghost"
+              id="exerciseCorrection">
+        Correction
+      </button>
+
     </div>
 
     <div id="exerciseFeedback"></div>
@@ -888,19 +1075,21 @@ footer{
 
 </section>
 
-<!-- RAISONNER -->
-<section class="page" id="reason">
+<!-- =======================================================
+     RAISONNER
+======================================================= -->
+
+<section id="reason" class="page">
 
   <h1>Raisonner et résoudre</h1>
 
   <div class="card">
-    <span class="badge orange">RAISONNER</span>
 
-    <h2>Vente de tickets</h2>
+    <h2>Tickets de spectacle</h2>
 
     <p>
-      Pour un spectacle, 26 tickets sont vendus.
-      Le ticket étudiant coûte 8 € et le ticket adulte 12 €.
+      26 tickets sont vendus.
+      Un ticket étudiant coûte 8 € et un ticket adulte 12 €.
       La recette totale est de 232 €.
     </p>
 
@@ -909,51 +1098,58 @@ footer{
       dans le contexte du problème.
     </div>
 
-    <div class="step">
-      <strong>1. Choisis les inconnues.</strong>
-      <textarea id="reasonUnknowns"
-        placeholder="Ex. x représente... et y représente..."></textarea>
-    </div>
+    <label for="reasonUnknowns">
+      1. Définis les inconnues.
+    </label>
 
-    <div class="step">
-      <strong>2. Écris les deux équations.</strong>
-      <textarea id="reasonEquations"
-        placeholder="Écris le système..."></textarea>
-    </div>
+    <textarea id="reasonUnknowns"
+              placeholder="x représente... ; y représente..."></textarea>
 
-    <div class="step">
-      <strong>3. Résous le système.</strong>
+    <label for="reasonEquations">
+      2. Écris le système.
+    </label>
 
-      <div class="form-row">
-        <div>
-          <label for="reasonX">Nombre de tickets étudiants</label>
-          <input id="reasonX" type="text">
-        </div>
+    <textarea id="reasonEquations"
+              placeholder="x + y = ..."></textarea>
 
-        <div>
-          <label for="reasonY">Nombre de tickets adultes</label>
-          <input id="reasonY" type="text">
-        </div>
+    <div class="form-row">
+
+      <div>
+        <label for="reasonX">x =</label>
+        <input id="reasonX" type="text">
       </div>
+
+      <div>
+        <label for="reasonY">y =</label>
+        <input id="reasonY" type="text">
+      </div>
+
     </div>
 
-    <div class="step">
-      <strong>4. Interprète ton résultat.</strong>
-      <textarea id="reasonConclusion"
-        placeholder="Rédige une phrase complète avec le contexte."></textarea>
-    </div>
+    <label for="reasonConclusion">
+      3. Interprète le résultat.
+    </label>
 
-    <button class="btn primary" id="checkReason">
-      Vérifier ma résolution
+    <textarea id="reasonConclusion"
+              placeholder="Il y a..."></textarea>
+
+    <button class="btn primary"
+            id="reasonCheck"
+            style="margin-top:12px">
+      Vérifier
     </button>
 
     <div id="reasonFeedback"></div>
+
   </div>
 
 </section>
 
-<!-- TRANSFERER -->
-<section class="page" id="transfer">
+<!-- =======================================================
+     TRANSFERER
+======================================================= -->
+
+<section id="transfer" class="page">
 
   <h1>Transférer et modéliser</h1>
 
@@ -964,58 +1160,85 @@ footer{
 
   <div class="grid three">
 
-    <article class="card">
-      <span class="badge">TRR1 • Géométrie</span>
-      <h2>Le rectangle</h2>
+    <div class="card">
+
+      <span class="badge">
+        TRR1 • Géométrie
+      </span>
+
+      <h2>Rectangle</h2>
 
       <p>
         Un rectangle a un périmètre de 54 cm.
         Sa longueur mesure 5 cm de plus que sa largeur.
-        Détermine ses dimensions.
       </p>
 
-      <label>Longueur (cm)</label>
-      <input id="geoL" type="text">
+      <label for="geoL">Longueur</label>
+      <input id="geoL"
+             type="text"
+             placeholder="cm">
 
-      <label style="margin-top:10px">Largeur (cm)</label>
-      <input id="geoW" type="text">
+      <label for="geoW">Largeur</label>
+      <input id="geoW"
+             type="text"
+             placeholder="cm">
 
-      <button class="btn primary transfer-check"
-              data-problem="geo"
+      <button class="btn primary transferButton"
+              data-transfer="geometry"
               style="margin-top:12px">
         Vérifier
       </button>
 
-      <div id="geoFeedback"></div>
-    </article>
+      <div id="geometryFeedback"></div>
 
-    <article class="card">
-      <span class="badge">TRR2 • Mouvement</span>
+    </div>
+
+    <div class="card">
+
+      <span class="badge">
+        TRR2 • Mouvement
+      </span>
+
       <h2>Deux cyclistes</h2>
 
       <p>
-        Deux cyclistes partent du même point dans des directions opposées.
-        Après 2 h, ils sont séparés de 70 km.
-        Le premier roule 5 km/h plus vite que le second.
+        Après 2 heures, deux cyclistes roulant en sens opposés
+        sont séparés de 70 km.
+        Le premier roule 5 km/h plus vite.
       </p>
 
-      <label>Vitesse du premier (km/h)</label>
-      <input id="moveV1" type="text">
+      <label for="speed1">
+        Première vitesse
+      </label>
 
-      <label style="margin-top:10px">Vitesse du second (km/h)</label>
-      <input id="moveV2" type="text">
+      <input id="speed1"
+             type="text"
+             placeholder="km/h">
 
-      <button class="btn primary transfer-check"
-              data-problem="move"
+      <label for="speed2">
+        Deuxième vitesse
+      </label>
+
+      <input id="speed2"
+             type="text"
+             placeholder="km/h">
+
+      <button class="btn primary transferButton"
+              data-transfer="movement"
               style="margin-top:12px">
         Vérifier
       </button>
 
-      <div id="moveFeedback"></div>
-    </article>
+      <div id="movementFeedback"></div>
 
-    <article class="card">
-      <span class="badge">Vie pratique</span>
+    </div>
+
+    <div class="card">
+
+      <span class="badge">
+        Vie pratique
+      </span>
+
       <h2>Boissons</h2>
 
       <p>
@@ -1024,77 +1247,102 @@ footer{
         La recette est de 44 €.
       </p>
 
-      <label>Nombre de jus</label>
-      <input id="lifeX" type="text">
+      <label for="juice">
+        Nombre de jus
+      </label>
 
-      <label style="margin-top:10px">Nombre de smoothies</label>
-      <input id="lifeY" type="text">
+      <input id="juice"
+             type="text">
 
-      <button class="btn primary transfer-check"
-              data-problem="life"
+      <label for="smoothie">
+        Nombre de smoothies
+      </label>
+
+      <input id="smoothie"
+             type="text">
+
+      <button class="btn primary transferButton"
+              data-transfer="life"
               style="margin-top:12px">
         Vérifier
       </button>
 
       <div id="lifeFeedback"></div>
-    </article>
+
+    </div>
 
   </div>
 
 </section>
 
-<!-- QUIZ -->
-<section class="page" id="quiz">
+<!-- =======================================================
+     QUIZ
+======================================================= -->
+
+<section id="quiz" class="page">
 
   <h1>Quiz final</h1>
 
   <div class="card">
+
     <p>
-      Le quiz contient 15 questions portant sur les différents niveaux
-      de maîtrise.
+      15 questions aléatoires. La note finale est calculée sur 20.
     </p>
 
-    <button class="btn primary" id="startQuiz">
-      Démarrer un nouveau quiz
+    <button class="btn primary"
+            id="quizStart">
+      Générer le quiz
     </button>
 
-    <div id="quizZone" style="margin-top:20px"></div>
+    <div id="quizContent"
+         style="margin-top:20px">
+    </div>
+
   </div>
 
 </section>
 
-<!-- PROGRES -->
-<section class="page" id="progress">
+<!-- =======================================================
+     PROGRES
+======================================================= -->
+
+<section id="progress" class="page">
 
   <h1>Mes progrès</h1>
 
   <div class="grid four">
+
     <div class="kpi">
-      <strong id="progressOverall">0 %</strong>
+      <strong id="progressPct">0 %</strong>
       Progression
     </div>
 
     <div class="kpi">
-      <strong id="progressAttempts">0</strong>
-      Exercices tentés
+      <strong id="attemptCount">0</strong>
+      Tentatives
     </div>
 
     <div class="kpi">
-      <strong id="progressSuccess">0</strong>
+      <strong id="successCount">0</strong>
       Réussites
     </div>
 
     <div class="kpi">
-      <strong id="progressQuiz">—</strong>
+      <strong id="bestQuiz">—</strong>
       Meilleur quiz
     </div>
+
   </div>
 
-  <div class="card" style="margin-top:20px">
-    <h2>Résultats par compétence</h2>
+  <div class="card"
+       style="margin-top:20px">
+
+    <h2>Compétences</h2>
 
     <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Compétence</th>
@@ -1103,212 +1351,250 @@ footer{
             <th>Taux</th>
           </tr>
         </thead>
-        <tbody id="progressSkills"></tbody>
+
+        <tbody id="progressTable"></tbody>
+
       </table>
+
     </div>
+
   </div>
 
-  <div class="card" style="margin-top:20px">
-    <h2>Conseil de révision</h2>
-    <div id="progressAdvice" class="feedback"></div>
+  <div class="card"
+       style="margin-top:20px">
+
+    <h2>Conseil</h2>
+
+    <div id="progressAdvice"
+         class="feedback">
+    </div>
+
   </div>
 
 </section>
 
-<!-- PROF -->
-<section class="page" id="teacherPage">
+<!-- =======================================================
+     ENSEIGNANT
+======================================================= -->
+
+<section id="teacherPage"
+         class="page">
 
   <h1>Espace enseignant</h1>
 
-  <div class="card" id="teacherLogin">
-    <h2>🔐 Accès enseignant</h2>
+  <div id="teacherLogin"
+       class="card teacher-panel">
 
-    <label for="teacherPassword">Mot de passe</label>
-    <input type="password"
-           id="teacherPassword"
-           placeholder="Mot de passe enseignant">
+    <h2>🔐 Connexion</h2>
 
-    <button class="btn primary" id="teacherLoginBtn" style="margin-top:12px">
+    <label for="teacherPassword">
+      Mot de passe
+    </label>
+
+    <input id="teacherPassword"
+           type="password"
+           placeholder="Mot de passe">
+
+    <button class="btn primary"
+            id="teacherLoginButton"
+            style="margin-top:12px">
       Se connecter
     </button>
 
     <div id="teacherLoginFeedback"></div>
+
   </div>
 
-  <div id="teacherContent" class="hidden">
+  <div id="teacherDashboard"
+       class="hidden">
 
     <div class="card teacher-panel">
-      <h2>👥 Suivi des élèves enregistrés</h2>
 
-      <p>
-        Les profils enregistrés sur ce navigateur apparaissent ici.
-      </p>
+      <h2>👥 Élèves enregistrés sur cet appareil</h2>
+
+      <div class="feedback hint">
+        <strong>Important :</strong>
+        GitHub Pages ne transmet pas automatiquement les résultats
+        d’un téléphone d’élève vers l’ordinateur du professeur.
+        Ce tableau montre les profils enregistrés dans ce navigateur.
+      </div>
 
       <div class="table-wrap">
+
         <table>
+
           <thead>
             <tr>
-              <th>Élève</th>
+              <th>Nom</th>
               <th>Progression</th>
               <th>Réussite</th>
               <th>Quiz</th>
               <th>Dernière activité</th>
-              <th></th>
+              <th>Détails</th>
             </tr>
           </thead>
-          <tbody id="teacherStudentTable"></tbody>
+
+          <tbody id="teacherStudents"></tbody>
+
         </table>
+
       </div>
 
-      <div id="studentDetailTeacher"
-           class="callout hidden"></div>
+      <div id="teacherStudentDetail"
+           class="feedback hidden">
+      </div>
+
     </div>
 
-    <div class="grid two" style="margin-top:20px">
+    <div class="grid two"
+         style="margin-top:20px">
 
       <div class="card teacher-panel">
-        <h2>📱 Accès des élèves</h2>
+
+        <h2>📱 QR code</h2>
 
         <p>
-          Affichez le QR code de l’adresse GitHub Pages afin que les élèves
-          puissent ouvrir l’activité.
+          Afficher le QR code de cette page GitHub Pages.
         </p>
 
-        <button class="btn primary" id="teacherQrBtn">
+        <button class="btn primary"
+                id="teacherQrButton">
           📱 Afficher le QR code élèves
         </button>
+
       </div>
 
       <div class="card teacher-panel">
-        <h2>📥 Export des résultats</h2>
 
-        <button class="btn success" id="exportCSV">
-          Télécharger les résultats CSV
-        </button>
-      </div>
-    </div>
+        <h2>📥 Résultats</h2>
 
-    <div class="grid two" style="margin-top:20px">
-
-      <div class="card teacher-panel">
-        <h2>🖥 Mode projection</h2>
-
-        <p>
-          Masque certaines réponses pendant une correction collective.
-        </p>
-
-        <button class="btn primary" id="projectionBtn">
-          Activer le mode projection
-        </button>
-      </div>
-
-      <div class="card teacher-panel">
-        <h2>🖨 Exercices imprimables</h2>
-
-        <button class="btn primary" id="generatePrint">
-          Générer 10 exercices
+        <button class="btn success"
+                id="exportCsv">
+          Télécharger le CSV
         </button>
 
-        <button class="btn ghost" onclick="window.print()">
-          Imprimer
-        </button>
       </div>
 
     </div>
 
-    <div class="card teacher-panel" style="margin-top:20px">
-      <h2>⚙ Données de l’application</h2>
+    <div class="card teacher-panel"
+         style="margin-top:20px">
 
-      <button class="btn danger" id="resetAllData">
-        Effacer toutes les données locales
+      <h2>🖨 Exercices imprimables</h2>
+
+      <button class="btn primary"
+              id="createPrint">
+        Générer 10 exercices
       </button>
+
+      <button class="btn ghost"
+              id="printButton">
+        Imprimer
+      </button>
+
+    </div>
+
+    <div class="card teacher-panel"
+         style="margin-top:20px">
+
+      <h2>⚠ Données locales</h2>
+
+      <button class="btn danger"
+              id="resetData">
+        Effacer les données locales
+      </button>
+
     </div>
 
   </div>
 
-  <div class="print-sheet" id="printSheet"></div>
+  <div id="printArea"
+       class="print-only">
+  </div>
 
 </section>
 
 </main>
 
 <footer>
-  Application pédagogique — Systèmes d’équations — 5e secondaire qualifiant
+  Systèmes d’équations interactif — Enseignement secondaire belge francophone
 </footer>
 
-<!-- QR MODAL -->
+<!-- =======================================================
+     MODAL QR
+======================================================= -->
+
 <div id="qrModal"
      class="modal hidden"
      role="dialog"
-     aria-modal="true"
-     aria-labelledby="qrTitle">
+     aria-modal="true">
 
   <div class="modal-card">
 
-    <h2 id="qrTitle">📱 QR code élèves</h2>
+    <h2>📱 QR code élèves</h2>
 
     <p>
-      Scanne ce QR code pour ouvrir l’activité.
+      Scanne ce code avec un smartphone ou une tablette.
     </p>
 
-    <div id="qrContainer"></div>
+    <img id="qrImage"
+         alt="QR code permettant d'ouvrir l'activité">
 
-    <div class="url-box" id="qrAddress"></div>
+    <div class="url-box"
+         id="qrUrl">
+    </div>
 
-    <div id="qrWarning" class="feedback hint"></div>
+    <div id="qrInfo"
+         class="feedback">
+    </div>
 
-    <div class="actions" style="justify-content:center">
-      <button class="btn primary" id="copyActivityLink">
+    <div class="actions"
+         style="justify-content:center">
+
+      <button class="btn primary"
+              id="copyUrl">
         Copier le lien
       </button>
 
-      <button class="btn ghost" id="closeQr">
+      <button class="btn ghost"
+              id="closeQr">
         Fermer
       </button>
+
     </div>
 
   </div>
+
 </div>
 
-<!-- QR CODE LIBRARY -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <script>
+(function(){
+
 "use strict";
 
 /* =========================================================
    CONFIGURATION
 ========================================================= */
 
-const CONFIG = {
-  matiere: "Mathématiques",
-  niveau: "5e secondaire — Enseignement qualifiant belge",
-  chapitre: "Systèmes d’équations",
-  teacherPassword: "prof2026",
-
-  storage: {
-    students: "systemes5e_students_v3",
-    currentStudent: "systemes5e_current_student_v3"
-  }
+var CONFIG = {
+  teacherPassword:"prof2026",
+  studentListKey:"systemes_equations_students_v5",
+  currentStudentKey:"systemes_equations_current_v5"
 };
 
-/* =========================================================
-   DONNÉES PAR DÉFAUT
-========================================================= */
+var DEFAULT_STATE = {
+  attempts:0,
+  successes:0,
+  bestQuiz:null,
 
-const DEFAULT_STATE = {
-  attempts: 0,
-  successes: 0,
-  bestQuiz: null,
-
-  scores: {
-    comprendre: {ok:0,total:0},
-    appliquer: {ok:0,total:0},
-    raisonner: {ok:0,total:0},
-    transferer: {ok:0,total:0}
+  scores:{
+    comprendre:{ok:0,total:0},
+    appliquer:{ok:0,total:0},
+    raisonner:{ok:0,total:0},
+    transferer:{ok:0,total:0}
   },
 
-  modules: {
+  modules:{
     explore:false,
     understand:false,
     train:false,
@@ -1317,200 +1603,347 @@ const DEFAULT_STATE = {
     quiz:false
   },
 
-  errors: {},
-  history: []
+  errors:{},
+  history:[]
 };
 
-let state = structuredClone(DEFAULT_STATE);
-let currentStudentId = "";
+var state = clone(DEFAULT_STATE);
+var currentStudentId = "";
+var currentExercise = null;
+var exerciseAttempts = 0;
+var quizQuestions = [];
 
 /* =========================================================
-   UTILITAIRES
+   COMPATIBILITÉ
 ========================================================= */
+
+function clone(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function byId(id){
+  return document.getElementById(id);
+}
+
+function safeText(value){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
 function normalizeName(value){
   return String(value || "")
-    .trim()
-    .replace(/\s+/g," ");
-}
-
-function escapeHTML(value){
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;");
+    .replace(/\s+/g," ")
+    .trim();
 }
 
 function parseNumber(value){
-  if(value === null || value === undefined) return NaN;
 
-  let v = String(value)
+  var text = String(value || "")
     .trim()
     .replace(",",".")
-    .replace(/\s/g,"");
+    .replace(/\s+/g,"");
 
-  v = v.replace(/[a-zA-Z€²³/%]+/g,"");
+  var fraction = text.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
 
-  if(v.includes("/")){
-    const parts = v.split("/");
+  if(fraction){
+    var numerator = Number(fraction[1]);
+    var denominator = Number(fraction[2]);
 
-    if(parts.length === 2){
-      const a = Number(parts[0]);
-      const b = Number(parts[1]);
-
-      if(Number.isFinite(a) && Number.isFinite(b) && b !== 0){
-        return a/b;
-      }
+    if(denominator !== 0){
+      return numerator/denominator;
     }
   }
 
-  return Number(v);
+  text = text.replace(/[^0-9.\-]/g,"");
+
+  return Number(text);
 }
 
-function nearlyEqual(a,b,tolerance=.001){
-  return Number.isFinite(a) &&
-         Number.isFinite(b) &&
-         Math.abs(a-b) <= tolerance;
+function equal(a,b){
+  return isFinite(a) &&
+         isFinite(b) &&
+         Math.abs(a-b)<0.001;
 }
 
 function randomInt(min,max){
   return Math.floor(Math.random()*(max-min+1))+min;
 }
 
-function deepClone(obj){
-  return JSON.parse(JSON.stringify(obj));
-}
-
-function createStudentId(first,last){
-  const base = `${first}-${last}`
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-|-$/g,"");
-
-  return base + "-" + Date.now().toString(36);
-}
-
 /* =========================================================
-   PROFILS ÉLÈVES
+   ÉLÈVES
 ========================================================= */
 
 function getStudents(){
+
   try{
-    return JSON.parse(
-      localStorage.getItem(CONFIG.storage.students)
-    ) || {};
-  }catch{
+
+    var raw =
+      localStorage.getItem(CONFIG.studentListKey);
+
+    if(!raw){
+      return {};
+    }
+
+    return JSON.parse(raw) || {};
+
+  }catch(error){
     return {};
   }
 }
 
-function saveStudents(students){
-  localStorage.setItem(
-    CONFIG.storage.students,
-    JSON.stringify(students)
-  );
+function setStudents(students){
+
+  try{
+    localStorage.setItem(
+      CONFIG.studentListKey,
+      JSON.stringify(students)
+    );
+  }catch(error){}
 }
 
-function stateKey(studentId){
-  return `systemes5e_state_${studentId}`;
+function studentStateKey(id){
+  return "systemes_equations_state_v5_"+id;
 }
 
-function loadStudentState(studentId){
-  if(!studentId){
-    return structuredClone(DEFAULT_STATE);
+function createStudentId(first,last){
+
+  var text =
+    (first+"-"+last)
+      .toLowerCase();
+
+  if(text.normalize){
+    text =
+      text.normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"");
+  }
+
+  text =
+    text.replace(/[^a-z0-9]+/g,"-")
+        .replace(/^-|-$/g,"");
+
+  return text+"-"+Date.now();
+}
+
+function loadStudentState(id){
+
+  if(!id){
+    return clone(DEFAULT_STATE);
   }
 
   try{
-    const saved = JSON.parse(
-      localStorage.getItem(stateKey(studentId))
-    );
 
-    return saved
-      ? Object.assign(structuredClone(DEFAULT_STATE),saved,{
-          scores:Object.assign(
-            structuredClone(DEFAULT_STATE.scores),
-            saved.scores || {}
-          ),
-          modules:Object.assign(
-            structuredClone(DEFAULT_STATE.modules),
-            saved.modules || {}
-          )
-        })
-      : structuredClone(DEFAULT_STATE);
+    var raw =
+      localStorage.getItem(
+        studentStateKey(id)
+      );
 
-  }catch{
-    return structuredClone(DEFAULT_STATE);
+    if(!raw){
+      return clone(DEFAULT_STATE);
+    }
+
+    var saved =
+      JSON.parse(raw);
+
+    var result =
+      clone(DEFAULT_STATE);
+
+    if(saved.attempts !== undefined){
+      result.attempts = saved.attempts;
+    }
+
+    if(saved.successes !== undefined){
+      result.successes = saved.successes;
+    }
+
+    if(saved.bestQuiz !== undefined){
+      result.bestQuiz = saved.bestQuiz;
+    }
+
+    if(saved.errors){
+      result.errors = saved.errors;
+    }
+
+    if(saved.history){
+      result.history = saved.history;
+    }
+
+    if(saved.scores){
+
+      Object.keys(result.scores)
+        .forEach(function(key){
+
+          if(saved.scores[key]){
+            result.scores[key] =
+              saved.scores[key];
+          }
+
+        });
+    }
+
+    if(saved.modules){
+
+      Object.keys(result.modules)
+        .forEach(function(key){
+
+          if(saved.modules[key] !== undefined){
+            result.modules[key] =
+              saved.modules[key];
+          }
+
+        });
+    }
+
+    return result;
+
+  }catch(error){
+    return clone(DEFAULT_STATE);
   }
 }
 
 function saveState(){
-  if(!currentStudentId) return;
 
-  localStorage.setItem(
-    stateKey(currentStudentId),
-    JSON.stringify(state)
-  );
+  if(!currentStudentId){
+    return;
+  }
 
-  updateStudentSummary();
+  try{
+
+    localStorage.setItem(
+      studentStateKey(currentStudentId),
+      JSON.stringify(state)
+    );
+
+    updateStudentSummary();
+
+  }catch(error){}
+
   renderProgress();
 }
 
+function overallProgress(){
+
+  var keys =
+    Object.keys(state.modules);
+
+  var done = 0;
+
+  keys.forEach(function(key){
+    if(state.modules[key]){
+      done++;
+    }
+  });
+
+  var modulePart =
+    keys.length
+      ? done/keys.length*60
+      : 0;
+
+  var exercisePart =
+    Math.min(state.successes,10)/10*40;
+
+  return Math.round(
+    Math.min(100,modulePart+exercisePart)
+  );
+}
+
 function updateStudentSummary(){
-  if(!currentStudentId) return;
 
-  const students = getStudents();
-  const student = students[currentStudentId];
+  if(!currentStudentId){
+    return;
+  }
 
-  if(!student) return;
+  var students =
+    getStudents();
 
-  student.lastActivity = new Date().toISOString();
-  student.progress = overallProgress();
-  student.attempts = state.attempts;
-  student.successes = state.successes;
-  student.bestQuiz = state.bestQuiz;
-  student.scores = deepClone(state.scores);
-  student.errors = deepClone(state.errors);
+  var student =
+    students[currentStudentId];
 
-  saveStudents(students);
+  if(!student){
+    return;
+  }
+
+  student.lastActivity =
+    new Date().toISOString();
+
+  student.progress =
+    overallProgress();
+
+  student.attempts =
+    state.attempts;
+
+  student.successes =
+    state.successes;
+
+  student.bestQuiz =
+    state.bestQuiz;
+
+  student.scores =
+    clone(state.scores);
+
+  student.errors =
+    clone(state.errors);
+
+  students[currentStudentId] =
+    student;
+
+  setStudents(students);
 }
 
 function identifyStudent(){
 
-  const first = normalizeName(
-    document.getElementById("studentFirstName").value
-  );
+  var first =
+    normalizeName(
+      byId("firstName").value
+    );
 
-  const last = normalizeName(
-    document.getElementById("studentLastName").value
-  );
-
-  const feedback =
-    document.getElementById("studentWelcome");
+  var last =
+    normalizeName(
+      byId("lastName").value
+    );
 
   if(!first || !last){
-    feedback.className = "feedback bad";
-    feedback.textContent =
-      "Indique ton prénom et ton nom avant de commencer.";
+
+    byId("studentMessage").className =
+      "feedback bad";
+
+    byId("studentMessage").textContent =
+      "Indique ton prénom et ton nom.";
+
     return false;
   }
 
-  const students = getStudents();
+  var students =
+    getStudents();
 
-  let id = Object.keys(students).find(key=>{
-    const s = students[key];
+  var existingId = null;
 
-    return s.firstName.toLowerCase() === first.toLowerCase() &&
-           s.lastName.toLowerCase() === last.toLowerCase();
-  });
+  Object.keys(students)
+    .some(function(id){
 
-  if(!id){
-    id = createStudentId(first,last);
+      var s = students[id];
 
-    students[id] = {
-      id,
+      if(
+        String(s.firstName).toLowerCase() === first.toLowerCase() &&
+        String(s.lastName).toLowerCase() === last.toLowerCase()
+      ){
+        existingId = id;
+        return true;
+      }
+
+      return false;
+    });
+
+  if(!existingId){
+
+    existingId =
+      createStudentId(first,last);
+
+    students[existingId] = {
+      id:existingId,
       firstName:first,
       lastName:last,
       created:new Date().toISOString(),
@@ -1518,21 +1951,29 @@ function identifyStudent(){
     };
   }
 
-  currentStudentId = id;
+  currentStudentId =
+    existingId;
 
-  localStorage.setItem(
-    CONFIG.storage.currentStudent,
-    id
-  );
+  try{
+    localStorage.setItem(
+      CONFIG.currentStudentKey,
+      currentStudentId
+    );
+  }catch(error){}
 
-  saveStudents(students);
+  setStudents(students);
 
-  state = loadStudentState(id);
+  state =
+    loadStudentState(currentStudentId);
 
-  feedback.className = "feedback ok";
-  feedback.innerHTML =
-    `✓ Bonjour <strong>${escapeHTML(first)}</strong>. ` +
-    `Ta progression est maintenant enregistrée.`;
+  byId("studentMessage").className =
+    "feedback ok";
+
+  byId("studentMessage").innerHTML =
+    "✓ Bonjour <strong>"+
+    safeText(first)+" "+
+    safeText(last)+
+    "</strong>. Ta progression est enregistrée.";
 
   updateStudentInterface();
   saveState();
@@ -1540,310 +1981,356 @@ function identifyStudent(){
   return true;
 }
 
-function restoreCurrentStudent(){
+function restoreStudent(){
 
-  const id =
-    localStorage.getItem(CONFIG.storage.currentStudent);
+  var id = "";
 
-  if(!id) return;
+  try{
+    id =
+      localStorage.getItem(
+        CONFIG.currentStudentKey
+      ) || "";
+  }catch(error){}
 
-  const students = getStudents();
+  if(!id){
+    return;
+  }
 
-  if(!students[id]) return;
+  var students =
+    getStudents();
+
+  if(!students[id]){
+    return;
+  }
 
   currentStudentId = id;
   state = loadStudentState(id);
 
-  const s = students[id];
+  byId("firstName").value =
+    students[id].firstName || "";
 
-  document.getElementById("studentFirstName").value =
-    s.firstName;
+  byId("lastName").value =
+    students[id].lastName || "";
 
-  document.getElementById("studentLastName").value =
-    s.lastName;
-
-  document.getElementById("studentWelcome").className =
+  byId("studentMessage").className =
     "feedback ok";
 
-  document.getElementById("studentWelcome").innerHTML =
-    `✓ Profil actif : <strong>${escapeHTML(s.firstName)} ` +
-    `${escapeHTML(s.lastName)}</strong>.`;
+  byId("studentMessage").innerHTML =
+    "✓ Profil actif : <strong>"+
+    safeText(students[id].firstName)+" "+
+    safeText(students[id].lastName)+
+    "</strong>.";
+}
+
+function updateStudentInterface(){
+
+  var chip =
+    byId("studentChip");
+
+  if(!currentStudentId){
+
+    chip.textContent =
+      "👤 Aucun élève";
+
+    renderProgress();
+
+    return;
+  }
+
+  var students =
+    getStudents();
+
+  var student =
+    students[currentStudentId];
+
+  if(student){
+
+    chip.textContent =
+      "👤 "+
+      student.firstName+
+      " "+
+      student.lastName;
+  }
+
+  renderProgress();
 }
 
 function changeStudent(){
 
   currentStudentId = "";
+  state = clone(DEFAULT_STATE);
 
-  localStorage.removeItem(
-    CONFIG.storage.currentStudent
-  );
+  try{
+    localStorage.removeItem(
+      CONFIG.currentStudentKey
+    );
+  }catch(error){}
 
-  state = structuredClone(DEFAULT_STATE);
+  byId("firstName").value = "";
+  byId("lastName").value = "";
 
-  document.getElementById("studentFirstName").value = "";
-  document.getElementById("studentLastName").value = "";
-
-  document.getElementById("studentWelcome").className =
+  byId("studentMessage").className =
     "feedback hint";
 
-  document.getElementById("studentWelcome").textContent =
+  byId("studentMessage").textContent =
     "Entre le nom du nouvel élève.";
 
   updateStudentInterface();
   showPage("home");
 
-  document.getElementById("studentFirstName").focus();
+  byId("firstName").focus();
 }
 
 function requireStudent(){
-  if(currentStudentId) return true;
+
+  if(currentStudentId){
+    return true;
+  }
 
   showPage("home");
 
-  const feedback =
-    document.getElementById("studentWelcome");
+  byId("studentMessage").className =
+    "feedback bad";
 
-  feedback.className = "feedback bad";
-  feedback.textContent =
-    "Identifie-toi avant de commencer l’activité.";
+  byId("studentMessage").textContent =
+    "Identifie-toi avant de commencer.";
 
-  document.getElementById("studentFirstName").focus();
+  byId("firstName").focus();
 
   return false;
-}
-
-function updateStudentInterface(){
-
-  const chip =
-    document.getElementById("headerStudent");
-
-  if(!currentStudentId){
-    chip.textContent = "👤 Aucun élève identifié";
-    renderProgress();
-    return;
-  }
-
-  const students = getStudents();
-  const s = students[currentStudentId];
-
-  if(s){
-    chip.textContent =
-      `👤 ${s.firstName} ${s.lastName}`;
-  }
-
-  renderProgress();
 }
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
 
-function showPage(id){
+function showPage(pageId){
 
-  document.querySelectorAll(".page")
-    .forEach(page=>{
-      page.classList.toggle(
-        "active",
-        page.id === id
-      );
-    });
+  var pages =
+    document.querySelectorAll(".page");
 
-  document.querySelectorAll(".nav-btn")
-    .forEach(btn=>{
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page === id
-      );
-    });
+  var i;
 
-  if(id === "explore"){
-    state.modules.explore = true;
-    drawGraph();
+  for(i=0;i<pages.length;i++){
+    pages[i].classList.remove("active");
   }
 
-  if(id === "understand"){
-    state.modules.understand = true;
+  var target =
+    byId(pageId);
+
+  if(target){
+    target.classList.add("active");
   }
 
-  if(id === "train"){
-    state.modules.train = true;
+  var buttons =
+    document.querySelectorAll(".nav-btn");
 
-    if(!currentExercise){
-      generateExercise();
+  for(i=0;i<buttons.length;i++){
+
+    buttons[i].classList.remove("active");
+
+    if(buttons[i].getAttribute("data-page") === pageId){
+      buttons[i].classList.add("active");
     }
   }
 
-  if(id === "reason"){
-    state.modules.reason = true;
-  }
-
-  if(id === "transfer"){
-    state.modules.transfer = true;
-  }
-
   if(currentStudentId){
+
+    if(pageId === "explore"){
+      state.modules.explore = true;
+    }
+
+    if(pageId === "understand"){
+      state.modules.understand = true;
+    }
+
+    if(pageId === "train"){
+      state.modules.train = true;
+    }
+
+    if(pageId === "reason"){
+      state.modules.reason = true;
+    }
+
+    if(pageId === "transfer"){
+      state.modules.transfer = true;
+    }
+
     saveState();
   }
 
-  if(id === "progress"){
+  if(pageId === "explore"){
+    drawGraph();
+  }
+
+  if(pageId === "train" && !currentExercise){
+    generateExercise();
+  }
+
+  if(pageId === "progress"){
     renderProgress();
   }
 
   window.scrollTo(0,0);
 }
 
-document.querySelectorAll(".nav-btn")
-  .forEach(btn=>{
-    btn.addEventListener("click",()=>{
+var navButtons =
+  document.querySelectorAll(".nav-btn");
 
-      const target = btn.dataset.page;
+for(var n=0;n<navButtons.length;n++){
+
+  navButtons[n].addEventListener(
+    "click",
+    function(){
+
+      var page =
+        this.getAttribute("data-page");
 
       if(
-        target !== "home" &&
-        target !== "teacherPage" &&
+        page !== "home" &&
+        page !== "teacherPage" &&
         !requireStudent()
       ){
         return;
       }
 
-      showPage(target);
-    });
-  });
+      showPage(page);
+    }
+  );
+}
 
-document.querySelectorAll("[data-page-go]")
-  .forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      showPage(btn.dataset.pageGo);
-    });
-  });
+var gotoButtons =
+  document.querySelectorAll("[data-goto]");
+
+for(var g=0;g<gotoButtons.length;g++){
+
+  gotoButtons[g].addEventListener(
+    "click",
+    function(){
+      showPage(
+        this.getAttribute("data-goto")
+      );
+    }
+  );
+}
 
 /* =========================================================
    PROGRESSION
 ========================================================= */
 
-function overallProgress(){
+function scorePercentage(key){
 
-  const moduleValues =
-    Object.values(state.modules);
+  var score =
+    state.scores[key];
 
-  const completed =
-    moduleValues.filter(Boolean).length;
-
-  const moduleProgress =
-    completed / moduleValues.length * 60;
-
-  const practiceProgress =
-    Math.min(state.successes,10) / 10 * 40;
+  if(!score || !score.total){
+    return 0;
+  }
 
   return Math.round(
-    Math.min(100,moduleProgress+practiceProgress)
-  );
-}
-
-function skillPercentage(key){
-
-  const s = state.scores[key];
-
-  if(!s || !s.total) return 0;
-
-  return Math.round(
-    s.ok/s.total*100
+    score.ok/score.total*100
   );
 }
 
 function renderProgress(){
 
-  const progress =
+  var pct =
     overallProgress();
 
-  document.getElementById("homeProgressBar").style.width =
-    `${progress}%`;
+  byId("homeProgress").style.width =
+    pct+"%";
 
-  document.getElementById("homeProgressText").textContent =
-    `${progress} % du parcours complété`;
+  byId("homeProgressText").textContent =
+    pct+" % du parcours complété";
 
-  document.getElementById("progressOverall").textContent =
-    `${progress} %`;
+  byId("progressPct").textContent =
+    pct+" %";
 
-  document.getElementById("progressAttempts").textContent =
+  byId("attemptCount").textContent =
     state.attempts;
 
-  document.getElementById("progressSuccess").textContent =
+  byId("successCount").textContent =
     state.successes;
 
-  document.getElementById("progressQuiz").textContent =
+  byId("bestQuiz").textContent =
     state.bestQuiz === null
       ? "—"
-      : `${state.bestQuiz}/20`;
+      : state.bestQuiz+"/20";
 
-  const labels = {
+  var labels = {
     comprendre:"Comprendre",
     appliquer:"Appliquer",
     raisonner:"Raisonner",
     transferer:"Transférer"
   };
 
-  const tbody =
-    document.getElementById("progressSkills");
+  var html = "";
 
-  tbody.innerHTML =
-    Object.keys(labels)
-      .map(key=>{
-        const s = state.scores[key];
+  Object.keys(labels)
+    .forEach(function(key){
 
-        return `
-          <tr>
-            <td>${labels[key]}</td>
-            <td>${s.ok}</td>
-            <td>${s.total}</td>
-            <td>${skillPercentage(key)} %</td>
-          </tr>
-        `;
-      })
-      .join("");
+      var score =
+        state.scores[key];
 
-  const rates =
-    Object.keys(labels)
-      .map(key=>({
-        key,
-        rate:skillPercentage(key)
-      }))
-      .filter(item=>state.scores[item.key].total>0);
+      html +=
+        "<tr>"+
+        "<td>"+labels[key]+"</td>"+
+        "<td>"+score.ok+"</td>"+
+        "<td>"+score.total+"</td>"+
+        "<td>"+scorePercentage(key)+" %</td>"+
+        "</tr>";
+    });
 
-  const advice =
-    document.getElementById("progressAdvice");
+  byId("progressTable").innerHTML =
+    html;
 
-  if(!rates.length){
-    advice.textContent =
-      "Commence quelques exercices pour obtenir une recommandation personnalisée.";
+  var attempted = [];
+
+  Object.keys(labels)
+    .forEach(function(key){
+
+      if(state.scores[key].total){
+
+        attempted.push({
+          key:key,
+          rate:scorePercentage(key)
+        });
+      }
+    });
+
+  if(!attempted.length){
+
+    byId("progressAdvice").textContent =
+      "Commence quelques exercices pour recevoir un conseil personnalisé.";
+
     return;
   }
 
-  rates.sort((a,b)=>a.rate-b.rate);
+  attempted.sort(function(a,b){
+    return a.rate-b.rate;
+  });
 
-  const weakest = rates[0];
+  var weakest =
+    attempted[0].key;
 
-  const suggestions = {
+  var advice = {
     comprendre:
-      "Revois la signification des inconnues, la vérification d’un couple et la lecture d’un système.",
+      "Revois la vérification d’un couple et le sens des inconnues.",
     appliquer:
-      "Entraîne-toi à résoudre les systèmes par substitution et élimination, puis vérifie tes solutions.",
+      "Travaille la substitution et l’élimination.",
     raisonner:
-      "Travaille le choix de la méthode et explique davantage tes étapes de raisonnement.",
+      "Explique tes étapes et vérifie les solutions.",
     transferer:
-      "Entraîne-toi à définir les inconnues et à transformer un problème concret en deux équations."
+      "Travaille la traduction d’un problème concret en équations."
   };
 
-  advice.innerHTML =
-    `<strong>Priorité :</strong> ${labels[weakest.key]}. ` +
-    suggestions[weakest.key];
+  byId("progressAdvice").innerHTML =
+    "<strong>À retravailler :</strong> "+
+    labels[weakest]+". "+
+    advice[weakest];
 }
 
-/* =========================================================
-   ENREGISTREMENT DES RÉSULTATS
-========================================================= */
-
-function recordAttempt(level,success,error=""){
+function record(level,success,errorName){
 
   state.attempts++;
 
@@ -1852,6 +2339,7 @@ function recordAttempt(level,success,error=""){
   }
 
   if(state.scores[level]){
+
     state.scores[level].total++;
 
     if(success){
@@ -1859,19 +2347,21 @@ function recordAttempt(level,success,error=""){
     }
   }
 
-  if(!success && error){
-    state.errors[error] =
-      (state.errors[error] || 0)+1;
+  if(!success && errorName){
+
+    state.errors[errorName] =
+      (state.errors[errorName] || 0)+1;
   }
 
   state.history.unshift({
     date:new Date().toISOString(),
-    level,
-    success
+    level:level,
+    success:success
   });
 
-  state.history =
-    state.history.slice(0,100);
+  if(state.history.length > 100){
+    state.history.length = 100;
+  }
 
   saveState();
 }
@@ -1880,699 +2370,695 @@ function recordAttempt(level,success,error=""){
    GRAPHIQUE
 ========================================================= */
 
-const canvas =
-  document.getElementById("systemGraph");
+var canvas =
+  byId("graphCanvas");
 
-const ctx =
+var ctx =
   canvas.getContext("2d");
 
-let graphGrid = true;
-let graphRange = 10;
+function graphData(){
 
-function graphValues(){
   return {
-    m1:Number(document.getElementById("m1").value),
-    p1:Number(document.getElementById("p1").value),
-    m2:Number(document.getElementById("m2").value),
-    p2:Number(document.getElementById("p2").value)
+    m1:Number(byId("m1").value),
+    p1:Number(byId("p1").value),
+    m2:Number(byId("m2").value),
+    p2:Number(byId("p2").value)
   };
-}
-
-function updateGraphLabels(){
-
-  ["m1","p1","m2","p2"].forEach(id=>{
-    document.getElementById(id+"Value").textContent =
-      document.getElementById(id).value;
-  });
 }
 
 function drawGraph(){
 
-  updateGraphLabels();
+  var d =
+    graphData();
 
-  const W = canvas.width;
-  const H = canvas.height;
+  byId("m1Text").textContent = d.m1;
+  byId("p1Text").textContent = d.p1;
+  byId("m2Text").textContent = d.m2;
+  byId("p2Text").textContent = d.p2;
+
+  var W = canvas.width;
+  var H = canvas.height;
+
+  var range = 10;
+
+  var unit =
+    Math.min(W,H)/(range*2);
+
+  var cx = W/2;
+  var cy = H/2;
+
+  function X(value){
+    return cx+value*unit;
+  }
+
+  function Y(value){
+    return cy-value*unit;
+  }
 
   ctx.clearRect(0,0,W,H);
+
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0,0,W,H);
 
-  const unit =
-    Math.min(W,H)/(graphRange*2);
+  ctx.strokeStyle = "#e2ebf3";
+  ctx.lineWidth = 1;
 
-  const cx = W/2;
-  const cy = H/2;
+  var i;
 
-  function pxX(x){
-    return cx+x*unit;
+  for(i=-range;i<=range;i++){
+
+    ctx.beginPath();
+    ctx.moveTo(X(i),Y(-range));
+    ctx.lineTo(X(i),Y(range));
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(X(-range),Y(i));
+    ctx.lineTo(X(range),Y(i));
+    ctx.stroke();
   }
 
-  function pxY(y){
-    return cy-y*unit;
-  }
-
-  if(graphGrid){
-
-    ctx.strokeStyle = "#e4edf5";
-    ctx.lineWidth = 1;
-
-    for(let i=-graphRange;i<=graphRange;i++){
-
-      ctx.beginPath();
-      ctx.moveTo(pxX(i),pxY(-graphRange));
-      ctx.lineTo(pxX(i),pxY(graphRange));
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(pxX(-graphRange),pxY(i));
-      ctx.lineTo(pxX(graphRange),pxY(i));
-      ctx.stroke();
-    }
-  }
-
-  ctx.strokeStyle = "#243a52";
+  ctx.strokeStyle = "#26384a";
   ctx.lineWidth = 2;
 
   ctx.beginPath();
-  ctx.moveTo(pxX(-graphRange),pxY(0));
-  ctx.lineTo(pxX(graphRange),pxY(0));
+  ctx.moveTo(X(-range),Y(0));
+  ctx.lineTo(X(range),Y(0));
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(pxX(0),pxY(-graphRange));
-  ctx.lineTo(pxX(0),pxY(graphRange));
+  ctx.moveTo(X(0),Y(-range));
+  ctx.lineTo(X(0),Y(range));
   ctx.stroke();
 
-  ctx.fillStyle = "#243a52";
-  ctx.font = "14px Arial";
+  ctx.fillStyle = "#26384a";
+  ctx.font = "13px Arial";
 
-  for(let i=-graphRange;i<=graphRange;i+=2){
+  for(i=-10;i<=10;i+=2){
+
     if(i !== 0){
-      ctx.fillText(String(i),pxX(i)-5,pxY(0)+18);
-      ctx.fillText(String(i),pxX(0)+7,pxY(i)+5);
+
+      ctx.fillText(
+        String(i),
+        X(i)-5,
+        Y(0)+17
+      );
+
+      ctx.fillText(
+        String(i),
+        X(0)+7,
+        Y(i)+5
+      );
     }
   }
 
-  ctx.fillText("x",W-20,cy-8);
+  ctx.fillText("x",W-18,cy-8);
   ctx.fillText("y",cx+8,18);
-  ctx.fillText("0",cx+6,cy+17);
+  ctx.fillText("0",cx+6,cy+16);
 
-  const {m1,p1,m2,p2} =
-    graphValues();
-
-  function line(m,p,color){
+  function drawLine(m,p,color){
 
     ctx.strokeStyle = color;
     ctx.lineWidth = 3;
 
     ctx.beginPath();
 
-    const xA = -graphRange;
-    const xB = graphRange;
-
     ctx.moveTo(
-      pxX(xA),
-      pxY(m*xA+p)
+      X(-range),
+      Y(m*(-range)+p)
     );
 
     ctx.lineTo(
-      pxX(xB),
-      pxY(m*xB+p)
+      X(range),
+      Y(m*range+p)
     );
 
     ctx.stroke();
   }
 
-  line(m1,p1,"#1677d2");
-  line(m2,p2,"#168a55");
+  drawLine(d.m1,d.p1,"#1976d2");
+  drawLine(d.m2,d.p2,"#168a55");
 
-  const obs =
-    document.getElementById("graphObservation");
+  var observation =
+    byId("graphObservation");
 
-  const text =
-    document.getElementById("graphText");
+  var alternative =
+    byId("graphAlternative");
 
-  if(m1 === m2){
+  if(d.m1 === d.m2){
 
-    if(p1 === p2){
-      obs.className = "feedback hint";
-      obs.innerHTML =
-        "<strong>J’observe :</strong> les deux droites sont confondues. " +
-        "Le système possède une infinité de solutions.";
+    if(d.p1 === d.p2){
 
-      text.innerHTML =
-        `<p>Les deux équations représentent la même droite :
-        <span class="math">y = ${m1}x + ${p1}</span>.</p>`;
+      observation.className =
+        "feedback hint";
+
+      observation.innerHTML =
+        "<strong>J’observe :</strong> les droites sont confondues. "+
+        "Il existe une infinité de solutions.";
+
+      alternative.innerHTML =
+        "Les deux équations représentent exactement la même droite.";
+
     }else{
-      obs.className = "feedback hint";
-      obs.innerHTML =
-        "<strong>J’observe :</strong> les droites sont parallèles. " +
-        "Elles ne se coupent pas : le système n’a aucune solution.";
 
-      text.innerHTML =
-        `<p>Droite 1 : y = ${m1}x + ${p1}.<br>
-        Droite 2 : y = ${m2}x + ${p2}.<br>
-        Elles ont la même pente mais des ordonnées à l’origine différentes.</p>`;
+      observation.className =
+        "feedback hint";
+
+      observation.innerHTML =
+        "<strong>J’observe :</strong> les droites sont parallèles. "+
+        "Le système ne possède aucune solution.";
+
+      alternative.innerHTML =
+        "Même pente, mais ordonnées à l’origine différentes.";
     }
 
-  }else{
-
-    const x =
-      (p2-p1)/(m1-m2);
-
-    const y =
-      m1*x+p1;
-
-    ctx.fillStyle = "#d85815";
-
-    ctx.beginPath();
-    ctx.arc(
-      pxX(x),
-      pxY(y),
-      7,
-      0,
-      Math.PI*2
-    );
-    ctx.fill();
-
-    ctx.fillStyle = "#8b3b0b";
-    ctx.fillText(
-      `(${x.toFixed(2)} ; ${y.toFixed(2)})`,
-      pxX(x)+10,
-      pxY(y)-10
-    );
-
-    obs.className = "feedback ok";
-    obs.innerHTML =
-      `<strong>J’observe :</strong> les deux droites se coupent en
-       <strong>(${x.toFixed(2)} ; ${y.toFixed(2)})</strong>.
-       Ce point est la solution du système.`;
-
-    text.innerHTML =
-      `<table>
-        <tr>
-          <th></th>
-          <th>Équation</th>
-        </tr>
-        <tr>
-          <td>Droite 1</td>
-          <td>y = ${m1}x + ${p1}</td>
-        </tr>
-        <tr>
-          <td>Droite 2</td>
-          <td>y = ${m2}x + ${p2}</td>
-        </tr>
-        <tr>
-          <td>Intersection</td>
-          <td>x ≈ ${x.toFixed(2)}, y ≈ ${y.toFixed(2)}</td>
-        </tr>
-       </table>`;
+    return;
   }
+
+  var x =
+    (d.p2-d.p1)/(d.m1-d.m2);
+
+  var y =
+    d.m1*x+d.p1;
+
+  ctx.fillStyle = "#e66f1a";
+
+  ctx.beginPath();
+  ctx.arc(X(x),Y(y),7,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.fillStyle = "#713910";
+  ctx.font = "14px Arial";
+
+  ctx.fillText(
+    "("+x.toFixed(2)+" ; "+y.toFixed(2)+")",
+    X(x)+10,
+    Y(y)-10
+  );
+
+  observation.className =
+    "feedback ok";
+
+  observation.innerHTML =
+    "<strong>J’observe :</strong> les droites se coupent en "+
+    "<strong>("+x.toFixed(2)+" ; "+y.toFixed(2)+")</strong>. "+
+    "Ce point est la solution du système.";
+
+  alternative.innerHTML =
+    "<table>"+
+    "<tr><th></th><th>Équation</th></tr>"+
+    "<tr><td>Bleue</td><td>y = "+d.m1+"x + "+d.p1+"</td></tr>"+
+    "<tr><td>Verte</td><td>y = "+d.m2+"x + "+d.p2+"</td></tr>"+
+    "<tr><td>Intersection</td><td>("+
+    x.toFixed(2)+" ; "+y.toFixed(2)+
+    ")</td></tr>"+
+    "</table>";
 }
 
-["m1","p1","m2","p2"].forEach(id=>{
-  document.getElementById(id)
-    .addEventListener("input",drawGraph);
-});
+["m1","p1","m2","p2"]
+  .forEach(function(id){
 
-document.getElementById("resetGraph")
-  .addEventListener("click",()=>{
+    byId(id).addEventListener(
+      "input",
+      drawGraph
+    );
+  });
 
-    document.getElementById("m1").value = 1;
-    document.getElementById("p1").value = 2;
-    document.getElementById("m2").value = -1;
-    document.getElementById("p2").value = 4;
+byId("graphReset")
+  .addEventListener("click",function(){
 
-    graphRange = 10;
+    byId("m1").value = 1;
+    byId("p1").value = 2;
+    byId("m2").value = -1;
+    byId("p2").value = 4;
 
     drawGraph();
   });
 
-document.getElementById("randomGraph")
-  .addEventListener("click",()=>{
+byId("graphRandom")
+  .addEventListener("click",function(){
 
-    let m1 = randomInt(-3,3);
-    let m2 = randomInt(-3,3);
+    var m1 =
+      randomInt(-3,3);
 
-    if(Math.random()>.25){
+    var m2 =
+      randomInt(-3,3);
+
+    if(Math.random()>.3){
+
       while(m2 === m1){
         m2 = randomInt(-3,3);
       }
     }
 
-    document.getElementById("m1").value = m1;
-    document.getElementById("m2").value = m2;
-    document.getElementById("p1").value =
-      randomInt(-5,5);
-    document.getElementById("p2").value =
-      randomInt(-5,5);
+    byId("m1").value = m1;
+    byId("m2").value = m2;
+    byId("p1").value = randomInt(-5,5);
+    byId("p2").value = randomInt(-5,5);
 
     drawGraph();
   });
 
-document.getElementById("graphHint")
-  .addEventListener("click",()=>{
+byId("graphHint")
+  .addEventListener("click",function(){
 
-    alert(
-      "Indice : la solution graphique d’un système correspond aux coordonnées du point qui appartient aux deux droites."
-    );
-  });
+    byId("graphObservation").className =
+      "feedback hint";
 
-document.getElementById("toggleGrid")
-  .addEventListener("click",event=>{
-
-    graphGrid = !graphGrid;
-
-    event.currentTarget.textContent =
-      `Grille : ${graphGrid ? "oui" : "non"}`;
-
-    drawGraph();
-  });
-
-document.getElementById("zoomGraph")
-  .addEventListener("click",()=>{
-
-    graphRange =
-      graphRange === 10 ? 6 : 10;
-
-    drawGraph();
+    byId("graphObservation").innerHTML =
+      "<strong>Indice :</strong> la solution est un point appartenant simultanément aux deux droites.";
   });
 
 /* =========================================================
-   DÉTERMINANTS
+   DÉTERMINANT ET CRAMER
 ========================================================= */
 
-function determinant2(a,b,c,d){
+function det2(a,b,c,d){
   return a*d-b*c;
 }
 
-function determinant3(m){
+byId("det2Button")
+  .addEventListener("click",function(){
 
-  const [
-    a,b,c,
-    d,e,f,
-    g,h,i
-  ] = m;
+    var a = Number(byId("da").value);
+    var b = Number(byId("db").value);
+    var c = Number(byId("dc").value);
+    var d = Number(byId("dd").value);
 
-  return (
-    a*e*i +
-    b*f*g +
-    c*d*h -
-    c*e*g -
-    b*d*i -
-    a*f*h
-  );
-}
+    var delta =
+      det2(a,b,c,d);
 
-document.getElementById("calcDet2")
-  .addEventListener("click",()=>{
-
-    const a =
-      Number(document.getElementById("d2a").value);
-
-    const b =
-      Number(document.getElementById("d2b").value);
-
-    const c =
-      Number(document.getElementById("d2c").value);
-
-    const d =
-      Number(document.getElementById("d2d").value);
-
-    const det =
-      determinant2(a,b,c,d);
-
-    document.getElementById("det2Result").innerHTML =
-      `Δ = (${a} × ${d}) − (${b} × ${c}) = <strong>${det}</strong>.`;
+    byId("det2Output").innerHTML =
+      "Δ = ("+a+" × "+d+") − ("+
+      b+" × "+c+") = <strong>"+
+      delta+"</strong>.";
   });
 
-document.getElementById("calcDet3")
-  .addEventListener("click",()=>{
+byId("cramerButton")
+  .addEventListener("click",function(){
 
-    const values =
-      [...document.querySelectorAll(".d3")]
-        .map(input=>Number(input.value));
+    var a = Number(byId("ca").value);
+    var b = Number(byId("cb").value);
+    var e = Number(byId("ce").value);
+    var c = Number(byId("cc").value);
+    var d = Number(byId("cd").value);
+    var f = Number(byId("cf").value);
 
-    const det =
-      determinant3(values);
+    var delta =
+      det2(a,b,c,d);
 
-    document.getElementById("det3Result").innerHTML =
-      `Avec la règle de Sarrus, le déterminant vaut
-       <strong>${det}</strong>.`;
+    var output =
+      byId("cramerOutput");
+
+    if(delta === 0){
+
+      output.className =
+        "feedback hint";
+
+      output.innerHTML =
+        "Δ = 0. La règle de Cramer ne donne pas de solution unique.";
+
+      return;
+    }
+
+    var deltaX =
+      det2(e,b,f,d);
+
+    var deltaY =
+      det2(a,e,c,f);
+
+    var x =
+      deltaX/delta;
+
+    var y =
+      deltaY/delta;
+
+    output.className =
+      "feedback ok";
+
+    output.innerHTML =
+      "Δ = "+delta+
+      "<br>Δx = "+deltaX+
+      "<br>Δy = "+deltaY+
+      "<br><strong>x = "+x+
+      " et y = "+y+"</strong>";
   });
 
 /* =========================================================
    EXERCICES
 ========================================================= */
 
-let currentExercise = null;
-let exerciseAttempts = 0;
-
 function makeSystem(difficulty){
 
-  let range =
-    difficulty === "facile"
-      ? 5
-      : difficulty === "intermediaire"
-        ? 8
-        : 12;
+  var limit = 5;
 
-  let x = randomInt(-range,range);
-  let y = randomInt(-range,range);
+  if(difficulty === "medium"){
+    limit = 8;
+  }
 
-  let a,b,c,d,det;
+  if(difficulty === "hard"){
+    limit = 12;
+  }
+
+  var x =
+    randomInt(-limit,limit);
+
+  var y =
+    randomInt(-limit,limit);
+
+  var a,b,c,d,delta;
 
   do{
+
     a = randomInt(1,5);
-    b = randomInt(-5,5) || 1;
-    c = randomInt(-5,5) || 2;
+    b = randomInt(-5,5);
+
+    if(b === 0){
+      b = 1;
+    }
+
+    c = randomInt(-5,5);
+
+    if(c === 0){
+      c = 2;
+    }
+
     d = randomInt(1,5);
 
-    det = a*d-b*c;
+    delta =
+      a*d-b*c;
 
-  }while(det === 0);
+  }while(delta === 0);
 
   return {
-    x,y,a,b,c,d,
+    x:x,
+    y:y,
+    a:a,
+    b:b,
+    c:c,
+    d:d,
     e:a*x+b*y,
     f:c*x+d*y
   };
 }
 
+function equationText(a,b,result){
+
+  return a+"x "+
+    (b>=0 ? "+ " : "− ")+
+    Math.abs(b)+"y = "+
+    result;
+}
+
 function generateExercise(){
 
-  if(!requireStudent()) return;
+  if(!requireStudent()){
+    return;
+  }
 
   exerciseAttempts = 0;
 
-  const level =
-    document.getElementById("exerciseLevel").value;
+  var difficulty =
+    byId("exerciseDifficulty").value;
 
-  const difficulty =
-    document.getElementById("exerciseDifficulty").value;
+  var type =
+    byId("exerciseMethod").value;
 
-  const badge =
-    document.getElementById("exerciseBadges");
+  var system =
+    makeSystem(difficulty);
 
-  badge.innerHTML =
-    `<span class="badge">${level.toUpperCase()}</span>
-     <span class="badge orange">${difficulty}</span>`;
+  byId("exerciseFeedback").innerHTML = "";
 
-  const statement =
-    document.getElementById("exerciseStatement");
-
-  const inputs =
-    document.getElementById("exerciseInputs");
-
-  const feedback =
-    document.getElementById("exerciseFeedback");
-
-  feedback.innerHTML = "";
-
-  if(level === "comprendre"){
-
-    const sys =
-      makeSystem(difficulty);
-
-    const correctX =
-      Math.random()>.5
-        ? sys.x
-        : sys.x+randomInt(1,3);
-
-    const correctY =
-      Math.random()>.5
-        ? sys.y
-        : sys.y+randomInt(1,3);
-
-    const trueAnswer =
-      nearlyEqual(
-        sys.a*correctX+sys.b*correctY,
-        sys.e
-      ) &&
-      nearlyEqual(
-        sys.c*correctX+sys.d*correctY,
-        sys.f
-      );
+  if(type === "solve"){
 
     currentExercise = {
-      level,
-      type:"verify",
-      answer:trueAnswer,
+      type:"solve",
+      x:system.x,
+      y:system.y,
       correction:
-        `On remplace x par ${correctX} et y par ${correctY} dans les deux équations. ` +
-        `Le couple ${trueAnswer ? "vérifie" : "ne vérifie pas"} simultanément les deux équations.`
+        "La solution est ("+
+        system.x+" ; "+
+        system.y+
+        "). Vérifie-la ensuite dans les deux équations."
     };
 
-    document.getElementById("exerciseTitle").textContent =
-      "Vérifier un couple";
+    byId("exerciseTitle").textContent =
+      "Résoudre le système";
 
-    statement.innerHTML =
-      `<p>Le couple <strong>(${correctX} ; ${correctY})</strong>
-       est-il solution du système ?</p>
+    byId("exerciseStatement").innerHTML =
+      "<div class='big-math'>"+
+      equationText(system.a,system.b,system.e)+
+      "<br>"+
+      equationText(system.c,system.d,system.f)+
+      "</div>";
 
-       <div class="big-math">
-         ${sys.a}x ${sys.b>=0?"+":"−"} ${Math.abs(sys.b)}y = ${sys.e}<br>
-         ${sys.c}x ${sys.d>=0?"+":"−"} ${Math.abs(sys.d)}y = ${sys.f}
-       </div>`;
-
-    inputs.innerHTML =
-      `<label for="exerciseChoice">Réponse</label>
-       <select id="exerciseChoice">
-         <option value="">Choisir…</option>
-         <option value="true">Oui</option>
-         <option value="false">Non</option>
-       </select>`;
+    byId("exerciseInputs").innerHTML =
+      "<div class='form-row'>"+
+      "<div><label for='exerciseX'>x =</label>"+
+      "<input id='exerciseX' type='text'></div>"+
+      "<div><label for='exerciseY'>y =</label>"+
+      "<input id='exerciseY' type='text'></div>"+
+      "</div>";
 
   }else{
 
-    const sys =
-      makeSystem(difficulty);
+    var correct =
+      Math.random()>.5;
+
+    var px =
+      correct
+        ? system.x
+        : system.x+randomInt(1,3);
+
+    var py =
+      correct
+        ? system.y
+        : system.y;
 
     currentExercise = {
-      level,
-      type:"solve",
-      x:sys.x,
-      y:sys.y,
+      type:"verify",
+      correct:correct,
       correction:
-        `La solution est <strong>(${sys.x} ; ${sys.y})</strong>. ` +
-        `Après résolution, vérifie cette solution dans les deux équations.`
+        "Il faut remplacer x et y dans les deux équations. "+
+        "Le couple proposé "+
+        (correct ? "est" : "n’est pas")+
+        " solution."
     };
 
-    document.getElementById("exerciseTitle").textContent =
-      level === "appliquer"
-        ? "Résoudre le système"
-        : "Choisir et appliquer une méthode";
+    byId("exerciseTitle").textContent =
+      "Vérifier un couple";
 
-    statement.innerHTML =
-      `<p>Résous le système suivant.</p>
+    byId("exerciseStatement").innerHTML =
+      "<p>Le couple <strong>("+
+      px+" ; "+py+
+      ")</strong> est-il solution ?</p>"+
+      "<div class='big-math'>"+
+      equationText(system.a,system.b,system.e)+
+      "<br>"+
+      equationText(system.c,system.d,system.f)+
+      "</div>";
 
-       <div class="big-math">
-         ${sys.a}x ${sys.b>=0?"+":"−"} ${Math.abs(sys.b)}y = ${sys.e}<br>
-         ${sys.c}x ${sys.d>=0?"+":"−"} ${Math.abs(sys.d)}y = ${sys.f}
-       </div>`;
-
-    inputs.innerHTML =
-      `<div class="form-row">
-        <div>
-          <label for="exerciseX">x =</label>
-          <input id="exerciseX" type="text">
-        </div>
-
-        <div>
-          <label for="exerciseY">y =</label>
-          <input id="exerciseY" type="text">
-        </div>
-       </div>`;
+    byId("exerciseInputs").innerHTML =
+      "<label for='exerciseChoice'>Réponse</label>"+
+      "<select id='exerciseChoice'>"+
+      "<option value=''>Choisir…</option>"+
+      "<option value='yes'>Oui</option>"+
+      "<option value='no'>Non</option>"+
+      "</select>";
   }
 }
 
 function checkExercise(){
 
-  if(!currentExercise) return;
+  if(!currentExercise){
+    return;
+  }
 
   exerciseAttempts++;
 
-  let success = false;
+  var success = false;
 
-  if(currentExercise.type === "verify"){
+  if(currentExercise.type === "solve"){
 
-    const choice =
-      document.getElementById("exerciseChoice").value;
-
-    if(choice !== ""){
-      success =
-        (choice === "true") ===
-        currentExercise.answer;
-    }
-
-  }else{
-
-    const x =
+    var x =
       parseNumber(
-        document.getElementById("exerciseX").value
+        byId("exerciseX").value
       );
 
-    const y =
+    var y =
       parseNumber(
-        document.getElementById("exerciseY").value
+        byId("exerciseY").value
       );
 
     success =
-      nearlyEqual(x,currentExercise.x) &&
-      nearlyEqual(y,currentExercise.y);
-  }
-
-  const feedback =
-    document.getElementById("exerciseFeedback");
-
-  if(success){
-
-    feedback.innerHTML =
-      `<div class="feedback ok">
-         ✓ Bonne réponse. Pense toujours à vérifier la solution
-         dans les deux équations.
-       </div>`;
-
-    recordAttempt(
-      currentExercise.level,
-      true
-    );
+      equal(x,currentExercise.x) &&
+      equal(y,currentExercise.y);
 
   }else{
 
-    let extra =
-      exerciseAttempts >= 2
-        ? `<br><strong>Correction :</strong> ${currentExercise.correction}`
-        : "";
+    var choice =
+      byId("exerciseChoice").value;
 
-    feedback.innerHTML =
-      `<div class="feedback bad">
-         Ce n’est pas encore correct.
-         Vérifie les signes et remplace ton résultat dans les deux équations.
-         ${extra}
-       </div>`;
+    if(choice){
 
-    recordAttempt(
-      currentExercise.level,
+      success =
+        (choice === "yes") ===
+        currentExercise.correct;
+    }
+  }
+
+  if(success){
+
+    byId("exerciseFeedback").innerHTML =
+      "<div class='feedback ok'>"+
+      "✓ Bonne réponse."+
+      "</div>";
+
+    record("appliquer",true,"");
+
+  }else{
+
+    var correction = "";
+
+    if(exerciseAttempts >= 2){
+
+      correction =
+        "<br><strong>Correction :</strong> "+
+        currentExercise.correction;
+    }
+
+    byId("exerciseFeedback").innerHTML =
+      "<div class='feedback bad'>"+
+      "Ce n’est pas correct. Vérifie les signes et les deux équations."+
+      correction+
+      "</div>";
+
+    record(
+      "appliquer",
       false,
-      "Résolution ou vérification du système"
+      "Résolution d’un système"
     );
   }
 }
 
-document.getElementById("newExercise")
-  .addEventListener("click",generateExercise);
+byId("exerciseNew")
+  .addEventListener(
+    "click",
+    generateExercise
+  );
 
-document.getElementById("exerciseLevel")
-  .addEventListener("change",generateExercise);
+byId("exerciseDifficulty")
+  .addEventListener(
+    "change",
+    generateExercise
+  );
 
-document.getElementById("exerciseDifficulty")
-  .addEventListener("change",generateExercise);
+byId("exerciseMethod")
+  .addEventListener(
+    "change",
+    generateExercise
+  );
 
-document.getElementById("checkExercise")
-  .addEventListener("click",checkExercise);
+byId("exerciseCheck")
+  .addEventListener(
+    "click",
+    checkExercise
+  );
 
-document.getElementById("exerciseHint")
-  .addEventListener("click",()=>{
+byId("exerciseHint")
+  .addEventListener("click",function(){
 
-    if(!currentExercise) return;
+    if(!currentExercise){
+      return;
+    }
 
-    const message =
-      currentExercise.type === "verify"
-        ? "Remplace x et y par les valeurs proposées dans la première équation, puis dans la seconde."
-        : "Essaie l’élimination : multiplie éventuellement une équation afin d’obtenir deux coefficients opposés devant une inconnue.";
-
-    document.getElementById("exerciseFeedback").innerHTML =
-      `<div class="feedback hint">
-         <strong>Indice :</strong> ${message}
-       </div>`;
+    byId("exerciseFeedback").innerHTML =
+      "<div class='feedback hint'>"+
+      "<strong>Indice :</strong> "+
+      (currentExercise.type === "solve"
+        ? "Essaie de supprimer une inconnue en additionnant ou soustrayant les équations."
+        : "Remplace les deux coordonnées dans chacune des équations.")+
+      "</div>";
   });
 
-document.getElementById("showCorrection")
-  .addEventListener("click",()=>{
+byId("exerciseCorrection")
+  .addEventListener("click",function(){
 
-    if(!currentExercise) return;
+    if(!currentExercise){
+      return;
+    }
 
-    document.getElementById("exerciseFeedback").innerHTML =
-      `<div class="feedback hint">
-         <strong>Correction :</strong>
-         ${currentExercise.correction}
-       </div>`;
+    byId("exerciseFeedback").innerHTML =
+      "<div class='feedback hint'>"+
+      "<strong>Correction :</strong> "+
+      currentExercise.correction+
+      "</div>";
   });
 
 /* =========================================================
    RAISONNER
 ========================================================= */
 
-document.getElementById("checkReason")
-  .addEventListener("click",()=>{
+byId("reasonCheck")
+  .addEventListener("click",function(){
 
-    if(!requireStudent()) return;
+    if(!requireStudent()){
+      return;
+    }
 
-    const x =
+    var x =
       parseNumber(
-        document.getElementById("reasonX").value
+        byId("reasonX").value
       );
 
-    const y =
+    var y =
       parseNumber(
-        document.getElementById("reasonY").value
+        byId("reasonY").value
       );
 
-    const unknowns =
-      document.getElementById("reasonUnknowns").value.trim();
+    var unknowns =
+      byId("reasonUnknowns").value.trim();
 
-    const equations =
-      document.getElementById("reasonEquations").value.trim();
+    var equations =
+      byId("reasonEquations").value.trim();
 
-    const conclusion =
-      document.getElementById("reasonConclusion").value.trim();
+    var conclusion =
+      byId("reasonConclusion").value.trim();
 
-    const numerical =
-      nearlyEqual(x,20) &&
-      nearlyEqual(y,6);
+    var numbersCorrect =
+      equal(x,20) &&
+      equal(y,6);
 
-    const process =
-      unknowns.length >= 10 &&
-      equations.length >= 8 &&
-      conclusion.length >= 10;
+    var process =
+      unknowns.length >= 8 &&
+      equations.length >= 6 &&
+      conclusion.length >= 8;
 
-    const success =
-      numerical && process;
+    if(numbersCorrect && process){
 
-    const feedback =
-      document.getElementById("reasonFeedback");
+      byId("reasonFeedback").innerHTML =
+        "<div class='feedback ok'>"+
+        "✓ Correct. "+
+        "On pose x = nombre de tickets étudiants et y = nombre de tickets adultes. "+
+        "Le système est x + y = 26 et 8x + 12y = 232. "+
+        "<strong>Il y a 20 tickets étudiants et 6 tickets adultes.</strong>"+
+        "</div>";
 
-    if(success){
-
-      feedback.innerHTML =
-        `<div class="feedback ok">
-          ✓ Très bien.<br><br>
-          On peut poser x = nombre de tickets étudiants
-          et y = nombre de tickets adultes.<br>
-          Le système est :
-          <span class="math">x + y = 26</span> et
-          <span class="math">8x + 12y = 232</span>.<br>
-          On obtient <strong>x = 20</strong> et <strong>y = 6</strong>.<br>
-          Il y a donc 20 tickets étudiants et 6 tickets adultes.
-        </div>`;
-
-      recordAttempt("raisonner",true);
+      record("raisonner",true,"");
 
     }else{
 
-      feedback.innerHTML =
-        `<div class="feedback bad">
-          Vérifie toutes les étapes. Les valeurs finales attendues
-          sont 20 tickets étudiants et 6 tickets adultes.
-          Il faut aussi définir les inconnues, écrire le système
-          et rédiger une conclusion.
-        </div>`;
+      byId("reasonFeedback").innerHTML =
+        "<div class='feedback bad'>"+
+        "Vérifie toutes les étapes. "+
+        "La solution numérique est x = 20 et y = 6, "+
+        "mais tu dois aussi définir les inconnues et interpréter le résultat."+
+        "</div>";
 
-      recordAttempt(
+      record(
         "raisonner",
         false,
-        "Modélisation ou interprétation"
+        "Modélisation et interprétation"
       );
     }
   });
@@ -2581,216 +3067,225 @@ document.getElementById("checkReason")
    TRANSFERT
 ========================================================= */
 
-const transferAnswers = {
+var transferProblems = {
 
-  geo:{
+  geometry:{
     ids:["geoL","geoW"],
-    values:[16,11],
-    feedback:"geoFeedback",
+    answers:[16,11],
+    feedback:"geometryFeedback",
     correction:
-      "On pose L = longueur et l = largeur. " +
-      "2L + 2l = 54 et L = l + 5. " +
-      "On obtient L = 16 cm et l = 11 cm."
+      "2L + 2l = 54 et L = l + 5. "+
+      "Donc L = 16 cm et l = 11 cm."
   },
 
-  move:{
-    ids:["moveV1","moveV2"],
-    values:[20,15],
-    feedback:"moveFeedback",
+  movement:{
+    ids:["speed1","speed2"],
+    answers:[20,15],
+    feedback:"movementFeedback",
     correction:
-      "En 2 h, la distance totale vaut 70 km. " +
-      "2v₁ + 2v₂ = 70 et v₁ = v₂ + 5. " +
-      "Les vitesses sont 20 km/h et 15 km/h."
+      "2v₁ + 2v₂ = 70 et v₁ = v₂ + 5. "+
+      "Donc v₁ = 20 km/h et v₂ = 15 km/h."
   },
 
   life:{
-    ids:["lifeX","lifeY"],
-    values:[10,8],
+    ids:["juice","smoothie"],
+    answers:[10,8],
     feedback:"lifeFeedback",
     correction:
-      "Si x est le nombre de jus et y le nombre de smoothies : " +
-      "x + y = 18 et 2x + 3y = 44. " +
-      "On obtient 10 jus et 8 smoothies."
+      "x + y = 18 et 2x + 3y = 44. "+
+      "Donc 10 jus et 8 smoothies."
   }
 };
 
-document.querySelectorAll(".transfer-check")
-  .forEach(button=>{
+var transferButtons =
+  document.querySelectorAll(".transferButton");
 
-    button.addEventListener("click",()=>{
+for(var t=0;t<transferButtons.length;t++){
 
-      if(!requireStudent()) return;
+  transferButtons[t].addEventListener(
+    "click",
+    function(){
 
-      const problem =
-        transferAnswers[
-          button.dataset.problem
-        ];
+      if(!requireStudent()){
+        return;
+      }
 
-      const values =
-        problem.ids.map(id=>
-          parseNumber(
-            document.getElementById(id).value
-          )
+      var key =
+        this.getAttribute("data-transfer");
+
+      var problem =
+        transferProblems[key];
+
+      var a =
+        parseNumber(
+          byId(problem.ids[0]).value
         );
 
-      const success =
-        values.every(
-          (value,index)=>
-            nearlyEqual(
-              value,
-              problem.values[index]
-            )
+      var b =
+        parseNumber(
+          byId(problem.ids[1]).value
         );
 
-      const box =
-        document.getElementById(
-          problem.feedback
-        );
+      var success =
+        equal(a,problem.answers[0]) &&
+        equal(b,problem.answers[1]);
 
       if(success){
 
-        box.innerHTML =
-          `<div class="feedback ok">
-            ✓ Correct. ${problem.correction}
-          </div>`;
+        byId(problem.feedback).innerHTML =
+          "<div class='feedback ok'>"+
+          "✓ Correct. "+
+          problem.correction+
+          "</div>";
 
-        recordAttempt("transferer",true);
+        record("transferer",true,"");
 
       }else{
 
-        box.innerHTML =
-          `<div class="feedback bad">
-            Ce résultat n’est pas correct.<br>
-            ${problem.correction}
-          </div>`;
+        byId(problem.feedback).innerHTML =
+          "<div class='feedback bad'>"+
+          "Ce n’est pas correct.<br>"+
+          problem.correction+
+          "</div>";
 
-        recordAttempt(
+        record(
           "transferer",
           false,
-          "Transfert vers une situation concrète"
+          "Modélisation d’un problème concret"
         );
       }
-    });
-  });
+    }
+  );
+}
 
 /* =========================================================
-   QUIZ FINAL
+   QUIZ
 ========================================================= */
-
-let quizQuestions = [];
-
-function createQuizQuestion(level,index){
-
-  const sys =
-    makeSystem(
-      index < 5
-        ? "facile"
-        : index < 10
-          ? "intermediaire"
-          : "avance"
-    );
-
-  return {
-    level,
-    statement:
-      `Résous : ${sys.a}x ${sys.b>=0?"+":"−"} ${Math.abs(sys.b)}y = ${sys.e} ` +
-      `et ${sys.c}x ${sys.d>=0?"+":"−"} ${Math.abs(sys.d)}y = ${sys.f}.`,
-    x:sys.x,
-    y:sys.y
-  };
-}
 
 function startQuiz(){
 
-  if(!requireStudent()) return;
+  if(!requireStudent()){
+    return;
+  }
 
-  const levels = [
-    "comprendre","comprendre","comprendre",
-    "appliquer","appliquer","appliquer","appliquer","appliquer",
-    "raisonner","raisonner","raisonner","raisonner",
-    "transferer","transferer","transferer"
+  quizQuestions = [];
+
+  var levels = [
+    "comprendre",
+    "comprendre",
+    "comprendre",
+    "appliquer",
+    "appliquer",
+    "appliquer",
+    "appliquer",
+    "appliquer",
+    "raisonner",
+    "raisonner",
+    "raisonner",
+    "raisonner",
+    "transferer",
+    "transferer",
+    "transferer"
   ];
 
-  quizQuestions =
-    levels.map((level,index)=>
-      createQuizQuestion(level,index)
+  var html = "";
+
+  for(var i=0;i<levels.length;i++){
+
+    var system =
+      makeSystem(
+        i<5
+          ? "easy"
+          : i<11
+            ? "medium"
+            : "hard"
+      );
+
+    quizQuestions.push({
+      level:levels[i],
+      x:system.x,
+      y:system.y
+    });
+
+    html +=
+      "<div class='card' style='margin:15px 0'>"+
+      "<span class='badge'>"+
+      safeText(levels[i])+
+      "</span>"+
+      "<h3>Question "+(i+1)+"</h3>"+
+      "<div class='big-math'>"+
+      equationText(system.a,system.b,system.e)+
+      "<br>"+
+      equationText(system.c,system.d,system.f)+
+      "</div>"+
+      "<div class='form-row'>"+
+      "<div><label>x =</label>"+
+      "<input id='quizX"+i+"' type='text'></div>"+
+      "<div><label>y =</label>"+
+      "<input id='quizY"+i+"' type='text'></div>"+
+      "</div>"+
+      "</div>";
+  }
+
+  html +=
+    "<button class='btn success' id='quizCorrect'>"+
+    "Corriger le quiz"+
+    "</button>"+
+    "<div id='quizResult'></div>";
+
+  byId("quizContent").innerHTML =
+    html;
+
+  byId("quizCorrect")
+    .addEventListener(
+      "click",
+      correctQuiz
     );
-
-  const zone =
-    document.getElementById("quizZone");
-
-  zone.innerHTML =
-    quizQuestions.map((q,index)=>`
-      <div class="card" style="margin:15px 0">
-        <span class="badge">${q.level}</span>
-        <h3>Question ${index+1}</h3>
-
-        <p>${q.statement}</p>
-
-        <div class="form-row">
-          <div>
-            <label for="qx${index}">x =</label>
-            <input id="qx${index}" type="text">
-          </div>
-
-          <div>
-            <label for="qy${index}">y =</label>
-            <input id="qy${index}" type="text">
-          </div>
-        </div>
-      </div>
-    `).join("") +
-    `<button class="btn success" id="submitQuiz">
-       Corriger le quiz
-     </button>
-     <div id="quizResult"></div>`;
-
-  document.getElementById("submitQuiz")
-    .addEventListener("click",correctQuiz);
 }
 
 function correctQuiz(){
 
-  let correct = 0;
+  var correct = 0;
 
-  const byLevel = {
+  var localScores = {
     comprendre:{ok:0,total:0},
     appliquer:{ok:0,total:0},
     raisonner:{ok:0,total:0},
     transferer:{ok:0,total:0}
   };
 
-  quizQuestions.forEach((q,index)=>{
+  for(var i=0;i<quizQuestions.length;i++){
 
-    const x =
+    var q =
+      quizQuestions[i];
+
+    var x =
       parseNumber(
-        document.getElementById(`qx${index}`).value
+        byId("quizX"+i).value
       );
 
-    const y =
+    var y =
       parseNumber(
-        document.getElementById(`qy${index}`).value
+        byId("quizY"+i).value
       );
 
-    const ok =
-      nearlyEqual(x,q.x) &&
-      nearlyEqual(y,q.y);
+    var ok =
+      equal(x,q.x) &&
+      equal(y,q.y);
 
-    byLevel[q.level].total++;
+    localScores[q.level].total++;
 
     if(ok){
-      correct++;
-      byLevel[q.level].ok++;
-    }
-  });
 
-  const note =
+      localScores[q.level].ok++;
+      correct++;
+    }
+  }
+
+  var note =
     Math.round(
-      correct /
-      quizQuestions.length *
-      20 *
-      10
-    ) / 10;
+      correct/quizQuestions.length*200
+    )/10;
 
   if(
     state.bestQuiz === null ||
@@ -2799,624 +3294,660 @@ function correctQuiz(){
     state.bestQuiz = note;
   }
 
-  state.modules.quiz = true;
+  Object.keys(localScores)
+    .forEach(function(key){
 
-  Object.entries(byLevel)
-    .forEach(([level,result])=>{
+      state.scores[key].ok +=
+        localScores[key].ok;
 
-      state.scores[level].total +=
-        result.total;
-
-      state.scores[level].ok +=
-        result.ok;
+      state.scores[key].total +=
+        localScores[key].total;
     });
+
+  state.modules.quiz = true;
 
   saveState();
 
-  const result =
-    document.getElementById("quizResult");
-
-  const weakest =
-    Object.entries(byLevel)
-      .map(([level,v])=>({
-        level,
-        rate:v.ok/v.total
-      }))
-      .sort((a,b)=>a.rate-b.rate)[0];
-
-  result.innerHTML =
-    `<div class="feedback ${note>=10?"ok":"hint"}">
-      <h2>Résultat : ${note} / 20</h2>
-
-      <p>Bonnes réponses : ${correct} / ${quizQuestions.length}</p>
-
-      <ul>
-        <li>Comprendre : ${byLevel.comprendre.ok}/${byLevel.comprendre.total}</li>
-        <li>Appliquer : ${byLevel.appliquer.ok}/${byLevel.appliquer.total}</li>
-        <li>Raisonner : ${byLevel.raisonner.ok}/${byLevel.raisonner.total}</li>
-        <li>Transférer : ${byLevel.transferer.ok}/${byLevel.transferer.total}</li>
-      </ul>
-
-      <p>
-        <strong>À retravailler en priorité :</strong>
-        ${weakest.level}.
-      </p>
-    </div>`;
+  byId("quizResult").innerHTML =
+    "<div class='feedback "+
+    (note>=10 ? "ok" : "hint")+
+    "'>"+
+    "<h2>Résultat : "+note+" / 20</h2>"+
+    "<p>"+correct+
+    " bonne(s) réponse(s) sur "+
+    quizQuestions.length+".</p>"+
+    "<p>"+
+    "Comprendre : "+localScores.comprendre.ok+"/"+localScores.comprendre.total+
+    "<br>Appliquer : "+localScores.appliquer.ok+"/"+localScores.appliquer.total+
+    "<br>Raisonner : "+localScores.raisonner.ok+"/"+localScores.raisonner.total+
+    "<br>Transférer : "+localScores.transferer.ok+"/"+localScores.transferer.total+
+    "</p>"+
+    "</div>";
 }
 
-document.getElementById("startQuiz")
-  .addEventListener("click",startQuiz);
+byId("quizStart")
+  .addEventListener(
+    "click",
+    startQuiz
+  );
 
 /* =========================================================
-   QR CODE GITHUB PAGES
+   QR CODE
+   AUCUNE BIBLIOTHÈQUE JAVASCRIPT EXTERNE
 ========================================================= */
 
-function getActivityURL(){
+function activityUrl(){
 
-  const url =
-    window.location.href
-      .split("#")[0]
-      .split("?")[0];
+  var url =
+    window.location.href;
+
+  var hash =
+    url.indexOf("#");
+
+  if(hash !== -1){
+    url = url.substring(0,hash);
+  }
 
   return url;
 }
 
-function showQRCode(){
+function showQr(){
 
-  const modal =
-    document.getElementById("qrModal");
+  var url =
+    activityUrl();
 
-  const container =
-    document.getElementById("qrContainer");
+  byId("qrUrl").textContent =
+    url;
 
-  const address =
-    document.getElementById("qrAddress");
+  /*
+    QR Server retourne directement une image.
+    Cela évite une bibliothèque JavaScript externe pouvant bloquer l'application.
+  */
 
-  const warning =
-    document.getElementById("qrWarning");
+  byId("qrImage").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=10&data="+
+    encodeURIComponent(url);
 
-  const url =
-    getActivityURL();
+  if(window.location.protocol === "file:"){
 
-  container.innerHTML = "";
-  address.textContent = url;
+    byId("qrInfo").className =
+      "feedback hint";
 
-  if(
-    location.protocol === "file:"
-  ){
-    warning.innerHTML =
-      `<strong>Attention :</strong> l’application est actuellement
-       ouverte comme fichier local. Publiez-la d’abord sur GitHub Pages
-       pour que les téléphones des élèves puissent l’ouvrir.`;
-  }else{
-    warning.className = "feedback ok";
-    warning.innerHTML =
-      `✓ Ce QR code pointe vers l’adresse publiée de l’application.`;
-  }
-
-  if(typeof QRCode !== "undefined"){
-
-    new QRCode(container,{
-      text:url,
-      width:250,
-      height:250,
-      colorDark:"#0b1f3a",
-      colorLight:"#ffffff",
-      correctLevel:QRCode.CorrectLevel.H
-    });
+    byId("qrInfo").innerHTML =
+      "<strong>Attention :</strong> tu ouvres actuellement index.html "+
+      "comme fichier local. Le QR code ne pourra pas ouvrir ce fichier "+
+      "sur les téléphones. Publie d’abord l’application avec GitHub Pages.";
 
   }else{
 
-    container.innerHTML =
-      `<div class="feedback bad">
-         Le générateur de QR code n’a pas pu être chargé.
-         Vérifie la connexion Internet puis recharge la page.
-       </div>`;
+    byId("qrInfo").className =
+      "feedback ok";
+
+    byId("qrInfo").innerHTML =
+      "✓ QR code généré pour l’adresse publiée :<br>"+
+      "<strong>"+safeText(url)+"</strong>";
   }
 
-  modal.classList.remove("hidden");
+  byId("qrModal")
+    .classList.remove("hidden");
 }
 
-document.getElementById("qrCodeBtn")
-  .addEventListener("click",showQRCode);
+function hideQr(){
 
-document.getElementById("teacherQrBtn")
-  .addEventListener("click",showQRCode);
+  byId("qrModal")
+    .classList.add("hidden");
+}
 
-document.getElementById("closeQr")
-  .addEventListener("click",()=>{
-    document.getElementById("qrModal")
-      .classList.add("hidden");
-  });
+byId("openQrTop")
+  .addEventListener(
+    "click",
+    showQr
+  );
 
-document.getElementById("qrModal")
-  .addEventListener("click",event=>{
-    if(event.target.id === "qrModal"){
-      event.currentTarget.classList.add("hidden");
+byId("teacherQrButton")
+  .addEventListener(
+    "click",
+    showQr
+  );
+
+byId("closeQr")
+  .addEventListener(
+    "click",
+    hideQr
+  );
+
+byId("qrModal")
+  .addEventListener("click",function(event){
+
+    if(event.target === this){
+      hideQr();
     }
   });
 
-document.addEventListener("keydown",event=>{
-  if(event.key === "Escape"){
-    document.getElementById("qrModal")
-      .classList.add("hidden");
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Escape"){
+      hideQr();
+    }
   }
-});
+);
 
-document.getElementById("copyActivityLink")
-  .addEventListener("click",async()=>{
+byId("copyUrl")
+  .addEventListener("click",function(){
 
-    const url =
-      getActivityURL();
+    var url =
+      activityUrl();
 
-    try{
-      await navigator.clipboard.writeText(url);
+    if(
+      navigator.clipboard &&
+      navigator.clipboard.writeText
+    ){
 
-      alert(
-        "Le lien de l’activité a été copié."
-      );
+      navigator.clipboard
+        .writeText(url)
+        .then(function(){
+          alert("Lien copié.");
+        })
+        .catch(function(){
+          window.prompt(
+            "Copie ce lien :",
+            url
+          );
+        });
 
-    }catch{
+    }else{
+
       window.prompt(
-        "Copiez ce lien :",
+        "Copie ce lien :",
         url
       );
     }
   });
 
 /* =========================================================
-   ESPACE ENSEIGNANT
+   ENSEIGNANT
 ========================================================= */
 
-let teacherUnlocked = false;
+byId("teacherLoginButton")
+  .addEventListener("click",function(){
 
-document.getElementById("teacherLoginBtn")
-  .addEventListener("click",()=>{
-
-    const password =
-      document.getElementById("teacherPassword").value;
-
-    const feedback =
-      document.getElementById("teacherLoginFeedback");
+    var password =
+      byId("teacherPassword").value;
 
     if(password === CONFIG.teacherPassword){
 
-      teacherUnlocked = true;
-
-      document.getElementById("teacherLogin")
+      byId("teacherLogin")
         .classList.add("hidden");
 
-      document.getElementById("teacherContent")
+      byId("teacherDashboard")
         .classList.remove("hidden");
 
-      renderTeacherTracking();
+      renderTeacher();
 
     }else{
 
-      feedback.innerHTML =
-        `<div class="feedback bad">
-          Mot de passe incorrect.
-        </div>`;
+      byId("teacherLoginFeedback").innerHTML =
+        "<div class='feedback bad'>"+
+        "Mot de passe incorrect."+
+        "</div>";
     }
   });
 
-function renderTeacherTracking(){
+function renderTeacher(){
 
-  const tbody =
-    document.getElementById("teacherStudentTable");
+  var students =
+    getStudents();
 
-  const students =
-    Object.values(getStudents())
-      .sort((a,b)=>
-        a.lastName.localeCompare(
-          b.lastName,
-          "fr"
-        )
-      );
+  var ids =
+    Object.keys(students);
 
-  if(!students.length){
+  var body =
+    byId("teacherStudents");
 
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="6">
-          Aucun élève enregistré sur cet appareil.
-        </td>
-       </tr>`;
+  if(!ids.length){
+
+    body.innerHTML =
+      "<tr>"+
+      "<td colspan='6'>"+
+      "Aucun élève enregistré sur cet appareil."+
+      "</td>"+
+      "</tr>";
 
     return;
   }
 
-  tbody.innerHTML =
-    students.map(student=>{
+  ids.sort(function(a,b){
 
-      const attempts =
-        student.attempts || 0;
+    var nameA =
+      String(students[a].lastName || "");
 
-      const successes =
-        student.successes || 0;
+    var nameB =
+      String(students[b].lastName || "");
 
-      const rate =
-        attempts
-          ? Math.round(
-              successes/attempts*100
+    return nameA.localeCompare(nameB);
+  });
+
+  var html = "";
+
+  ids.forEach(function(id){
+
+    var student =
+      students[id];
+
+    var studentState =
+      loadStudentState(id);
+
+    var attempts =
+      studentState.attempts || 0;
+
+    var success =
+      studentState.successes || 0;
+
+    var rate =
+      attempts
+        ? Math.round(success/attempts*100)
+        : 0;
+
+    var quiz =
+      studentState.bestQuiz === null
+        ? "—"
+        : studentState.bestQuiz+"/20";
+
+    var date = "—";
+
+    if(student.lastActivity){
+
+      try{
+        date =
+          new Date(
+            student.lastActivity
+          ).toLocaleString("fr-BE");
+      }catch(error){}
+    }
+
+    html +=
+      "<tr>"+
+      "<td><strong>"+
+      safeText(student.lastName)+" "+
+      safeText(student.firstName)+
+      "</strong></td>"+
+      "<td>"+(student.progress || 0)+" %</td>"+
+      "<td>"+rate+" %</td>"+
+      "<td>"+quiz+"</td>"+
+      "<td>"+date+"</td>"+
+      "<td>"+
+      "<button class='btn ghost studentDetailButton' "+
+      "data-student-id='"+safeText(id)+"'>"+
+      "Voir"+
+      "</button>"+
+      "</td>"+
+      "</tr>";
+  });
+
+  body.innerHTML =
+    html;
+
+  var detailButtons =
+    document.querySelectorAll(
+      ".studentDetailButton"
+    );
+
+  for(var i=0;i<detailButtons.length;i++){
+
+    detailButtons[i]
+      .addEventListener(
+        "click",
+        function(){
+
+          showStudentDetails(
+            this.getAttribute(
+              "data-student-id"
             )
-          : 0;
-
-      const quiz =
-        student.bestQuiz === null ||
-        student.bestQuiz === undefined
-          ? "—"
-          : `${student.bestQuiz}/20`;
-
-      const date =
-        student.lastActivity
-          ? new Date(
-              student.lastActivity
-            ).toLocaleString("fr-BE")
-          : "—";
-
-      return `
-        <tr>
-          <td>
-            <strong>
-              ${escapeHTML(student.lastName)}
-              ${escapeHTML(student.firstName)}
-            </strong>
-          </td>
-
-          <td>${student.progress || 0} %</td>
-          <td>${rate} %</td>
-          <td>${quiz}</td>
-          <td>${date}</td>
-
-          <td>
-            <button class="btn small ghost"
-                    data-student="${student.id}">
-              Détails
-            </button>
-          </td>
-        </tr>
-      `;
-    }).join("");
-
-  document.querySelectorAll("[data-student]")
-    .forEach(button=>{
-      button.addEventListener("click",()=>{
-        showStudentDetail(
-          button.dataset.student
-        );
-      });
-    });
+          );
+        }
+      );
+  }
 }
 
-function showStudentDetail(id){
+function showStudentDetails(id){
 
-  const students =
+  var students =
     getStudents();
 
-  const student =
+  var student =
     students[id];
 
-  if(!student) return;
+  if(!student){
+    return;
+  }
 
-  const studentState =
+  var s =
     loadStudentState(id);
 
-  function rate(level){
+  function pct(key){
 
-    const s =
-      studentState.scores[level];
+    var score =
+      s.scores[key];
 
-    return s.total
-      ? Math.round(s.ok/s.total*100)
+    return score.total
+      ? Math.round(
+          score.ok/score.total*100
+        )
       : 0;
   }
 
-  const errors =
-    Object.entries(
-      studentState.errors || {}
-    )
-      .sort((a,b)=>b[1]-a[1])
-      .slice(0,5);
-
-  const box =
-    document.getElementById(
-      "studentDetailTeacher"
-    );
-
-  box.innerHTML =
-    `<h3>
-       ${escapeHTML(student.firstName)}
-       ${escapeHTML(student.lastName)}
-     </h3>
-
-     <div class="grid four">
-
-       <div class="kpi">
-         <strong>${rate("comprendre")} %</strong>
-         Comprendre
-       </div>
-
-       <div class="kpi">
-         <strong>${rate("appliquer")} %</strong>
-         Appliquer
-       </div>
-
-       <div class="kpi">
-         <strong>${rate("raisonner")} %</strong>
-         Raisonner
-       </div>
-
-       <div class="kpi">
-         <strong>${rate("transferer")} %</strong>
-         Transférer
-       </div>
-
-     </div>
-
-     <h4 style="margin-top:18px">
-       Erreurs fréquentes
-     </h4>
-
-     ${
-       errors.length
-         ? `<ul>
-            ${errors.map(
-              ([name,count])=>
-                `<li>${escapeHTML(name)} : ${count}</li>`
-            ).join("")}
-            </ul>`
-         : "<p>Aucune erreur enregistrée.</p>"
-     }`;
+  var box =
+    byId("teacherStudentDetail");
 
   box.classList.remove("hidden");
+
+  box.innerHTML =
+    "<h3>"+
+    safeText(student.firstName)+" "+
+    safeText(student.lastName)+
+    "</h3>"+
+    "<div class='grid four'>"+
+    "<div class='kpi'><strong>"+
+    pct("comprendre")+" %</strong>Comprendre</div>"+
+    "<div class='kpi'><strong>"+
+    pct("appliquer")+" %</strong>Appliquer</div>"+
+    "<div class='kpi'><strong>"+
+    pct("raisonner")+" %</strong>Raisonner</div>"+
+    "<div class='kpi'><strong>"+
+    pct("transferer")+" %</strong>Transférer</div>"+
+    "</div>";
 }
 
 /* =========================================================
    CSV
 ========================================================= */
 
-function csvEscape(value){
-  const text =
-    String(value ?? "");
+function csvCell(value){
 
-  return `"${text.replaceAll('"','""')}"`;
+  var text =
+    String(
+      value === undefined ||
+      value === null
+        ? ""
+        : value
+    );
+
+  return "\""+
+    text.replace(/"/g,"\"\"")+
+    "\"";
 }
 
-document.getElementById("exportCSV")
-  .addEventListener("click",()=>{
+byId("exportCsv")
+  .addEventListener("click",function(){
 
-    const students =
-      Object.values(getStudents());
+    var students =
+      getStudents();
 
-    const rows = [
+    var rows = [
       [
         "Nom",
         "Prénom",
         "Progression",
         "Tentatives",
         "Réussites",
-        "Meilleur quiz",
-        "Comprendre",
-        "Appliquer",
-        "Raisonner",
-        "Transférer",
-        "Dernière activité"
+        "Quiz",
+        "Comprendre %",
+        "Appliquer %",
+        "Raisonner %",
+        "Transférer %"
       ]
     ];
 
-    students.forEach(student=>{
+    Object.keys(students)
+      .forEach(function(id){
 
-      const s =
-        loadStudentState(student.id);
+        var student =
+          students[id];
 
-      function pct(level){
-        const score = s.scores[level];
+        var s =
+          loadStudentState(id);
 
-        return score.total
-          ? Math.round(
-              score.ok/score.total*100
-            )
-          : 0;
-      }
+        function pct(key){
 
-      rows.push([
-        student.lastName,
-        student.firstName,
-        student.progress || 0,
-        s.attempts,
-        s.successes,
-        s.bestQuiz ?? "",
-        pct("comprendre"),
-        pct("appliquer"),
-        pct("raisonner"),
-        pct("transferer"),
-        student.lastActivity || ""
-      ]);
-    });
+          var score =
+            s.scores[key];
 
-    const csv =
-      "\uFEFF" +
-      rows.map(row=>
-        row.map(csvEscape).join(";")
-      ).join("\n");
+          return score.total
+            ? Math.round(
+                score.ok/score.total*100
+              )
+            : 0;
+        }
 
-    const blob =
+        rows.push([
+          student.lastName,
+          student.firstName,
+          student.progress || 0,
+          s.attempts,
+          s.successes,
+          s.bestQuiz === null
+            ? ""
+            : s.bestQuiz,
+          pct("comprendre"),
+          pct("appliquer"),
+          pct("raisonner"),
+          pct("transferer")
+        ]);
+      });
+
+    var csv =
+      "\uFEFF"+
+      rows.map(function(row){
+
+        return row.map(csvCell)
+          .join(";");
+
+      }).join("\n");
+
+    var blob =
       new Blob(
         [csv],
-        {type:"text/csv;charset=utf-8"}
+        {
+          type:"text/csv;charset=utf-8"
+        }
       );
 
-    const url =
-      URL.createObjectURL(blob);
-
-    const a =
+    var link =
       document.createElement("a");
 
-    a.href = url;
-    a.download =
+    link.href =
+      URL.createObjectURL(blob);
+
+    link.download =
       "resultats-systemes-equations.csv";
 
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    URL.revokeObjectURL(url);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });
 
 /* =========================================================
-   MODE PROJECTION
+   IMPRESSION
 ========================================================= */
 
-document.getElementById("projectionBtn")
-  .addEventListener("click",event=>{
+byId("createPrint")
+  .addEventListener("click",function(){
 
-    document.body.classList.toggle(
-      "projection-mode"
-    );
+    var exercises = [];
 
-    const active =
-      document.body.classList.contains(
-        "projection-mode"
-      );
+    for(var i=0;i<10;i++){
 
-    event.currentTarget.textContent =
-      active
-        ? "Désactiver le mode projection"
-        : "Activer le mode projection";
-  });
-
-/* =========================================================
-   IMPRESSION DE 10 EXERCICES
-========================================================= */
-
-document.getElementById("generatePrint")
-  .addEventListener("click",()=>{
-
-    const exercises = [];
-
-    for(let i=0;i<10;i++){
       exercises.push(
         makeSystem(
           i<4
-            ? "facile"
+            ? "easy"
             : i<8
-              ? "intermediaire"
-              : "avance"
+              ? "medium"
+              : "hard"
         )
       );
     }
 
-    document.getElementById("printSheet").innerHTML =
-      `<h1>Systèmes d’équations — Série d’exercices</h1>
-       <p>Nom : __________________________ Date : _______________</p>
+    var html =
+      "<h1>Systèmes d’équations — Exercices</h1>"+
+      "<p>Nom : _________________________________ "+
+      "Date : ______________</p>";
 
-       ${exercises.map((s,i)=>`
-         <div style="margin:22px 0">
-           <strong>${i+1}. Résous le système :</strong><br>
-           ${s.a}x ${s.b>=0?"+":"−"} ${Math.abs(s.b)}y = ${s.e}<br>
-           ${s.c}x ${s.d>=0?"+":"−"} ${Math.abs(s.d)}y = ${s.f}
-         </div>
-       `).join("")}
+    exercises.forEach(
+      function(s,index){
 
-       <hr>
+        html +=
+          "<div style='margin:25px 0'>"+
+          "<strong>"+
+          (index+1)+". Résous le système :</strong><br>"+
+          equationText(s.a,s.b,s.e)+
+          "<br>"+
+          equationText(s.c,s.d,s.f)+
+          "</div>";
+      }
+    );
 
-       <h2>Corrigé enseignant</h2>
+    html +=
+      "<hr><h2>Corrigé</h2>";
 
-       ${exercises.map((s,i)=>`
-         <p>
-           ${i+1}. Solution :
-           (${s.x} ; ${s.y})
-         </p>
-       `).join("")}`;
+    exercises.forEach(
+      function(s,index){
+
+        html +=
+          "<p>"+
+          (index+1)+
+          ". Solution : ("+
+          s.x+" ; "+s.y+
+          ")</p>";
+      }
+    );
+
+    byId("printArea").innerHTML =
+      html;
+
+    alert(
+      "Les 10 exercices ont été générés. Clique maintenant sur Imprimer."
+    );
   });
+
+byId("printButton")
+  .addEventListener(
+    "click",
+    function(){
+      window.print();
+    }
+  );
 
 /* =========================================================
    RESET
 ========================================================= */
 
-document.getElementById("resetAllData")
-  .addEventListener("click",()=>{
+byId("resetData")
+  .addEventListener("click",function(){
 
-    const confirmation =
-      confirm(
-        "Effacer tous les profils et toutes les progressions enregistrées sur cet appareil ?"
+    var answer =
+      window.confirm(
+        "Effacer tous les profils et résultats enregistrés sur cet appareil ?"
       );
 
-    if(!confirmation) return;
+    if(!answer){
+      return;
+    }
 
-    const students =
+    var students =
       getStudents();
 
     Object.keys(students)
-      .forEach(id=>{
-        localStorage.removeItem(
-          stateKey(id)
-        );
+      .forEach(function(id){
+
+        try{
+          localStorage.removeItem(
+            studentStateKey(id)
+          );
+        }catch(error){}
       });
 
-    localStorage.removeItem(
-      CONFIG.storage.students
-    );
+    try{
 
-    localStorage.removeItem(
-      CONFIG.storage.currentStudent
-    );
+      localStorage.removeItem(
+        CONFIG.studentListKey
+      );
+
+      localStorage.removeItem(
+        CONFIG.currentStudentKey
+      );
+
+    }catch(error){}
 
     currentStudentId = "";
-    state = structuredClone(DEFAULT_STATE);
+    state = clone(DEFAULT_STATE);
 
     updateStudentInterface();
-    renderTeacherTracking();
+    renderTeacher();
 
     alert(
-      "Les données locales ont été supprimées."
+      "Données locales effacées."
     );
   });
 
 /* =========================================================
-   COMMANDES ÉLÈVE
+   BOUTONS ÉLÈVE
 ========================================================= */
 
-document.getElementById("saveStudentName")
-  .addEventListener("click",identifyStudent);
+byId("saveStudent")
+  .addEventListener(
+    "click",
+    identifyStudent
+  );
 
-document.getElementById("changeStudent")
-  .addEventListener("click",changeStudent);
+byId("changeStudent")
+  .addEventListener(
+    "click",
+    changeStudent
+  );
 
-document.getElementById("changeStudentTop")
-  .addEventListener("click",changeStudent);
+byId("changeStudentTop")
+  .addEventListener(
+    "click",
+    changeStudent
+  );
 
-document.getElementById("startBtn")
-  .addEventListener("click",()=>{
+byId("startActivity")
+  .addEventListener("click",function(){
 
     if(!currentStudentId){
-      const ok =
-        identifyStudent();
 
-      if(!ok) return;
+      if(!identifyStudent()){
+        return;
+      }
     }
 
     showPage("explore");
   });
 
-document.getElementById("studentLastName")
-  .addEventListener("keydown",event=>{
+byId("lastName")
+  .addEventListener(
+    "keydown",
+    function(event){
 
-    if(event.key === "Enter"){
-      identifyStudent();
+      if(event.key === "Enter"){
+        identifyStudent();
+      }
     }
-  });
+  );
 
 /* =========================================================
    INITIALISATION
 ========================================================= */
 
-restoreCurrentStudent();
+restoreStudent();
 updateStudentInterface();
 renderProgress();
 drawGraph();
 
+})();
 </script>
 
 </body>
